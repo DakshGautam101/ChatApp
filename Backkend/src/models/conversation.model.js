@@ -1,0 +1,89 @@
+import mongoose from "mongoose";
+
+const participantSchema = new mongoose.Schema({
+    user : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User' ,
+        required : true
+    },
+    role : {
+        type : String , 
+        enum : ['admin' , 'member'] ,
+        default : 'member'
+    },
+    lastReadMessageId : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Message',
+        default : null,
+    },
+    muted : {
+        type : Boolean,
+        default : false
+    },
+    joinedAt : {
+        type : Date,
+        default : Date.now
+    },
+}, 
+{
+    _id : false,
+}
+);
+
+
+const consversationSchema = new mongoose.Schema({
+    type : {
+        type : String,
+        enum : ['private', 'group'],
+        required : true
+    },
+    name : {
+        type : String,
+        default : null,
+        trim : true,
+        minLength : 3,
+        maxLength : 50
+    },
+    avatarUrl : {
+        type : String , 
+        default : null
+    },
+    createdBy : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User',   
+        required : true
+    },
+    participants :{
+        type : [participantSchema],
+        validate : {
+            validator : (arr)=> arr.length >= 2,
+            message : 'A conversation must have at least 2 participants'
+        },
+    },
+    lastMessage : {
+        text : {
+            type : String ,
+            defalt : null,
+        },
+        sender : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'User',
+            default : null,
+        },
+        receiver : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'User',
+            default : null,
+        }
+    }
+},
+
+    {timestamps : true}
+
+)
+
+conversationSchema.index({ 'participants.user' : 1 });
+conversationSchema.index({ type : 1 , 'participants.user' : 1 }); 
+
+const Conversation = mongoose.model("Conversation", consversationSchema);
+export default Conversation;
