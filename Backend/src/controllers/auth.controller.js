@@ -48,11 +48,12 @@ export const signup = async (req, res) => {
             console.error("Error sending verification email:", mailErr);
         }
         const token = generateToken(user._id);
-        res.cookie("token" , token , {
+        res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-        })
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
         res.status(201).json({
             success: true,
             message: "Signup successful. Verification email sent.",
@@ -85,11 +86,12 @@ export const login = async (req, res) => {
         const token = generateToken(user._id);
 
         const safeUser = await User.findById(user._id).select('-emailVerificationOtp -emailVerificationOtpExpires -password');
-        res.cookie("token" , token , {
+        res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-        })
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        });
         res.status(200).json({
             success: true,
             token,
@@ -175,3 +177,19 @@ export const resendEmailOtp = async (req, res) => {
         return res.status(500).json({ message: "Internal server error in resendEmailOtp" });
     }
 }
+
+export const me = async (req, res) => {
+    try {
+        // verifyAuth middleware attaches decoded token to req.user
+        const userId = req.user?.id;
+        if (!userId) return res.status(401).json({ message: "Unauthorized" });
+
+        const safeUser = await User.findById(userId).select('-emailVerificationOtp -emailVerificationOtpExpires -password');
+        if (!safeUser) return res.status(404).json({ message: "User not found" });
+
+        return res.status(200).json({ success: true, user: safeUser });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};

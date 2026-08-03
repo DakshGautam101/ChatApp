@@ -8,17 +8,25 @@ const useAuthStore = create((set ,get)=>({
     isLoading : false,
 
     checkAuth : async()=>{
-        const token = cookieStore.get("token")?.catch(()=>null);
-        if(!token){
+        set({ isLoading: true });
+        try {
+            const res = await axios.get('/auth/me');
             set({
-                user : null ,
-                isAuthenticated : false ,
-                isVerified : false,
-                isLoading : false,
-            })
+                user: res.data.user,
+                isAuthenticated: true,
+                isVerified: Boolean(res.data.user?.isVerified),
+                isLoading: false,
+            });
+            return true;
+        } catch (err) {
+            set({
+                user: null,
+                isAuthenticated: false,
+                isVerified: false,
+                isLoading: false,
+            });
             return false;
         }
-        return true;
     },
     
     signup : async ({ username , email , password })=>{

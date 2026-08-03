@@ -38,6 +38,19 @@ const userSchema = new mongoose.Schema({
             ref: 'User',
         },
     ],
+    friends : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'User',
+        },
+    ],
+
+    invitations : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Invitation',
+        }
+    ],
 
     emailVerificationOtp: {
         type: String,
@@ -60,6 +73,8 @@ const userSchema = new mongoose.Schema({
 );
 
 userSchema.index({ username: 1, email: 1 });
+//TTL indexing for otp ;
+// userSchema.session.createIndex
 
 const User = mongoose.model("User", userSchema);
 export default User;

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route , Routes } from 'react-router-dom';
 import useAuthStore from './Stores/useAuthStore';
+import { useEffect } from 'react';
 import LoginPage from './Pages/LoginPage';
 import { Toaster } from 'react-hot-toast';
 import SignUpPage from './Pages/SignUpPage';
@@ -11,10 +12,16 @@ import DashboardPage from './Pages/DashboardPage';
 const App = () => {
 
   const { isAuthenticated } = useAuthStore();
+  const { checkAuth, isLoading } = useAuthStore();
+
+  useEffect(() => {
+    // on app mount validate cookie-based session
+    checkAuth();
+  }, []);
 
   return (
     <>
-      
+      {isLoading ? <div className='p-6'>Checking session...</div> : null}
         <Routes>
           <Route
             path="/"
