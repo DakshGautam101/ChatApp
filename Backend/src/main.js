@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import invitationRoutes from "./routes/invitation.routes.js";
+import messageRoutes from "./routes/message.routes.js"
 import {createServer} from "http";
 import { Server } from "socket.io";
 import cors from "cors";
@@ -24,7 +25,7 @@ app.use(cors({
 app.use("/api/auth", authRoutes);
 app.use("/api/user" , userRoutes);
 app.use("/api/invitation" , invitationRoutes);
-
+app.use("/api/message", messageRoutes);
 const io = new Server(server, {
     cors :{
         origin : allowedOrigins,

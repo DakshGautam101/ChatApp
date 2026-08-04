@@ -1,4 +1,5 @@
-import Message from "../models/messages.model";
+import Conversation from "../models/conversation.model.js";
+import Message from "../models/messages.model.js";
 
 export const getMessages = async (req, res) => {
     try {
@@ -14,7 +15,7 @@ export const getMessages = async (req, res) => {
         const messages = await Message.find(query).sort({ createdAt: -1 }).limit(50);
         return res.status(200).json({
             success: true,
-            messages = messages.reverse()
+            messages : messages.reverse()
         });
     } catch (error) {
         return res.status(500).json({
@@ -29,7 +30,7 @@ export const getConversation = async (req, res) => {
         const conversations = await Conversation.find({ "participants.user": userId })
             .populate("participants.user", "username email avatar")
             .sort({ updatedAt: -1 });
-        res.satus(200).json({ success: true, conversations });
+        res.status(200).json({ success: true, conversations });
     } catch (error) {
         res.satus(500).json({ success: false, message : "Backend cannot get conversations" });
     }

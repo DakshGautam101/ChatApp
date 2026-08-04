@@ -199,7 +199,7 @@ export const changeStatus = async (req, res) => {
                 sender.save(),
                 receiver.save(),
             ]);
-            const conversation = await Conversation.findOne({
+            let conversation = await Conversation.findOne({
                 type: "private",
                 "participants.user": { $all: [invitation.sender, invitation.receiver] },
             });
@@ -213,7 +213,6 @@ export const changeStatus = async (req, res) => {
                     ],
                 });
             }
-            await conversation.save();
         }
 
         else {
