@@ -1,92 +1,131 @@
 import Invitation from "../models/invitation.model.js";
 import User from "../models/user.model.js"
 import { io } from "../main.js";
+import Conversation from "../models/conversation.model.js";
 
-export const sendInvitation = async function (req, res) {
+export const sendInvitation = async (req, res) => {
     try {
-        const receiverId = req.params.receiverId || req.params.id;
-        if (!receiverId) {
-            return res.status(400).json({ message: "Provide a valid ID" });
-        }
-        const reciever = await User.findById(receiverId);
-        if (!reciever) {
-            return res.status(404).json({ message: "User does not exists" });
-        }
         const senderId = req.user.id;
-        if (!senderId) {
-            return res.status(401).json({
-                message: "Unauthorized"
+        const receiverId = req.params.id;
+
+        if (!receiverId) {
+            return res.status(400).json({
+                success: false,
+                message: "Receiver ID is required",
             });
         }
+
         if (senderId === receiverId) {
             return res.status(400).json({
-                message: "you cannot send invitation to yourself"
-            })
+                success: false,
+                message: "You cannot send an invitation to yourself",
+            });
         }
 
-        const invitation = new Invitation({
-            sender: senderId,
-            receiver: receiverId,
-        });
+        const [sender, receiver] = await Promise.all([
+            User.findById(senderId),
+            User.findById(receiverId),
+        ]);
 
+        if (!sender || !receiver) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
 
+        // Already friends
+        if (sender.friends.includes(receiver._id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Already friends",
+            });
+        }
+
+        // Check if either direction already has an invitation
         const existingInvitation = await Invitation.findOne({
-            sender: senderId,
-            receiver: receiverId,
+            $or: [
+                { sender: senderId, receiver: receiverId },
+                { sender: receiverId, receiver: senderId },
+            ],
         });
 
         if (existingInvitation) {
 
             if (existingInvitation.status === "pending") {
                 return res.status(400).json({
-                    message: "Invitation already sent."
+                    success: false,
+                    message: "Invitation already pending",
                 });
             }
 
             if (existingInvitation.status === "accepted") {
                 return res.status(400).json({
-                    message: "Invitation already accepted."
+                    success: false,
+                    message: "Users are already friends",
                 });
             }
 
             if (
                 existingInvitation.status === "rejected" &&
-                existingInvitation.rejectedUntil > Date.now()
+                existingInvitation.rejectedUntil &&
+                existingInvitation.rejectedUntil > new Date()
             ) {
                 return res.status(400).json({
-                    message: "Invitation was rejected. Try again after 24 hours."
+                    success: false,
+                    message: "Invitation was rejected. Try again after 24 hours.",
                 });
             }
 
-            if (existingInvitation.status === "rejected") {
-                existingInvitation.status = "pending";
-                existingInvitation.rejectedUntil = null;
-                await existingInvitation.save();
+            // Reuse the old invitation
+            existingInvitation.sender = senderId;
+            existingInvitation.receiver = receiverId;
+            existingInvitation.status = "pending";
+            existingInvitation.rejectedUntil = null;
 
-                io.to(`user_${receiverId}`).emit("invitation:created");
+            await existingInvitation.save();
 
-                return res.json({
-                    success: true,
-                    message: "Invitation sent again."
-                });
-            }
-        }
-
-        await invitation.save();
-
-        try {
-            io.to(`user_${receiverId}`).emit('invitation:created', {
-                invitationId: invitation._id,
-                from: senderId,
-                to: receiverId
+            io.to(`user_${receiverId}`).emit("invitation:created", {
+                invitationId: existingInvitation._id,
+                sender: {
+                    _id: sender._id,
+                    username: sender.username,
+                },
             });
-        } catch (err) {
-            console.error('Socket emit error (invitation:created):', err.message);
+
+            return res.status(200).json({
+                success: true,
+                message: "Invitation sent successfully",
+                invitation: existingInvitation,
+            });
         }
+
+        // Create new invitation
+        const invitation = await Invitation.create({
+            sender: senderId,
+            receiver: receiverId,
+        });
+
+        sender.invitations.addToSet(invitation._id);
+        receiver.invitations.addToSet(invitation._id);
+
+        await Promise.all([
+            sender.save(),
+            receiver.save(),
+        ]);
+
+        io.to(`user_${receiverId}`).emit("invitation:created", {
+            invitationId: invitation._id,
+            sender: {
+                _id: sender._id,
+                username: sender.username,
+            },
+        });
 
         return res.status(201).json({
             success: true,
-            message: "invitation sent successfully"
+            message: "Invitation sent successfully",
+            invitation,
         });
 
     } catch (error) {
@@ -94,96 +133,165 @@ export const sendInvitation = async function (req, res) {
 
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
         });
     }
-}
+};
 
 export const changeStatus = async (req, res) => {
     try {
-        const invitationStatus = String(req.query.invitationStatus || "").toLowerCase();
         const invitationId = req.params.id;
-        const recieverId = req.user?.id;
+        const receiverId = req.user.id;
+        const status = String(req.query.invitationStatus || "").toLowerCase();
 
-        if (!recieverId) {
-            return res.status(401).json({ message: "Unauthorized" });
-        }
-        if (!invitationStatus || !["accepted", "rejected"].includes(invitationStatus)) {
+        if (!["accepted", "rejected"].includes(status)) {
             return res.status(400).json({
-                message: "Invalid status"
-            });
-        }
-        if (!invitationId) {
-            return res.status(400).json({
-                message: "Invitation ID is required"
+                success: false,
+                message: "Invalid invitation status",
             });
         }
 
         const invitation = await Invitation.findById(invitationId);
+
         if (!invitation) {
             return res.status(404).json({
-                message: "Invitation not found"
+                success: false,
+                message: "Invitation not found",
             });
         }
-        if (invitation.receiver.toString() != recieverId) {
+
+        if (invitation.receiver.toString() !== receiverId) {
             return res.status(403).json({
-                message: "Forbidden - Invalid user access",
-            })
+                success: false,
+                message: "Unauthorized",
+            });
         }
+
         if (invitation.status !== "pending") {
             return res.status(400).json({
-                message: "Invitation already processed"
+                success: false,
+                message: "Invitation already processed",
             });
         }
-        if (invitationStatus.toLowerCase() == "rejected") {
-            invitation.rejectedUntil = new Date(Date.now() + 24 * 60 * 60 * 1000);
-        }
-        invitation.status = invitationStatus;
-        await invitation.save();
 
-        try {
-            const senderId = invitation.sender.toString();
-            io.to(`user_${senderId}`).emit('invitation:statusChanged', {
-                invitationId: invitation._id,
-                status: invitation.status,
-                by: recieverId
+        const sender = await User.findById(invitation.sender);
+        const receiver = await User.findById(invitation.receiver);
+
+        if (!sender || !receiver) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
             });
-        } catch (err) {
-            console.error('Socket emit error (invitation:statusChanged):', err.message);
         }
+
+        if (status === "accepted") {
+
+            invitation.status = "accepted";
+
+            sender.friends.addToSet(receiver._id);
+            receiver.friends.addToSet(sender._id);
+
+            sender.invitations.pull(invitation._id);
+            receiver.invitations.pull(invitation._id);
+
+            await Promise.all([
+                invitation.save(),
+                sender.save(),
+                receiver.save(),
+            ]);
+            const conversation = await Conversation.findOne({
+                type: "private",
+                "participants.user": { $all: [invitation.sender, invitation.receiver] },
+            });
+            if (!conversation) {
+                conversation = await Conversation.create({
+                    type: "private",
+                    createdBy: invitation.sender,
+                    participants: [
+                        { user: invitation.sender },
+                        { user: invitation.receiver },
+                    ],
+                });
+            }
+            await conversation.save();
+        }
+
+        else {
+
+            invitation.status = "rejected";
+            invitation.rejectedUntil = new Date(
+                Date.now() + 24 * 60 * 60 * 1000
+            );
+
+            sender.invitations.pull(invitation._id);
+            receiver.invitations.pull(invitation._id);
+
+            await Promise.all([
+                invitation.save(),
+                sender.save(),
+                receiver.save(),
+            ]);
+        }
+
+        io.to(`user_${sender._id}`).emit("invitation:statusChanged", {
+            invitationId: invitation._id,
+            status: invitation.status,
+            receiver: {
+                _id: receiver._id,
+                username: receiver.username,
+            },
+        });
 
         return res.status(200).json({
-            message: "status updated",
-        })
+            success: true,
+            message: `Invitation ${status}`,
+            invitation,
+        });
+
     } catch (error) {
-        console.error("changeStatus error:", error);
+
+        console.error("changeStatus:", error);
+
         return res.status(500).json({
-            message: "Error in invitation status controller",
-            error: error.message,
+            success: false,
+            message: error.message,
         });
     }
-}
+};
 
 export const getInvitation = async (req, res) => {
     try {
         const userId = req.user.id;
-        const received = await Invitation.find({
-            receiver: userId
-        }).populate("sender", "username email").sort({ createdAt: -1 });
 
-        const sent = await Invitation.find({
-            sender: userId
-        }).populate("receiver", "username email").sort({ createdAt: -1 });
+        const [received, sent] = await Promise.all([
 
-        return res.json({
+            Invitation.find({
+                receiver: userId,
+            })
+                .populate("sender", "username email avatar status")
+                .sort({ createdAt: -1 })
+                .lean(),
+
+            Invitation.find({
+                sender: userId,
+            })
+                .populate("receiver", "username email avatar status")
+                .sort({ createdAt: -1 })
+                .lean(),
+        ]);
+
+        return res.status(200).json({
             success: true,
             received,
             sent,
         });
 
     } catch (error) {
+        console.error("getInvitation:", error);
+
         return res.status(500).json({
-            message: err.message,
+            success: false,
+            message: error.message,
         });
     }
-}
+};

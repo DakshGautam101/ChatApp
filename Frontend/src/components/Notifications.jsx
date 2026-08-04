@@ -1,46 +1,76 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "../lib/socket";
+import { Bell, UserPlus, X } from "lucide-react";
+
+const AUTO_DISMISS_MS = 6000;
+
+const ICONS = {
+    invitation: UserPlus,
+    notification: Bell,
+    status: Bell,
+};
 
 export default function Notifications() {
     const [items, setItems] = useState([]);
 
-    useEffect(() => {
-        function onInvitation(data) {
-            setItems((s) => [{ type: "invitation", ...data, id: Date.now() }, ...s]);
-        }
+    const dismiss = (id) => {
+        setItems((s) => s.filter((it) => it.id !== id));
+    };
 
-        function onNotification(data) {
-            setItems((s) => [{ type: "notification", ...data, id: Date.now() }, ...s]);
-        }
+    useEffect(() => {
+        if (!socket) return;
+
+        const push = (entry) => {
+            const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+            setItems((s) => [{ ...entry, id }, ...s].slice(0, 5));
+            setTimeout(() => dismiss(id), AUTO_DISMISS_MS);
+        };
+
+        const onInvitation = (data) => push({ type: "invitation", ...data });
+        const onNotification = (data) => push({ type: "notification", ...data });
+        const onStatusChanged = (data) => push({ type: "status", ...data });
 
         socket.on("invitation:created", onInvitation);
         socket.on("notification:new", onNotification);
-        socket.on("invitation:statusChanged", (d) => {
-            setItems((s) => [{ type: "status", ...d, id: Date.now() }, ...s]);
-        });
+        socket.on("invitation:statusChanged", onStatusChanged);
 
         return () => {
             socket.off("invitation:created", onInvitation);
             socket.off("notification:new", onNotification);
-            socket.off("invitation:statusChanged");
+            socket.off("invitation:statusChanged", onStatusChanged);
         };
     }, []);
 
     if (!items.length) return null;
 
     return (
-        <div className="fixed right-4 top-16 w-80 z-50">
-            <div className="space-y-2">
-                {items.map((it) => (
-                    <div key={it.id} className="p-3 bg-white shadow rounded">
-                        <div className="text-sm font-medium">
-                            {it.type === "invitation" && `Invitation from ${it.from}`}
-                            {it.type === "notification" && `Notification: ${it.message || JSON.stringify(it)}`}
-                            {it.type === "status" && `Invitation ${it.status} by ${it.by}`}
+        <div className="pointer-events-none fixed right-4 top-20 z-50 flex w-[calc(100%-2rem)] max-w-sm flex-col gap-2 sm:right-6">
+            {items.map((it) => {
+                const Icon = ICONS[it.type] || Bell;
+                let message = "";
+                if (it.type === "invitation") message = `Invitation from ${it.from || "someone new"}`;
+                if (it.type === "notification") message = it.message || "You have a new notification";
+                if (it.type === "status") message = `Invitation ${it.status} by ${it.by || "a user"}`;
+
+                return (
+                    <div
+                        key={it.id}
+                        className="pointer-events-auto flex items-start gap-3 rounded-xl border border-border bg-foreground p-3 text-background shadow-lg animate-in fade-in slide-in-from-right-6 duration-300"
+                    >
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-background/15">
+                            <Icon className="h-4 w-4" />
                         </div>
+                        <p className="min-w-0 flex-1 text-sm leading-snug">{message}</p>
+                        <button
+                            onClick={() => dismiss(it.id)}
+                            className="shrink-0 rounded-md p-0.5 text-background/60 transition-colors hover:text-background"
+                            aria-label="Dismiss notification"
+                        >
+                            <X className="h-3.5 w-3.5" />
+                        </button>
                     </div>
-                ))}
-            </div>
+                );
+            })}
         </div>
     );
 }

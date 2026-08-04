@@ -31,7 +31,7 @@ const participantSchema = new mongoose.Schema({
 );
 
 
-const consversationSchema = new mongoose.Schema({
+const conversationSchema = new mongoose.Schema({
     type : {
         type : String,
         enum : ['private', 'group'],
@@ -91,5 +91,5 @@ const consversationSchema = new mongoose.Schema({
 conversationSchema.index({ 'participants.user' : 1 });
 conversationSchema.index({ type : 1 , 'participants.user' : 1 }); 
 
-const Conversation = mongoose.model("Conversation", consversationSchema);
+const Conversation = mongoose.model("Conversation", conversationSchema);
 export default Conversation;

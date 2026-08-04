@@ -1,58 +1,47 @@
 import mongoose from "mongoose";
 
 const attachmentSchema = new mongoose.Schema({
-    url : {
-        type : String, 
-        required : true,
+    url: {
+        type: String,
+        required: true
     },
-    fileType : {
-        type : String,
-        required : true,
+    fileType: {
+        type: String,
+        required: true
     },
-    size : {
-        type : Number,
-        required : true,
+    size: {
+        type: Number,
+        required: true
     }
-},
-{_id : false}
-);
+}, 
+{ _id: false });
 
 const messageSchema = new mongoose.Schema({
-    sender : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'User', 
-        required : true
+    conversation: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Conversation',
+        required: true,
     },
-    reciever : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'User',
-        required : true
+    sender: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
-    content : {
-        type : String,
-        required : true
+    content: {
+        type: String,
+        required: true,
+        trim: true,
     },
-    attachments : [attachmentSchema],
-    reactions : [
+    attachments: [attachmentSchema],
+    reactions: [
         {
-            user : {
-                type : mongoose.Schema.Types.ObjectId,  
-                ref : 'User',
-                required : true
-            },
-            type : {
-                type : String,
-                default : 'like',
-            }
+            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+            type: { type: String, default: 'like' }
         }
     ],
-    messageStatus : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'MessageStatus',
-        required : true
-    }
-});
+}, { timestamps: true });
 
-const Message = mongoose.model("Message" , messageSchema);
+messageSchema.index({ conversation: 1, createdAt: -1 });
 
+const Message = mongoose.model("Message", messageSchema);
 export default Message;
