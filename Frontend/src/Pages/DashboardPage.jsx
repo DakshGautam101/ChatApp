@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 import useAuthStore from '../Stores/useAuthStore'
-import { MessageSquare, Power, UserPlus, Users } from 'lucide-react';
+import { MessageSquare, Power, UserPlus, Users, MessagesSquare } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import UserList from '../components/UserList';
 import Notifications from '../components/Notifications';
 import Invitation from '../components/Invitation';
+import ConversationList from '../components/ConversationList';
+import ChatWindow from '../components/ChatWindow';
+import useChatStore from '../Stores/useChatStore';
 import toast from 'react-hot-toast';
 
 const DashboardPage = () => {
 
     const { user, logout } = useAuthStore();
+    const { activeConversation, closeConversation } = useChatStore();
     const [mobileTab, setMobileTab] = useState("people");
 
     const handleLogout = async () => {
@@ -81,16 +85,78 @@ const DashboardPage = () => {
                     <UserPlus className="h-4 w-4" />
                     Invitations
                 </button>
+                <button
+                    onClick={() => setMobileTab("chats")}
+                    className={`flex flex-1 items-center justify-center gap-1.5 border-b-2 py-3 text-sm font-medium transition-colors ${mobileTab === "chats"
+                            ? "border-foreground text-foreground"
+                            : "border-transparent text-muted-foreground hover:text-foreground"
+                        }`}
+                >
+                    <MessagesSquare className="h-4 w-4" />
+                    Chats
+                </button>
             </div>
 
-            <main className="mx-auto grid w-full max-w-6xl flex-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[340px_1fr]">
-                <section className={`${mobileTab === "people" ? "block" : "hidden"} lg:block animate-in fade-in-up duration-500`}>
-                    <UserList />
-                </section>
+            {/* Desktop tab switcher */}
+            <div className="hidden border-b border-border lg:flex">
+                <div className="mx-auto flex w-full max-w-6xl px-6">
+                    {[
+                        { key: "people", label: "People", icon: Users },
+                        { key: "invitations", label: "Invitations", icon: UserPlus },
+                        { key: "chats", label: "Chats", icon: MessagesSquare },
+                    ].map(({ key, label, icon: Icon }) => (
+                        <button
+                            key={key}
+                            onClick={() => setMobileTab(key)}
+                            className={`flex items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${mobileTab === key
+                                    ? "border-foreground text-foreground"
+                                    : "border-transparent text-muted-foreground hover:text-foreground"
+                                }`}
+                        >
+                            <Icon className="h-4 w-4" />
+                            {label}
+                        </button>
+                    ))}
+                </div>
+            </div>
 
-                <section className={`${mobileTab === "invitations" ? "block" : "hidden"} lg:block animate-in fade-in-up duration-500 delay-100`}>
-                    <Invitation />
-                </section>
+            <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-6 sm:px-6">
+                {mobileTab === "people" && (
+                    <section className="animate-in fade-in-up duration-500">
+                        <UserList />
+                    </section>
+                )}
+
+                {mobileTab === "invitations" && (
+                    <section className="animate-in fade-in-up duration-500">
+                        <Invitation />
+                    </section>
+                )}
+
+                {mobileTab === "chats" && (
+                    <section className="grid flex-1 animate-in fade-in-up gap-0 overflow-hidden rounded-lg border border-border duration-500 lg:grid-cols-[320px_1fr]">
+                        <div
+                            className={`overflow-y-auto border-border lg:block lg:border-r ${activeConversation ? "hidden" : "block"
+                                }`}
+                        >
+                            <ConversationList />
+                        </div>
+                        <div
+                            className={`min-h-105 lg:block ${activeConversation ? "block" : "hidden"
+                                }`}
+                        >
+                            {activeConversation && (
+                                <button
+                                    onClick={closeConversation}
+                                    className="border-b border-border p-3 text-sm text-muted-foreground hover:text-foreground lg:hidden"
+                                >
+                                    ← Back to conversations
+                                </button>
+                            )}
+                            <ChatWindow />
+                        </div>
+                    </section>
+                )}
             </main>
 
             <Notifications />
