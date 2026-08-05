@@ -1,6 +1,7 @@
 import { addSocket, removeSocket } from "./socket.js";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import Message from "../models/messages.model.js";
 import Conversation from "../models/conversation.model.js";
 
@@ -60,6 +61,7 @@ function init(io) {
                     conversation: conversationId,
                     sender: userId,
                     content: content.trim(),
+                    status: "sent",
                 });
 
                 await Conversation.updateOne(
@@ -73,6 +75,10 @@ function init(io) {
 
                 const populated = await message.populate("sender", "username email avatar");
 
+                socket.emit("message:statusUpdated", {
+                    messageId: populated._id.toString(),
+                    status: populated.status,
+                });
                 io.to(`conv_${conversationId}`).emit("message:new", populated);
 
                 // notify offline/not-in-room recipients so their sidebar can update
@@ -87,6 +93,43 @@ function init(io) {
             }
         });
 
+        socket.on("message:react", async ({ conversationId, messageId, reactionType }) => {
+            try {
+                const conversation = await Conversation.findOne({
+                    _id: conversationId,
+                    "participants.user": userId,
+                });
+                if (!conversation) return;
+
+                const message = await Message.findOne({
+                    _id: messageId,
+                    conversation: conversationId,
+                });
+                if (!message) return;
+
+                const existing = message.reactions.find(
+                    (reaction) => reaction.user.toString() === userId
+                );
+
+                if (existing) {
+                    message.reactions = message.reactions.filter(
+                        (reaction) => reaction.user.toString() !== userId
+                    );
+                } else {
+                    message.reactions.push({
+                        user: userId,
+                        type: reactionType || "like",
+                    });
+                }
+
+                await message.save();
+                const populated = await message.populate("sender", "username email avatar");
+                io.to(`conv_${conversationId}`).emit("message:reactionUpdated", populated);
+            } catch (err) {
+                console.error("message:react error:", err.message);
+            }
+        });
+
         socket.on("typing", ({ conversationId, isTyping }) => {
             socket.to(`conv_${conversationId}`).emit("typing", { userId, isTyping });
         });
@@ -97,6 +140,35 @@ function init(io) {
                     { _id: conversationId, "participants.user": userId },
                     { $set: { "participants.$.lastReadMessageId": lastMessageId } }
                 );
+
+                const upperBound = mongoose.Types.ObjectId.isValid(lastMessageId)
+                    ? new mongoose.Types.ObjectId(lastMessageId)
+                    : null;
+
+                const affectedMessages = upperBound
+                    ? await Message.find({
+                          conversation: conversationId,
+                          sender: { $ne: userId },
+                          _id: { $lte: upperBound },
+                      }).select("_id")
+                    : [];
+
+                if (affectedMessages.length) {
+                    await Message.updateMany(
+                        {
+                            conversation: conversationId,
+                            sender: { $ne: userId },
+                            _id: { $lte: upperBound },
+                        },
+                        { $set: { status: "read" } }
+                    );
+
+                    io.to(`conv_${conversationId}`).emit("message:statusUpdated", {
+                        messageIds: affectedMessages.map((message) => message._id.toString()),
+                        status: "read",
+                    });
+                }
+
                 socket.to(`conv_${conversationId}`).emit("message:readReceipt", {
                     userId,
                     lastMessageId,

@@ -31,7 +31,7 @@ const DashboardPage = () => {
         .toUpperCase();
 
     return (
-        <div className="flex min-h-screen flex-col bg-background">
+        <div className="flex h-screen flex-col bg-background overflow-hidden">
             <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur animate-in fade-in-down duration-500">
                 <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
                     <div className="flex items-center gap-2.5">
@@ -68,8 +68,8 @@ const DashboardPage = () => {
                 <button
                     onClick={() => setMobileTab("people")}
                     className={`flex flex-1 items-center justify-center gap-1.5 border-b-2 py-3 text-sm font-medium transition-colors ${mobileTab === "people"
-                            ? "border-foreground text-foreground"
-                            : "border-transparent text-muted-foreground hover:text-foreground"
+                        ? "border-foreground text-foreground"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
                         }`}
                 >
                     <Users className="h-4 w-4" />
@@ -78,8 +78,8 @@ const DashboardPage = () => {
                 <button
                     onClick={() => setMobileTab("invitations")}
                     className={`flex flex-1 items-center justify-center gap-1.5 border-b-2 py-3 text-sm font-medium transition-colors ${mobileTab === "invitations"
-                            ? "border-foreground text-foreground"
-                            : "border-transparent text-muted-foreground hover:text-foreground"
+                        ? "border-foreground text-foreground"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
                         }`}
                 >
                     <UserPlus className="h-4 w-4" />
@@ -88,8 +88,8 @@ const DashboardPage = () => {
                 <button
                     onClick={() => setMobileTab("chats")}
                     className={`flex flex-1 items-center justify-center gap-1.5 border-b-2 py-3 text-sm font-medium transition-colors ${mobileTab === "chats"
-                            ? "border-foreground text-foreground"
-                            : "border-transparent text-muted-foreground hover:text-foreground"
+                        ? "border-foreground text-foreground"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
                         }`}
                 >
                     <MessagesSquare className="h-4 w-4" />
@@ -109,8 +109,8 @@ const DashboardPage = () => {
                             key={key}
                             onClick={() => setMobileTab(key)}
                             className={`flex items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${mobileTab === key
-                                    ? "border-foreground text-foreground"
-                                    : "border-transparent text-muted-foreground hover:text-foreground"
+                                ? "border-foreground text-foreground"
+                                : "border-transparent text-muted-foreground hover:text-foreground"
                                 }`}
                         >
                             <Icon className="h-4 w-4" />
@@ -120,7 +120,7 @@ const DashboardPage = () => {
                 </div>
             </div>
 
-            <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-6 sm:px-6">
+            <main className="mx-auto flex flex-1 min-h-0 w-full max-w-6xl flex-col px-4 py-6 sm:px-6 overflow-hidden">
                 {mobileTab === "people" && (
                     <section className="animate-in fade-in-up duration-500">
                         <UserList />
@@ -134,16 +134,39 @@ const DashboardPage = () => {
                 )}
 
                 {mobileTab === "chats" && (
-                    <section className="grid flex-1 animate-in fade-in-up gap-0 overflow-hidden rounded-lg border border-border duration-500 lg:grid-cols-[320px_1fr]">
+                    <section
+                        className="
+                            flex-1
+                            min-h-0
+                            grid
+                            overflow-hidden
+                            rounded-lg
+                            border
+                            border-border
+                            lg:grid-cols-[320px_1fr]
+                        "
+                    >
                         <div
-                            className={`overflow-y-auto border-border lg:block lg:border-r ${activeConversation ? "hidden" : "block"
-                                }`}
+                            className={`
+                                ${activeConversation ? "hidden" : "block"}
+                                lg:block
+                                border-r
+                                border-border
+                                overflow-y-auto
+                                min-h-0
+                            `}
                         >
                             <ConversationList />
                         </div>
                         <div
-                            className={`min-h-105 lg:block ${activeConversation ? "block" : "hidden"
-                                }`}
+                            className={`
+                                    flex
+                                    flex-col
+                                    flex-1
+                                    min-h-0
+                                    overflow-hidden
+                                    ${activeConversation ? "block lg:flex" : "hidden"}
+                                `}
                         >
                             {activeConversation && (
                                 <button

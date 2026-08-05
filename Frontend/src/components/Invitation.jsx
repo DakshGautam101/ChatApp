@@ -140,7 +140,7 @@ export default function Invitation() {
             {!loading && error && (
                 <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border py-12 text-center animate-in fade-in duration-300">
                     <AlertCircle className="h-5 w-5 text-muted-foreground" />
-                    <p className="max-w-[240px] text-sm text-muted-foreground">{error}</p>
+                    <p className="max-w-60 text-sm text-muted-foreground">{error}</p>
                     <Button size="sm" variant="outline" onClick={fetchInvitations}>
                         Try again
                     </Button>

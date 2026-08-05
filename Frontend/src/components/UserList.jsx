@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useAuthStore from "../Stores/useAuthStore";
 import { axiosInstance } from "../lib/axiosInstance";
 import { Button } from "./ui/button";
-import { AlertCircle, Loader2, MessageCircle, Send, Users } from "lucide-react";
+import { Input } from "./ui/input";
+import { AlertCircle, Loader2, MessageCircle, Search, Send, Users } from "lucide-react";
 import toast from "react-hot-toast";
 
 function Avatar({ name }) {
@@ -36,6 +37,7 @@ export default function UserList() {
     const [error, setError] = useState(null);
     const [sending, setSending] = useState({});
     const [sentTo, setSentTo] = useState({});
+    const [searchTerm, setSearchTerm] = useState("");
 
     const fetchUsers = useCallback(async () => {
         setLoading(true);
@@ -75,7 +77,19 @@ export default function UserList() {
         }
     };
 
-    const visibleUsers = users.filter((u) => u._id !== user?._id);
+    const visibleUsers = useMemo(() => {
+        const filtered = users.filter((u) => u._id !== user?._id);
+        const normalizedSearch = searchTerm.trim().toLowerCase();
+
+        if (!normalizedSearch) {
+            return filtered;
+        }
+
+        return filtered.filter((u) => {
+            const haystack = `${u.username || ""} ${u.email || ""}`.toLowerCase();
+            return haystack.includes(normalizedSearch);
+        });
+    }, [searchTerm, user?._id, users]);
 
     return (
         <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-4">
@@ -100,17 +114,37 @@ export default function UserList() {
             {!loading && error && (
                 <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border py-10 text-center animate-in fade-in duration-300">
                     <AlertCircle className="h-5 w-5 text-muted-foreground" />
-                    <p className="max-w-[220px] text-sm text-muted-foreground">{error}</p>
+                    <p className="max-w-55 text-sm text-muted-foreground">{error}</p>
                     <Button size="sm" variant="outline" onClick={fetchUsers}>
                         Try again
                     </Button>
                 </div>
             )}
 
+            {!loading && !error && (
+                <div className="mb-3">
+                    <label htmlFor="user-search" className="sr-only">
+                        Search people
+                    </label>
+                    <div className="relative">
+                        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                            id="user-search"
+                            value={searchTerm}
+                            onChange={(event) => setSearchTerm(event.target.value)}
+                            placeholder="Search by name or email"
+                            className="pl-9"
+                        />
+                    </div>
+                </div>
+            )}
+
             {!loading && !error && visibleUsers.length === 0 && (
                 <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed border-border py-10 text-center animate-in fade-in duration-300">
                     <Users className="h-5 w-5 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground">No one else here yet</p>
+                    <p className="text-sm text-muted-foreground">
+                        {searchTerm.trim() ? "No users match your search" : "No one else here yet"}
+                    </p>
                 </div>
             )}
 

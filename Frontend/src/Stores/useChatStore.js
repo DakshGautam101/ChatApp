@@ -1,129 +1,217 @@
 import { create } from "zustand";
-import {axiosInstance as axios} from "../lib/axiosInstance.js"
+import { axiosInstance as axios } from "../lib/axiosInstance.js";
 import { socket } from "../lib/socket.js";
 
-const useChatStore = create((set , get) => ({
-    conversations : [], 
-    activeConversation : null,
-    messages : null,
-    typingUsers : {} ,
-    isLoadingConversations : false,
-    isLoadingMessages : false,
+const useChatStore = create((set, get) => ({
+    conversations: [],
+    activeConversation: null,
+    messages: [],
+    typingUsers: {},
+    isLoadingConversations: false,
+    isLoadingMessages: false,
+    isLoadingOlderMessages: false,
+    hasMoreMessages: true,
 
-    fetchConversations : async()=>{
+    fetchConversations: async () => {
         try {
-            set({isLoadingConversations : true});
+            set({ isLoadingConversations: true });
             const res = await axios.get("/message/conversations");
             set({ conversations: res.data.conversations || [] });
         } catch (error) {
-            console.error("fetchConversation error :", error);
-        }finally{
-            set({isLoadingConversations : false});
+            console.error("fetchConversation error:", error);
+        } finally {
+            set({ isLoadingConversations: false });
         }
     },
 
-    openConversation : async (conversation)=>{
-        set({activeConversation : conversation , messages : [] , isLoadingMessages : true});
-        socket.emit("conversation:join" , conversation._id);
+    openConversation: async (conversation) => {
+        set({
+            activeConversation: conversation,
+            messages: [],
+            isLoadingMessages: true,
+            isLoadingOlderMessages: false,
+            hasMoreMessages: true,
+        });
+        socket.emit("conversation:join", conversation._id);
 
         try {
             const res = await axios.get(`/message/${conversation._id}`);
-            set({messages : res.data.messages || []});
+            const loadedMessages = res.data.messages || [];
+            set({ messages: loadedMessages, hasMoreMessages: res.data.hasMore });
 
-            const last = res.data.messages?.[res.data.messages.length - 1];
-            if(last){
-                socket.emit("message:read" , {
-                    conversationId : conversation._id,
-                    lastMessageId : last._id
+            const last = loadedMessages[loadedMessages.length - 1];
+            if (last) {
+                socket.emit("message:read", {
+                    conversationId: conversation._id,
+                    lastMessageId: last._id,
                 });
-            }            
+            }
         } catch (error) {
-            console.error("fetchConversation error :", error);
-        }finally{
-            set({isLoadingMessages : false});
+            console.error("fetchConversation error:", error);
+        } finally {
+            set({ isLoadingMessages: false });
         }
     },
 
-    closeConversation : ()=>{
-        set({activeConversation : null , messages : []});
+    closeConversation: () => {
+        set({ activeConversation: null, messages: [], hasMoreMessages: true });
     },
 
-    sendMessage : (content)=>{
-        const {activeConversation} = get();
-        if(!activeConversation || !content?.trim()){
+    loadOlderMessages: async () => {
+        const { activeConversation, messages, isLoadingOlderMessages, hasMoreMessages } = get();
+        if (!activeConversation || isLoadingOlderMessages || !hasMoreMessages || messages.length === 0) {
             return;
         }
-        socket.emit("message:send" , {
-            conversationId : activeConversation._id,
-            content : content.trim()
+
+        const oldest = [...messages].sort(
+            (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        )[0];
+
+        if (!oldest?.createdAt) return;
+
+        set({ isLoadingOlderMessages: true });
+
+        try {
+            const res = await axios.get(`/message/${activeConversation._id}`, {
+                params: { before: oldest.createdAt },
+            });
+            const olderMessages = res.data.messages || [];
+
+            if (olderMessages.length > 0) {
+                set((state) => ({
+                    messages: [...olderMessages, ...state.messages],
+                }));
+            }
+
+            set({ hasMoreMessages: res.data.hasMore });
+        } catch (error) {
+            console.error("loadOlderMessages error:", error);
+        } finally {
+            set({ isLoadingOlderMessages: false });
+        }
+    },
+
+    sendMessage: (content) => {
+        const { activeConversation } = get();
+        if (!activeConversation || !content?.trim()) {
+            return;
+        }
+        socket.emit("message:send", {
+            conversationId: activeConversation._id,
+            content: content.trim(),
         });
     },
 
-    receiveMessage : (message)=>{
-        const {activeConversation , conversations} = get();
+    reactToMessage: (messageId, reactionType) => {
+        const { activeConversation } = get();
+        if (!activeConversation) return;
+        socket.emit("message:react", {
+            conversationId: activeConversation._id,
+            messageId,
+            reactionType,
+        });
+    },
 
-        if(activeConversation._id === message.conversation){
-            set((s)=>({
-                messages : [...s.messages , message]
+    receiveMessage: (message) => {
+        const { activeConversation, conversations } = get();
+
+        if (activeConversation?._id === message.conversation) {
+            set((state) => ({
+                messages: [...state.messages, message],
             }));
-            socket.emit("message:read" , {
-                conversationId : message.conversation,
-                lastMessageId : message._id,
+            socket.emit("message:read", {
+                conversationId: message.conversation,
+                lastMessageId: message._id,
             });
         }
-        const idx = conversations.findIndex((c)=> c._id === message.conversation);
-        if(idx !== -1){
+
+        const idx = conversations.findIndex((conversation) => conversation._id === message.conversation);
+        if (idx !== -1) {
             const updated = [...conversations];
-            const [conv] = updated.splice(idx , 1);
-            conv.lastMessage = {
-                text : message.content,
-                sender : message.sender?._id || message.sender
+            const [conversation] = updated.splice(idx, 1);
+            conversation.lastMessage = {
+                text: message.content,
+                sender: message.sender?._id || message.sender,
             };
-            updated.unshift(conv);
-            set({conversations : updated});
+            updated.unshift(conversation);
+            set({ conversations: updated });
         }
     },
 
-    updateConversationPreview : ({conversationId , lastMessage}) => {
-        set((s)=>{
-            const idx = s.conversations.findIndex((c)=> c._id === conversationId);
-            if(idx === -1)return s;
-            const updated = [...conversations];
-            const [conv] = updated.splice(idx , 1);
-            conv.lastMessage = lastMessage;
-            updated.unshift(conv);
-            return {conversations : updated}
+    updateMessageStatus: (payload) => {
+        const messageIds = Array.isArray(payload?.messageIds)
+            ? payload.messageIds
+            : payload?.messageId
+              ? [payload.messageId]
+              : [];
+        const status = payload?.status;
+
+        if (!status || messageIds.length === 0) return;
+
+        set((state) => ({
+            messages: state.messages.map((message) =>
+                messageIds.includes(message._id?.toString?.() || message._id)
+                    ? { ...message, status }
+                    : message
+            ),
+        }));
+    },
+
+    updateMessageReaction: (message) => {
+        set((state) => ({
+            messages: state.messages.map((item) => {
+                const itemId = item._id?.toString?.() || item._id;
+                const messageId = message._id?.toString?.() || message._id;
+                return itemId === messageId ? message : item;
+            }),
+        }));
+    },
+
+    updateConversationPreview: ({ conversationId, lastMessage }) => {
+        set((state) => {
+            const idx = state.conversations.findIndex((conversation) => conversation._id === conversationId);
+            if (idx === -1) return state;
+            const updated = [...state.conversations];
+            const [conversation] = updated.splice(idx, 1);
+            conversation.lastMessage = lastMessage;
+            updated.unshift(conversation);
+            return { conversations: updated };
         });
     },
 
-    setTyping : (conversationId , userId , isTyping)=>{
-        set((s)=>{
-            const current = new Set(s.typingUsers[conversationId]||[]);
+    setTyping: (conversationId, userId, isTyping) => {
+        set((state) => {
+            const current = new Set(state.typingUsers[conversationId] || []);
             isTyping ? current.add(userId) : current.delete(userId);
-            return {typingUsers : {...s.typingUsers , [conversationId] : current}};
-        })
+            return { typingUsers: { ...state.typingUsers, [conversationId]: current } };
+        });
     },
 
-    emitTyping : (isTyping) => {
-        const {activeConversation} = get();
-        if(!activeConversation)return;
-        socket.emit("typing" , {
-            conversationId : activeConversation._id,
-            isTyping
-        })
+    emitTyping: (isTyping) => {
+        const { activeConversation } = get();
+        if (!activeConversation) return;
+        socket.emit("typing", {
+            conversationId: activeConversation._id,
+            isTyping,
+        });
     },
 }));
 
-socket.on("message:new" , (message)=> useChatStore.getState().receiveMessage(message));
-socket.on("conversation:updated" , (payload)=>{
+socket.on("message:new", (message) => useChatStore.getState().receiveMessage(message));
+socket.on("message:statusUpdated", (payload) => {
+    useChatStore.getState().updateMessageStatus(payload);
+});
+socket.on("message:reactionUpdated", (message) => {
+    useChatStore.getState().updateMessageReaction(message);
+});
+socket.on("conversation:updated", (payload) => {
     useChatStore.getState().updateConversationPreview(payload);
 });
-socket.on("typing" , ({userId , isTyping})=>{
-    const {activeConversation} = useChatStore.getState();
-    if(activeConversation){
-        useChatStore.getState().setTyping(activeConversation._id , userId , isTyping);
+socket.on("typing", ({ userId, isTyping }) => {
+    const { activeConversation } = useChatStore.getState();
+    if (activeConversation) {
+        useChatStore.getState().setTyping(activeConversation._id, userId, isTyping);
     }
-})
-
+});
 
 export default useChatStore;

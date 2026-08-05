@@ -5,24 +5,36 @@ export const getMessages = async (req, res) => {
     try {
         const { conversationId } = req.params;
         const { before } = req.query;
+        const pageSize = 50;
         const query = { conversation: conversationId };
+
         if (before) {
             query.createdAt = {
-                $lt: new Date(before)
-            }
+                $lt: new Date(before),
+            };
         }
 
-        const messages = await Message.find(query).sort({ createdAt: -1 }).limit(50);
+        const messages = await Message.find(query)
+            .populate("sender", "username email avatar")
+            .sort({ createdAt: -1 })
+            .limit(pageSize + 1);
+
+        const hasMore = messages.length > pageSize;
+        const pagedMessages = messages.slice(0, pageSize).reverse();
+
         return res.status(200).json({
             success: true,
-            messages : messages.reverse()
+            messages: pagedMessages,
+            hasMore,
         });
     } catch (error) {
+        console.error("Error in message controller", error);
         return res.status(500).json({
-            message: "Error in message controller"
+            success: false,
+            message: "Error in message controller",
         });
     }
-}
+};
 
 export const getConversation = async (req, res) => {
     try {
