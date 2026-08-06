@@ -91,15 +91,39 @@ const useChatStore = create((set, get) => ({
         }
     },
 
-    sendMessage: (content) => {
+    sendMessage: ({ content = "", attachments = [] }) => {
         const { activeConversation } = get();
-        if (!activeConversation || !content?.trim()) {
-            return;
-        }
+
+        if (!activeConversation) return;
+
+        const hasText = content.trim().length > 0;
+        const hasAttachments = attachments.length > 0;
+
+        if (!hasText && !hasAttachments) return;
+
         socket.emit("message:send", {
             conversationId: activeConversation._id,
             content: content.trim(),
+            attachments,
         });
+    },
+    uploadFile: async (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const res = await axios.post("/upload/single", formData);
+
+        return res.data;
+    },
+
+    uploadMultipleFiles: async (files) => {
+        const formData = new FormData();
+        files.forEach(file => {
+            formData.append("files", file)
+        });
+        const res = await axios.post("/upload/multiple", formData);
+
+        return res.data.files;
     },
 
     reactToMessage: (messageId, reactionType) => {
@@ -129,10 +153,21 @@ const useChatStore = create((set, get) => ({
         if (idx !== -1) {
             const updated = [...conversations];
             const [conversation] = updated.splice(idx, 1);
+            let preview = message.content;
+
+            if (!preview && message.attachments?.length) {
+                const type = message.attachments[0].fileType;
+
+                if (type.startsWith("image/")) preview = "📷 Photo";
+                else if (type.startsWith("video/")) preview = "🎥 Video";
+                else if (type === "application/pdf") preview = "📄 PDF";
+                else preview = "📎 Attachment";
+            }
+
             conversation.lastMessage = {
-                text: message.content,
+                text: preview,
                 sender: message.sender?._id || message.sender,
-            };
+            }
             updated.unshift(conversation);
             set({ conversations: updated });
         }
@@ -142,8 +177,8 @@ const useChatStore = create((set, get) => ({
         const messageIds = Array.isArray(payload?.messageIds)
             ? payload.messageIds
             : payload?.messageId
-              ? [payload.messageId]
-              : [];
+                ? [payload.messageId]
+                : [];
         const status = payload?.status;
 
         if (!status || messageIds.length === 0) return;

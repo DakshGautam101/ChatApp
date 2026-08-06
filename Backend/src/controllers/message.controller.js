@@ -42,8 +42,8 @@ export const getConversation = async (req, res) => {
         const conversations = await Conversation.find({ "participants.user": userId })
             .populate("participants.user", "username email avatar")
             .sort({ updatedAt: -1 });
-        res.status(200).json({ success: true, conversations });
+        return res.status(200).json({ success: true, conversations });
     } catch (error) {
-        res.satus(500).json({ success: false, message : "Backend cannot get conversations" });
+        return res.satus(500).json({ success: false, message : "Backend cannot get conversations" });
     }
 }

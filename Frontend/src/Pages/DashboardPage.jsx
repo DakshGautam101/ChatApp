@@ -9,12 +9,13 @@ import ConversationList from '../components/ConversationList';
 import ChatWindow from '../components/ChatWindow';
 import useChatStore from '../Stores/useChatStore';
 import toast from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const DashboardPage = () => {
 
     const { user, logout } = useAuthStore();
     const { activeConversation, closeConversation } = useChatStore();
-    const [mobileTab, setMobileTab] = useState("people");
+    const [mobileTab, setMobileTab] = useState("chats");
 
     const handleLogout = async () => {
         try {
@@ -32,73 +33,74 @@ const DashboardPage = () => {
 
     return (
         <div className="flex h-screen flex-col bg-background overflow-hidden">
-            <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur animate-in fade-in-down duration-500">
+            <motion.header 
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="sticky top-0 z-40 border-b border-white/10 glass shadow-sm"
+            >
                 <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
                     <div className="flex items-center gap-2.5">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-foreground text-background">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-foreground shadow-lg animate-float">
                             <MessageSquare className="h-5 w-5" />
                         </div>
                         <div className="hidden sm:block">
-                            <p className="text-sm font-semibold leading-tight">Chat App</p>
-                            <p className="text-xs leading-tight text-muted-foreground">
+                            <p className="text-lg font-bold leading-tight text-gradient">Chat App</p>
+                            <p className="text-xs font-medium leading-tight text-muted-foreground">
                                 {user?.username || "Welcome"}
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-secondary text-sm font-semibold">
-                            {initials}
+                    <div className="flex items-center gap-4">
+                        <div className="relative">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-sm font-bold shadow-inner border-2 border-transparent bg-clip-padding relative z-10">
+                                {initials}
+                            </div>
+                            <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-white/70 border-2 border-background z-20"></div>
                         </div>
                         <Button
                             onClick={handleLogout}
                             variant="outline"
                             size="sm"
-                            className="gap-1.5"
+                            className="gap-1.5 border-border/50 hover:bg-white/10 hover:text-foreground hover:border-white/20 transition-all"
                         >
-                            <Power className="h-3.5 w-3.5" />
-                            <span className="hidden sm:inline">Log out</span>
+                            <Power className="h-4 w-4" />
+                            <span className="hidden sm:inline font-medium">Log out</span>
                         </Button>
                     </div>
                 </div>
-            </header>
+            </motion.header>
 
             {/* Mobile tab switcher */}
-            <div className="flex border-b border-border lg:hidden">
-                <button
-                    onClick={() => setMobileTab("people")}
-                    className={`flex flex-1 items-center justify-center gap-1.5 border-b-2 py-3 text-sm font-medium transition-colors ${mobileTab === "people"
-                        ? "border-foreground text-foreground"
-                        : "border-transparent text-muted-foreground hover:text-foreground"
-                        }`}
-                >
-                    <Users className="h-4 w-4" />
-                    People
-                </button>
-                <button
-                    onClick={() => setMobileTab("invitations")}
-                    className={`flex flex-1 items-center justify-center gap-1.5 border-b-2 py-3 text-sm font-medium transition-colors ${mobileTab === "invitations"
-                        ? "border-foreground text-foreground"
-                        : "border-transparent text-muted-foreground hover:text-foreground"
-                        }`}
-                >
-                    <UserPlus className="h-4 w-4" />
-                    Invitations
-                </button>
-                <button
-                    onClick={() => setMobileTab("chats")}
-                    className={`flex flex-1 items-center justify-center gap-1.5 border-b-2 py-3 text-sm font-medium transition-colors ${mobileTab === "chats"
-                        ? "border-foreground text-foreground"
-                        : "border-transparent text-muted-foreground hover:text-foreground"
-                        }`}
-                >
-                    <MessagesSquare className="h-4 w-4" />
-                    Chats
-                </button>
+            <div className="flex border-b border-border/50 glass-subtle lg:hidden relative z-30">
+                {[
+                    { key: "people", label: "People", icon: Users },
+                    { key: "invitations", label: "Invitations", icon: UserPlus },
+                    { key: "chats", label: "Chats", icon: MessagesSquare },
+                ].map(({ key, label, icon: Icon }) => (
+                    <button
+                        key={key}
+                        onClick={() => setMobileTab(key)}
+                        className={`relative flex flex-1 flex-col items-center justify-center gap-1 py-3 text-xs font-medium transition-colors ${mobileTab === key
+                            ? "text-primary"
+                            : "text-muted-foreground hover:text-foreground"
+                            }`}
+                    >
+                        <Icon className="h-5 w-5" />
+                        {label}
+                        {mobileTab === key && (
+                            <motion.div 
+                                layoutId="mobile-tab-indicator"
+                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500"
+                            />
+                        )}
+                    </button>
+                ))}
             </div>
 
             {/* Desktop tab switcher */}
-            <div className="hidden border-b border-border lg:flex">
+            <div className="hidden border-b border-border/50 glass-subtle lg:flex relative z-30">
                 <div className="mx-auto flex w-full max-w-6xl px-6">
                     {[
                         { key: "people", label: "People", icon: Users },
@@ -108,78 +110,99 @@ const DashboardPage = () => {
                         <button
                             key={key}
                             onClick={() => setMobileTab(key)}
-                            className={`flex items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${mobileTab === key
-                                ? "border-foreground text-foreground"
-                                : "border-transparent text-muted-foreground hover:text-foreground"
+                            className={`relative flex items-center gap-2 px-6 py-4 text-sm font-medium transition-colors ${mobileTab === key
+                                ? "text-foreground"
+                                : "text-muted-foreground hover:text-foreground"
                                 }`}
                         >
                             <Icon className="h-4 w-4" />
                             {label}
+                            {mobileTab === key && (
+                                <motion.div 
+                                    layoutId="desktop-tab-indicator"
+                                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500"
+                                />
+                            )}
                         </button>
                     ))}
                 </div>
             </div>
 
-            <main className="mx-auto flex flex-1 min-h-0 w-full max-w-6xl flex-col px-4 py-6 sm:px-6 overflow-hidden">
-                {mobileTab === "people" && (
-                    <section className="animate-in fade-in-up duration-500">
-                        <UserList />
-                    </section>
-                )}
-
-                {mobileTab === "invitations" && (
-                    <section className="animate-in fade-in-up duration-500">
-                        <Invitation />
-                    </section>
-                )}
-
-                {mobileTab === "chats" && (
-                    <section
-                        className="
-                            flex-1
-                            min-h-0
-                            grid
-                            overflow-hidden
-                            rounded-lg
-                            border
-                            border-border
-                            lg:grid-cols-[320px_1fr]
-                        "
-                    >
-                        <div
-                            className={`
-                                ${activeConversation ? "hidden" : "block"}
-                                lg:block
-                                border-r
-                                border-border
-                                overflow-y-auto
-                                min-h-0
-                            `}
+            <main className="mx-auto flex flex-1 min-h-0 w-full max-w-6xl flex-col px-4 py-6 sm:px-6 overflow-hidden relative">
+                <AnimatePresence mode="wait">
+                    {mobileTab === "people" && (
+                        <motion.section 
+                            key="people"
+                            initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex-1 min-h-0"
                         >
-                            <ConversationList />
-                        </div>
-                        <div
-                            className={`
+                            <UserList />
+                        </motion.section>
+                    )}
+
+                    {mobileTab === "invitations" && (
+                        <motion.section 
+                            key="invitations"
+                            initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex-1 min-h-0"
+                        >
+                            <Invitation />
+                        </motion.section>
+                    )}
+
+                    {mobileTab === "chats" && (
+                        <motion.section
+                            key="chats"
+                            initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex-1 min-h-0 grid overflow-hidden rounded-2xl border border-white/10 glass-subtle shadow-xl lg:grid-cols-[320px_1fr]"
+                        >
+                            <div
+                                className={`
+                                    ${activeConversation ? "hidden" : "block"}
+                                    lg:block
+                                    border-r
+                                    border-black/25
+                                    overflow-y-auto
+                                    min-h-0
+                                    bg-background/40
+                                `}
+                            >
+                                <ConversationList />
+                            </div>
+                            <div
+                                className={`
                                     flex
                                     flex-col
                                     flex-1
                                     min-h-0
                                     overflow-hidden
+                                    relative
                                     ${activeConversation ? "block lg:flex" : "hidden"}
                                 `}
-                        >
-                            {activeConversation && (
-                                <button
-                                    onClick={closeConversation}
-                                    className="border-b border-border p-3 text-sm text-muted-foreground hover:text-foreground lg:hidden"
-                                >
-                                    ← Back to conversations
-                                </button>
-                            )}
-                            <ChatWindow />
-                        </div>
-                    </section>
-                )}
+                            >
+                                {activeConversation && (
+                                    <button
+                                        onClick={closeConversation}
+                                        className="border-b border-border/50 glass-subtle p-3 text-sm font-medium text-muted-foreground hover:text-foreground lg:hidden flex items-center gap-2"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                                        Back to conversations
+                                    </button>
+                                )}
+                                <ChatWindow />
+                            </div>
+                        </motion.section>
+                    )}
+                </AnimatePresence>
             </main>
 
             <Notifications />

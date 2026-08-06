@@ -1,8 +1,7 @@
-import React from "react";
+import { Component } from "react";
 import { AlertTriangle, RefreshCw } from "lucide-react";
-import { Button } from "./ui/button";
 
-export default class ErrorBoundary extends React.Component {
+class ErrorBoundary extends Component {
     constructor(props) {
         super(props);
         this.state = { hasError: false, error: null };
@@ -12,35 +11,38 @@ export default class ErrorBoundary extends React.Component {
         return { hasError: true, error };
     }
 
-    componentDidCatch(error, info) {
-        // Centralized place to log to a monitoring service later.
-        console.error("Unhandled UI error:", error, info);
+    componentDidCatch(error, errorInfo) {
+        console.error("ErrorBoundary caught:", error, errorInfo);
     }
-
-    handleReset = () => {
-        this.setState({ hasError: false, error: null });
-        window.location.reload();
-    };
 
     render() {
-        if (!this.state.hasError) return this.props.children;
+        if (this.state.hasError) {
+            return (
+                <div className="flex min-h-screen items-center justify-center bg-background p-4">
+                    <div className="glass rounded-2xl p-8 text-center max-w-md animate-scale-in">
+                        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/10">
+                            <AlertTriangle className="h-7 w-7 text-foreground" />
+                        </div>
+                        <h1 className="text-xl font-semibold text-foreground mb-2">
+                            Something went wrong
+                        </h1>
+                        <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+                            {this.state.error?.message || "An unexpected error occurred"}
+                        </p>
+                        <button
+                            className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-5 py-2.5 text-sm font-medium text-foreground transition-all hover:bg-white/20 hover:scale-105 active:scale-95"
+                            onClick={() => window.location.reload()}
+                        >
+                            <RefreshCw className="h-4 w-4" />
+                            Reload Page
+                        </button>
+                    </div>
+                </div>
+            );
+        }
 
-        return (
-            <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background px-6 text-center animate-in fade-in duration-500">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-border bg-secondary">
-                    <AlertTriangle className="h-6 w-6" />
-                </div>
-                <div className="space-y-1">
-                    <h1 className="text-lg font-semibold">Something went wrong</h1>
-                    <p className="max-w-sm text-sm text-muted-foreground">
-                        The app hit an unexpected error. Reloading usually fixes it.
-                    </p>
-                </div>
-                <Button onClick={this.handleReset} className="gap-2">
-                    <RefreshCw className="h-4 w-4" />
-                    Reload app
-                </Button>
-            </div>
-        );
+        return this.props.children;
     }
 }
+
+export default ErrorBoundary;

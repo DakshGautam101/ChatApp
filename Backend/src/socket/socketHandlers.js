@@ -47,20 +47,26 @@ function init(io) {
             }
         });
 
-        socket.on("message:send", async ({ conversationId, content }) => {
+        socket.on("message:send", async ({ conversationId, content, attachments = [] }) => {
             try {
-                if (!content || !content.trim()) return;
+                const hasText = content && content.trim();
+                const hasAttachment = attachments.length > 0;
+
+                if (!hasText && !hasAttachment) {
+                    return;
+                }
 
                 const conversation = await Conversation.findOne({
                     _id: conversationId,
                     "participants.user": userId,
                 });
-                if (!conversation) return; // not a participant
+                if (!conversation) return;
 
                 const message = await Message.create({
                     conversation: conversationId,
                     sender: userId,
                     content: content.trim(),
+                    attachments,
                     status: "sent",
                 });
 
@@ -147,10 +153,10 @@ function init(io) {
 
                 const affectedMessages = upperBound
                     ? await Message.find({
-                          conversation: conversationId,
-                          sender: { $ne: userId },
-                          _id: { $lte: upperBound },
-                      }).select("_id")
+                        conversation: conversationId,
+                        sender: { $ne: userId },
+                        _id: { $lte: upperBound },
+                    }).select("_id")
                     : [];
 
                 if (affectedMessages.length) {
