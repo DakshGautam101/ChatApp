@@ -1,142 +1,103 @@
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import crypto from "crypto";
 import User from "../models/user.model.js";
-import sendEmail from "../services/mailer.js";
+import generateOtp from "../helper/generateOtp.js";
+import {
+    attachAuthResponse,
+    checkExistingUser,
+    checkExistingUserByID,
+    createSafeUserResponse,
+    createUserWithOtp,
+    sendVerificationEmail,
+} from "../services/auth.service.js";
+import { sendError, sendSuccess } from "../utils/response.js";
+import { clearAuthCookie } from "../utils/authCookie.js";
 
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-}
-
-const generateOtp = (length = 6) => {
-    const min = 10 ** (length - 1);
-    const max = 10 ** length - 1;
-    return String(Math.floor(Math.random() * (max - min + 1)) + min);
-}
-
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
     try {
-        const body = req.body;
-        const { username, email, password, avatar } = body;
+        const { username, email, phone , password, avatar } = req.body;
 
-        if (!username || !email || !password) {
-            return res.status(400).json({ message: "Please fill all the fields" });
-        }
-        if (password.length < 6) {
-            return res.status(400).json({ message: "Password must be at least 6 characters" });
+        if (await checkExistingUser(email)) {
+            return sendError(res, 400, "User already exists");
         }
 
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ message: "User already exists" });
-        }
+        const user = await createUserWithOtp({ username, email, password, phone, avatar });
+        await sendVerificationEmail(email, user.emailVerificationOtp);
+        const token = attachAuthResponse(res, user);
 
-        const hashedPassword = await bcrypt.hash(password, 12);
-        const user = new User({ username, email, password: hashedPassword, avatar: avatar || "" });
-
-        const otp = generateOtp(6);
-        user.emailVerificationOtp = otp;
-        user.emailVerificationOtpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
-
-        await user.save();
-
-        const subject = "Verify your email";
-        const html = `<p>Hi ${username},</p><p>Your verification code is <strong>${otp}</strong>. It expires in 10 minutes.</p>`;
-        try {
-            await sendEmail({ to: email, subject, html });
-        } catch (mailErr) {
-            console.error("Error sending verification email:", mailErr);
-        }
-        const token = generateToken(user._id);
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-        });
-        res.status(201).json({
-            success: true,
-            message: "Signup successful. Verification email sent.",
-            user: { id: user._id, email: user.email, username: user.username, isVerified: user.isVerified }
-        });
-
+        return sendSuccess(res, 201, {
+            token,
+            user: {
+                id: user._id,
+                email: user.email,
+                username: user.username,
+                phone: user.phone,
+                avatar: user.avatar,
+                isVerified: user.isVerified,
+            },
+        }, "Signup successful. Verification email sent.");
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Internal server error in signup controller function" });
+        next(error);
     }
-}
+};
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
+
         if (!email || !password) {
-            return res.status(400).json({ message: "Please fill all the fields" });
+            return sendError(res, 400, "Please fill all the fields");
         }
-        const user = await User.findOne({ email }).select('+password');
+
+        const user = await User.findOne({ email }).select("+password +isVerified");
         if (!user) {
-            return res.status(400).json({ message: "User does not exist" });
+            return sendError(res, 404, "User does not exist");
         }
-        // if (!user.isVerified) {
-        //     return res.status(403).json({ message: "Please verify your email before logging in" });
-        // }
+
+        if (!user.isVerified) {
+            return sendError(res, 403, "Please verify your email before logging in");
+        }
+
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
-            return res.status(400).json({ message: "Invalid credentials" });
+            return sendError(res, 400, "Invalid credentials");
         }
-        const token = generateToken(user._id);
 
-        const safeUser = await User.findById(user._id).select('-emailVerificationOtp -emailVerificationOtpExpires -password');
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        });
-        res.status(200).json({
-            success: true,
-            token,
-            user: safeUser
-        });
+        const token = attachAuthResponse(res, user);
+        const safeUser = await createSafeUserResponse(user._id);
 
+        return sendSuccess(res, 200, { token, user: safeUser }, "Login successful");
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Internal server error in login controller function" });
+        next(error);
     }
+};
 
-}
-
-export const logout = async (req, res) => {
+export const logout = async (req, res, next) => {
     try {
-        res.clearCookie("token",{
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-        });
-        return res.status(200).json({ success: true, message: "Logged out" });
+        clearAuthCookie(res);
+        return sendSuccess(res, 200, {}, "Logged out");
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Internal server error in logout controller function" });
+        next(error);
     }
-}
+};
 
-export const verifyUserEmailOtp = async (req, res) => {
+export const verifyUserEmailOtp = async (req, res, next) => {
     try {
         const { email, otp } = req.body;
-        if (!email || !otp) return res.status(400).json({ message: "Email and otp required" });
+        if (!email || !otp) return sendError(res, 400, "Email and otp required");
 
-        const user = await User.findOne({ email }).select('+emailVerificationOtp +emailVerificationOtpExpires');
-        if (!user) return res.status(400).json({ message: "Invalid request" });
+        const user = await User.findOne({ email }).select("+emailVerificationOtp +emailVerificationOtpExpires");
+        if (!user) return sendError(res, 400, "Invalid request");
 
         if (!user.emailVerificationOtp || !user.emailVerificationOtpExpires) {
-            return res.status(400).json({ message: "No OTP requested for this account" });
+            return sendError(res, 400, "No OTP requested for this account");
         }
 
         if (user.emailVerificationOtp !== otp) {
-            return res.status(400).json({ message: "Invalid OTP" });
+            return sendError(res, 400, "Invalid OTP");
         }
 
         if (Date.now() > user.emailVerificationOtpExpires) {
-            return res.status(400).json({ message: "OTP expired" });
+            return sendError(res, 400, "OTP expired");
         }
 
         user.isVerified = true;
@@ -144,52 +105,47 @@ export const verifyUserEmailOtp = async (req, res) => {
         user.emailVerificationOtpExpires = undefined;
         await user.save();
 
-        const token = generateToken(user._id);
-        const safeUser = await User.findById(user._id).select('-emailVerificationOtp -emailVerificationOtpExpires -password');
-        return res.status(200).json({ success: true, token, user: safeUser });
+        const token = attachAuthResponse(res, user);
+        const safeUser = await createSafeUserResponse(user._id);
+        return sendSuccess(res, 200, { token, user: safeUser }, "Email verified successfully");
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Internal server error in verifyUserEmailOtp" });
+        next(error);
     }
-}
+};
 
-export const resendEmailOtp = async (req, res) => {
+export const resendEmailOtp = async (req, res, next) => {
     try {
         const { email } = req.body;
-        if (!email) return res.status(400).json({ message: "Email required" });
+        if (!email) return sendError(res, 400, "Email required");
 
         const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: "User does not exist" });
-        if (user.isVerified) return res.status(400).json({ message: "User already verified" });
+        if (!user) return sendError(res, 400, "User does not exist");
+        if (user.isVerified) return sendError(res, 400, "User already verified");
 
         const otp = generateOtp(6);
         user.emailVerificationOtp = otp;
         user.emailVerificationOtpExpires = Date.now() + 10 * 60 * 1000;
         await user.save();
 
-        const subject = "Your verification code";
-        const html = `<p>Your verification code is <strong>${otp}</strong>. It expires in 10 minutes.</p>`;
-        try { await sendEmail({ to: email, subject, html }); } catch (err) { console.error(err); }
+        await sendVerificationEmail(email, otp);
 
-        return res.status(200).json({ success: true, message: "OTP resent" });
+        return sendSuccess(res, 200, {}, "OTP resent");
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Internal server error in resendEmailOtp" });
+        next(error);
     }
-}
+};
 
-export const me = async (req, res) => {
+export const me = async (req, res, next) => {
     try {
-        // verifyAuth middleware attaches decoded token to req.user
         const userId = req.user?.id;
-        if (!userId) return res.status(401).json({ message: "Unauthorized" });
+        if (!userId) return sendError(res, 401, "Unauthorized");
 
-        const safeUser = await User.findById(userId).select('-emailVerificationOtp -emailVerificationOtpExpires -password');
-        if (!safeUser) return res.status(404).json({ message: "User not found" });
+        const exists = await checkExistingUserByID(userId);
+        if (!exists) return sendError(res, 404, "User not found");
 
-        return res.status(200).json({ success: true, user: safeUser });
+        const user = await User.findById(userId).select("-emailVerificationOtp -emailVerificationOtpExpires -password");
+        return sendSuccess(res, 200, { user });
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Internal server error" });
+        next(err);
     }
 };

@@ -1,23 +1,36 @@
-import User from "../models/user.model.js"
+import User from "../models/user.model.js";
+import { fetchUserList } from "../services/user.service.js";
+import { sendSuccess, sendError } from "../utils/response.js";
 
-
-const getUserList = async function(req , res){
+const getUserList = async function (req, res, next) {
     try {
-        const users = await User.find({
-            _id : {$ne : req.user.id}
-        });
-
-        const currentUser = await User.findById(req.user.id).select("friends");
-        const data =  users.map(user => ({
-            ...user.toObject(),
-            isFriend : currentUser.friends.some(
-                friendId => friendId.toString() === user._id.toString()
-            ),
-        }) );
-        res.status(200).json({success : true , data});
+        const data = await fetchUserList(req.user.id);
+        return sendSuccess(res, 200, { data });
     } catch (error) {
-        res.status(500).json({success : false , message : "Error fetching user list in getUserList controller function" , error});
+        next(error);
     }
-}
+};
 
-export {getUserList};
+const updateProfile = async function (req, res, next) {
+    try {
+        const userId = req.user.id;
+        const { username, phone, avatar } = req.body;
+        const updates = {};
+        if (username !== undefined) updates.username = username;
+        if (phone !== undefined) updates.phone = phone;
+        if (avatar !== undefined) updates.avatar = avatar;
+
+        const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true })
+            .select("-password -emailVerificationOtp -emailVerificationOtpExpires");
+
+        if (!updatedUser) {
+            return sendError(res, 404, "User not found");
+        }
+
+        return sendSuccess(res, 200, { user: updatedUser }, "Profile updated successfully");
+    } catch (error) {
+        next(error);
+    }
+};
+
+export { getUserList, updateProfile };

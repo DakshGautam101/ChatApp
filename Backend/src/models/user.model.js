@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         select: false,
         minLength: 6
     },
+    phone : {
+        type : String ,
+        required : true,
+    },
     avatar: {
         type: String,
         default: null

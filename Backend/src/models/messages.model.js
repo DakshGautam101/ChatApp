@@ -12,7 +12,11 @@ const attachmentSchema = new mongoose.Schema({
     size: {
         type: Number,
         required: true
-    }
+    },
+    name: {
+        type: String,
+        required: true,
+    },
 }, 
 { _id: false });
 
@@ -29,8 +33,8 @@ const messageSchema = new mongoose.Schema({
     },
     content: {
         type: String,
-        required: true,
         trim: true,
+        default: "",
     },
     status: {
         type: String,

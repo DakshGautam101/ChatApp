@@ -1,4 +1,13 @@
 const userSockets = new Map();
+let ioInstance = null;
+
+function setIO(io) {
+    ioInstance = io;
+}
+
+function getIO() {
+    return ioInstance;
+}
 
 function addSocket(userId, socketId) {
     if (!userSockets.has(userId)) {
@@ -18,4 +27,4 @@ function getSockets(userId) {
     return userSockets.has(userId) ? Array.from(userSockets.get(userId)) : [];
 }
 
-export { addSocket, removeSocket, getSockets };
+export { addSocket, removeSocket, getSockets, setIO, getIO };

@@ -1,4 +1,4 @@
-import { addSocket, removeSocket } from "./socket.js";
+import { addSocket, removeSocket, getSockets, setIO } from "./socket.js";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -6,6 +6,7 @@ import Message from "../models/messages.model.js";
 import Conversation from "../models/conversation.model.js";
 
 function init(io) {
+    setIO(io);
     io.use((socket, next) => {
         const cookies = cookie.parse(socket.handshake.headers.cookie || "");
         const token = socket.handshake.auth?.token || cookies.token;
@@ -40,8 +41,24 @@ function init(io) {
                     _id: conversationId,
                     "participants.user": userId,
                 });
-                if (!conversation) return; // not a participant — silently ignore
+                if (!conversation) return;
                 socket.join(`conv_${conversationId}`);
+                const undelivered = await Message.find({
+                    conversation: conversationId,
+                    sender: { $ne: userId },
+                    status: "sent",
+                }).select("_id");
+
+                if (undelivered.length) {
+                    await Message.updateMany(
+                        { _id: { $in: undelivered.map((m) => m._id) } },
+                        { $set: { status: "delivered" } }
+                    );
+                    io.to(`conv_${conversationId}`).emit("message:statusUpdated", {
+                        messageIds: undelivered.map((m) => m._id.toString()),
+                        status: "delivered",
+                    });
+                }
             } catch (err) {
                 console.error("conversation:join error:", err.message);
             }
@@ -62,22 +79,33 @@ function init(io) {
                 });
                 if (!conversation) return;
 
+                const recipients = conversation.participants
+                    .map((p) => p.user.toString())
+                    .filter((id) => id !== userId);
+
+                const recipientIsOnline = recipients.some((id) => getSockets(id).length > 0);
+
                 const message = await Message.create({
                     conversation: conversationId,
                     sender: userId,
                     content: content.trim(),
                     attachments,
-                    status: "sent",
+                    status: recipientIsOnline ? "delivered" : "sent",
                 });
+
+                let previewText = content.trim();
+                if (!previewText && attachments.length > 0) {
+                    const type = attachments[0].fileType || "";
+                    if (type.startsWith("image/")) previewText = "📷 Photo";
+                    else if (type.startsWith("video/")) previewText = "🎥 Video";
+                    else if (type === "application/pdf") previewText = "📄 PDF";
+                    else previewText = "📎 Attachment";
+                }
 
                 await Conversation.updateOne(
                     { _id: conversationId },
-                    { $set: { lastMessage: { text: content.trim(), sender: userId } } }
+                    { $set: { lastMessage: { text: previewText, sender: userId } } }
                 );
-
-                const recipients = conversation.participants
-                    .map((p) => p.user.toString())
-                    .filter((id) => id !== userId);
 
                 const populated = await message.populate("sender", "username email avatar");
 
@@ -91,7 +119,7 @@ function init(io) {
                 recipients.forEach((recipientId) => {
                     io.to(`user_${recipientId}`).emit("conversation:updated", {
                         conversationId,
-                        lastMessage: { text: content.trim(), sender: userId },
+                        lastMessage: { text: previewText, sender: userId },
                     });
                 });
             } catch (err) {
