@@ -1,15 +1,11 @@
 import { io as clientIo } from "socket.io-client";
+import { hasAuthCookie } from "../utils/authCookie.js";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-const getToken = () => {
-    if (typeof window === "undefined") return null;
-    return localStorage.getItem("chatapp_token");
-};
-
 export const socket = clientIo(API_URL, {
     withCredentials: true,
-    auth: { token: getToken() },
+    autoConnect: false,
     transports: ["websocket"],
 });
 
@@ -30,14 +26,10 @@ socket.on("notification:new", (data) => {
 });
 
 export const ensureSocket = () => {
-    const token = getToken();
-
-    if (!token) {
+    if (!hasAuthCookie()) {
         if (socket.connected) socket.disconnect();
         return;
     }
-
-    socket.auth = { token };
 
     if (!socket.connected) {
         socket.connect();
@@ -47,3 +39,4 @@ export const ensureSocket = () => {
 export const disconnectSocket = () => {
     if (socket.connected) socket.disconnect();
 };
+

@@ -2,6 +2,9 @@ import { create } from "zustand";
 import { toast } from "react-hot-toast";
 import { uploadFileRecoverable } from "@/core/utils/uploadManager";
 import useChatStore from "./useChatStore";
+import { hasAuthCookie } from "@/core/utils/authCookie.js";
+import { disconnectSocket } from "@/core/socket/socket.js";
+import useAuthStore from "@/modules/auth/stores/useAuthStore.js";
 
 const ALLOWED_TYPES = [
     "image/jpeg",
@@ -27,8 +30,16 @@ const useFileStore = create((set, get) => ({
     },
 
     addFiles: (files) => {
+        if (!hasAuthCookie()) {
+            toast.error("Session expired or cookies deleted. Cannot upload files.");
+            disconnectSocket();
+            useAuthStore.getState().logout();
+            return;
+        }
+
         const fileList = Array.from(files || []);
         if (!fileList.length) return;
+
 
         const currentItems = get().items;
         if (currentItems.length + fileList.length > MAX_FILES) {

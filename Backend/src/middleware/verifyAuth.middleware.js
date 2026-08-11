@@ -2,20 +2,12 @@ import jwt from "jsonwebtoken";
 
 export const verifyAuth = (req, res, next) => {
     try {
-        let token = req.cookies?.token;
-
-        if (!token && req.headers.authorization) {
-            if (req.headers.authorization.startsWith("Bearer ")) {
-                token = req.headers.authorization.split(" ")[1];
-            } else {
-                token = req.headers.authorization;
-            }
-        }
+        const token = req.cookies?.token;
 
         if (!token) {
             return res.status(401).json({
                 success: false,
-                message: "Unauthorized - Token missing",
+                message: "Unauthorized - Cookies missing or deleted",
             });
         }
 

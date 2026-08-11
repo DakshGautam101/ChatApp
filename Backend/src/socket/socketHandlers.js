@@ -9,10 +9,10 @@ function init(io) {
     setIO(io);
     io.use((socket, next) => {
         const cookies = cookie.parse(socket.handshake.headers.cookie || "");
-        const token = socket.handshake.auth?.token || cookies.token;
+        const token = cookies.token;
 
         if (!token) {
-            return next(new Error("Unauthorized"));
+            return next(new Error("Unauthorized - Cookie missing"));
         }
 
         try {
@@ -115,7 +115,6 @@ function init(io) {
                 });
                 io.to(`conv_${conversationId}`).emit("message:new", populated);
 
-                // notify offline/not-in-room recipients so their sidebar can update
                 recipients.forEach((recipientId) => {
                     io.to(`user_${recipientId}`).emit("conversation:updated", {
                         conversationId,

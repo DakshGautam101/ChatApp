@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { axiosInstance as axios } from "@/core/api/axiosInstance.js";
-import { socket } from "@/core/socket/socket.js";
+import { socket, disconnectSocket } from "@/core/socket/socket.js";
+import { hasAuthCookie } from "@/core/utils/authCookie.js";
+import useAuthStore from "@/modules/auth/stores/useAuthStore.js";
+import toast from "react-hot-toast";
 
 const useChatStore = create((set, get) => ({
     conversations: [],
@@ -13,6 +16,7 @@ const useChatStore = create((set, get) => ({
     hasMoreMessages: true,
     _requestToken: 0,
     _conversationsRequestToken: 0,
+
 
     fetchConversations: async () => {
         const token = get()._conversationsRequestToken + 1;
@@ -147,7 +151,7 @@ const useChatStore = create((set, get) => ({
         }));
     },
 
-    sendMessage: (payload) => {
+    sendMessage: async (payload) => {
         const { content = "", attachments = [] } =
             typeof payload === "string" ? { content: payload } : payload || {};
         const { activeConversation } = get();
@@ -158,6 +162,22 @@ const useChatStore = create((set, get) => ({
         const hasAttachments = attachments.length > 0;
 
         if (!hasText && !hasAttachments) return;
+
+        if (!hasAuthCookie()) {
+            toast.error("Session expired. Cannot send message.");
+            disconnectSocket();
+            useAuthStore.getState().logout();
+            return;
+        }
+
+        try {
+            await axios.get("/auth/me");
+        } catch (error) {
+            toast.error("Session expired. Cannot send message.");
+            disconnectSocket();
+            useAuthStore.getState().logout();
+            return;
+        }
 
         socket.emit("message:send", {
             conversationId: activeConversation._id,

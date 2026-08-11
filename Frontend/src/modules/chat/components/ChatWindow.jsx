@@ -11,11 +11,13 @@ import Avatar from "@/core/components/Avatar";
 import MessageBubble from "./MessageBubble";
 import FileAttachmentBar from "./FileAttachmentBar";
 import ImageViewDialog from "./ImageViewDialog";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 let typingTimeout = null;
 
 export default function ChatWindow() {
-    const { user } = useAuthStore();
+    const { user , isAuthneticated } = useAuthStore();
     const {
         activeConversation,
         messages,
@@ -48,6 +50,7 @@ export default function ChatWindow() {
     const [chatViewerOpen, setChatViewerOpen] = useState(false);
     const [chatViewerImages, setChatViewerImages] = useState([]);
     const [chatViewerIndex, setChatViewerIndex] = useState(0);
+    const navigate = useNavigate();
 
     const canSend = draft.trim().length > 0 || (items && items.length > 0);
 

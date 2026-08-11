@@ -1,5 +1,5 @@
 import { cn } from "@/core/utils/utils";
-
+//TODO : this functionality is a little bit buggy , will be implemented later.
 const reactionOptions = ["👍", "❤️", "😂", "😮", "😢", "🙏"];
 
 export function ReactionPicker({ isMine, onSelectReaction }) {
