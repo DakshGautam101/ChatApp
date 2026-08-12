@@ -17,8 +17,8 @@ const attachmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-}, 
-{ _id: false });
+},
+    { _id: false });
 
 const messageSchema = new mongoose.Schema({
     conversation: {
@@ -41,6 +41,32 @@ const messageSchema = new mongoose.Schema({
         enum: ['sent', 'delivered', 'read'],
         default: 'sent',
     },
+    deliveredTo: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+
+            deliveredAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
+    readBy: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+
+            readAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
     attachments: [attachmentSchema],
     reactions: [
         {

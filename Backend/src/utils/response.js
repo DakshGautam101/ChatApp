@@ -2,5 +2,12 @@ export const sendError = (res, status, message) => res.status(status).json({ suc
 
 export const sendSuccess = (res, status, data, message = null) => {
     const payload = { success: true, ...(message ? { message } : {}) };
-    return res.status(status).json({ ...payload, ...data });
+    if (Array.isArray(data)) {
+        return res.status(status).json({ ...payload, data });
+    }
+    if (data && typeof data === "object") {
+        return res.status(status).json({ ...payload, ...data });
+    }
+    return res.status(status).json({ ...payload, data });
 };
+

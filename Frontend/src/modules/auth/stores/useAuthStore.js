@@ -1,25 +1,32 @@
 import { create } from "zustand";
 import { axiosInstance as axios } from "@/core/api/axiosInstance.js";
-import { hasAuthCookie } from "@/core/utils/authCookie.js";
+
+const TOKEN_STORAGE_KEY = "chatapp_token";
+
+const getStoredToken = () => {
+    if (typeof window === "undefined") return null;
+    return localStorage.getItem(TOKEN_STORAGE_KEY);
+};
+
+const persistToken = (token) => {
+    if (typeof window === "undefined") return;
+    if (token) {
+        localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    } else {
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+    }
+};
 
 const useAuthStore = create((set, get) => ({
     user: null,
-    isAuthenticated: hasAuthCookie(),
+    isAuthenticated: Boolean(getStoredToken()),
     isVerified: false,
     isLoading: false,
+    token: getStoredToken(),
 
     checkAuth: async () => {
-        if (!hasAuthCookie()) {
-            set({
-                user: null,
-                isAuthenticated: false,
-                isVerified: false,
-                isLoading: false,
-            });
-            return false;
-        }
-
-        set({ isLoading: true });
+        const storedToken = getStoredToken();
+        set({ isLoading: true, token: storedToken });
         try {
             const res = await axios.get('/auth/me');
             set({
@@ -27,14 +34,17 @@ const useAuthStore = create((set, get) => ({
                 isAuthenticated: true,
                 isVerified: Boolean(res.data.user?.isVerified),
                 isLoading: false,
+                token: storedToken,
             });
             return true;
         } catch (err) {
+            persistToken(null);
             set({
                 user: null,
                 isAuthenticated: false,
                 isVerified: false,
                 isLoading: false,
+                token: null,
             });
             return false;
         }
@@ -44,12 +54,15 @@ const useAuthStore = create((set, get) => ({
         try {
             set({ isLoading: true });
             const res = await axios.post('/auth/signup', { username, email, phone, password, avatar });
+            const token = res.data?.token || null;
+            persistToken(token);
 
             set({
                 user: res.data.user,
                 isAuthenticated: true,
                 isVerified: Boolean(res.data.user?.isVerified),
                 isLoading: false,
+                token,
             });
 
             return true;
@@ -81,11 +94,14 @@ const useAuthStore = create((set, get) => ({
         try {
             set({ isLoading: true });
             const res = await axios.post('/auth/login', { email, password: pass });
+            const token = res.data?.token || null;
+            persistToken(token);
 
             set({
                 user: res.data.user,
                 isAuthenticated: true,
                 isLoading: false,
+                token,
             });
 
             return true;
@@ -99,13 +115,15 @@ const useAuthStore = create((set, get) => ({
         try {
             await axios.post('/auth/logout');
         } catch (error) {
-            // ignore logout errors 
+            // ignore logout errors and still clear local auth state
         } finally {
+            persistToken(null);
             set({
                 user: null,
                 isAuthenticated: false,
                 isVerified: false,
                 isLoading: false,
+                token: null,
             });
         }
     },
@@ -117,11 +135,14 @@ const useAuthStore = create((set, get) => ({
                 return true;
             }
             set({ isLoading: true });
-            await axios.post('/auth/verify-email-otp', { email, otp });
+            const res = await axios.post('/auth/verify-email-otp', { email, otp });
+            const token = res.data?.token || get().token;
+            persistToken(token);
 
             set({
                 isVerified: true,
                 isLoading: false,
+                token,
             });
 
             return true;
@@ -145,4 +166,3 @@ const useAuthStore = create((set, get) => ({
 }));
 
 export default useAuthStore;
-

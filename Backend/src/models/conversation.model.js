@@ -11,6 +11,10 @@ const participantSchema = new mongoose.Schema({
         enum : ['admin' , 'member'] ,
         default : 'member'
     },
+    isOwner : {
+        type : Boolean ,
+        default : false,
+    },
     lastReadMessageId : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Message',
@@ -56,7 +60,12 @@ const conversationSchema = new mongoose.Schema({
     participants :{
         type : [participantSchema],
         validate : {
-            validator : (arr)=> arr.length >= 2,
+            validator : function(arr){
+                if(this.type === 'private'){
+                    return arr.length === 2;
+                }
+                return arr.length >= 2;
+            },
             message : 'A conversation must have at least 2 participants'
         },
     },

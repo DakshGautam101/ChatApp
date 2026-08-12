@@ -4,17 +4,17 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import Message from "../models/messages.model.js";
 import Conversation from "../models/conversation.model.js";
+import logger from "../utils/logger.js";
 
 function init(io) {
     setIO(io);
     io.use((socket, next) => {
         const cookies = cookie.parse(socket.handshake.headers.cookie || "");
-        const token = cookies.token;
+        const token = socket.handshake.auth?.token || cookies.token;
 
         if (!token) {
-            return next(new Error("Unauthorized - Cookie missing"));
+            return next(new Error("Unauthorized"));
         }
-
         try {
             const user = jwt.verify(token, process.env.JWT_SECRET);
             socket.user = user;
@@ -43,11 +43,20 @@ function init(io) {
                 });
                 if (!conversation) return;
                 socket.join(`conv_${conversationId}`);
-                const undelivered = await Message.find({
+
+                const participant = conversation.participants.find(
+                    (p) => (p.user?._id || p.user).toString() === userId.toString()
+                );
+                const minDate = conversation.type === "group" ? participant?.joinedAt : null;
+
+                const filter = {
                     conversation: conversationId,
                     sender: { $ne: userId },
                     status: "sent",
-                }).select("_id");
+                };
+                if (minDate) filter.createdAt = { $gte: minDate };
+
+                const undelivered = await Message.find(filter).select("_id");
 
                 if (undelivered.length) {
                     await Message.updateMany(
@@ -60,7 +69,7 @@ function init(io) {
                     });
                 }
             } catch (err) {
-                console.error("conversation:join error:", err.message);
+                logger.error("conversation:join error:", { error: err.message });
             }
         });
 
@@ -115,6 +124,7 @@ function init(io) {
                 });
                 io.to(`conv_${conversationId}`).emit("message:new", populated);
 
+                // notify offline/not-in-room recipients so their sidebar can update
                 recipients.forEach((recipientId) => {
                     io.to(`user_${recipientId}`).emit("conversation:updated", {
                         conversationId,
@@ -122,7 +132,7 @@ function init(io) {
                     });
                 });
             } catch (err) {
-                console.error("message:send error:", err.message);
+                logger.error("message:send error:", { error: err.message });
             }
         });
 
@@ -159,7 +169,7 @@ function init(io) {
                 const populated = await message.populate("sender", "username email avatar");
                 io.to(`conv_${conversationId}`).emit("message:reactionUpdated", populated);
             } catch (err) {
-                console.error("message:react error:", err.message);
+                logger.error("message:react error:", { error: err.message });
             }
         });
 
@@ -169,6 +179,9 @@ function init(io) {
 
         socket.on("message:read", async ({ conversationId, lastMessageId }) => {
             try {
+                const conversation = await Conversation.findById(conversationId);
+                if (!conversation) return;
+
                 await Conversation.updateOne(
                     { _id: conversationId, "participants.user": userId },
                     { $set: { "participants.$.lastReadMessageId": lastMessageId } }
@@ -178,27 +191,71 @@ function init(io) {
                     ? new mongoose.Types.ObjectId(lastMessageId)
                     : null;
 
-                const affectedMessages = upperBound
-                    ? await Message.find({
-                        conversation: conversationId,
-                        sender: { $ne: userId },
-                        _id: { $lte: upperBound },
-                    }).select("_id")
-                    : [];
+                if (!upperBound) return;
 
-                if (affectedMessages.length) {
-                    await Message.updateMany(
-                        {
-                            conversation: conversationId,
-                            sender: { $ne: userId },
-                            _id: { $lte: upperBound },
-                        },
-                        { $set: { status: "read" } }
+                const participant = conversation.participants.find(
+                    (p) => (p.user?._id || p.user).toString() === userId.toString()
+                );
+                const minDate = conversation.type === "group" ? participant?.joinedAt : null;
+
+                const msgFilter = {
+                    conversation: conversationId,
+                    sender: { $ne: userId },
+                    _id: { $lte: upperBound },
+                };
+                if (minDate) msgFilter.createdAt = { $gte: minDate };
+
+                const messagesToUpdate = await Message.find(msgFilter);
+
+                if (!messagesToUpdate.length) return;
+
+                const readMessageIds = [];
+                const deliveredMessageIds = [];
+
+                for (const msg of messagesToUpdate) {
+                    const alreadyRead = msg.readBy.some(
+                        (r) => r.user.toString() === userId.toString()
                     );
+                    if (!alreadyRead) {
+                        msg.readBy.push({ user: userId, readAt: new Date() });
+                    }
 
+                    const senderIdStr = msg.sender.toString();
+                    const recipientIds = conversation.participants
+                        .map((p) => (p.user._id ? p.user._id.toString() : p.user.toString()))
+                        .filter((id) => id !== senderIdStr);
+
+                    const readUserIds = new Set(msg.readBy.map((r) => r.user.toString()));
+                    const allRecipientsRead =
+                        recipientIds.length > 0 &&
+                        recipientIds.every((id) => readUserIds.has(id));
+
+                    const oldStatus = msg.status;
+                    if (allRecipientsRead) {
+                        msg.status = "read";
+                    } else {
+                        msg.status = "delivered";
+                    }
+
+                    await msg.save();
+
+                    if (msg.status === "read") {
+                        readMessageIds.push(msg._id.toString());
+                    } else if (msg.status === "delivered" && oldStatus !== "delivered") {
+                        deliveredMessageIds.push(msg._id.toString());
+                    }
+                }
+
+                if (readMessageIds.length) {
                     io.to(`conv_${conversationId}`).emit("message:statusUpdated", {
-                        messageIds: affectedMessages.map((message) => message._id.toString()),
+                        messageIds: readMessageIds,
                         status: "read",
+                    });
+                }
+                if (deliveredMessageIds.length) {
+                    io.to(`conv_${conversationId}`).emit("message:statusUpdated", {
+                        messageIds: deliveredMessageIds,
+                        status: "delivered",
                     });
                 }
 
@@ -207,7 +264,7 @@ function init(io) {
                     lastMessageId,
                 });
             } catch (err) {
-                console.error("message:read error:", err.message);
+                logger.error("message:read error:", { error: err.message });
             }
         });
     });

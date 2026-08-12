@@ -1,13 +1,22 @@
 import jwt from "jsonwebtoken";
+import logger from "../utils/logger.js";
 
 export const verifyAuth = (req, res, next) => {
     try {
-        const token = req.cookies?.token;
+        let token = req.cookies?.token;
+
+        if (!token && req.headers.authorization) {
+            if (req.headers.authorization.startsWith("Bearer ")) {
+                token = req.headers.authorization.split(" ")[1];
+            } else {
+                token = req.headers.authorization;
+            }
+        }
 
         if (!token) {
             return res.status(401).json({
                 success: false,
-                message: "Unauthorized - Cookies missing or deleted",
+                message: "Unauthorized - Token missing",
             });
         }
 
@@ -15,7 +24,7 @@ export const verifyAuth = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (error) {
-        console.error("Auth Verification Error:", error.message);
+        logger.warn("Auth Verification Error:", { error: error.message });
         return res.status(401).json({
             success: false,
             message: "Invalid or expired token",

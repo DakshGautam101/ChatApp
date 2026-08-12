@@ -1,0 +1,876 @@
+{"level":"info","message":"Test info log","timestamp":"2026-08-10 17:15:47"}
+{"level":"error","message":"Test error log","timestamp":"2026-08-10 17:15:47"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:05:26"}
+{"durationMs":13,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 13ms","method":"GET","status":401,"timestamp":"2026-08-11 12:05:26","url":"/api/auth/me"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:05:27"}
+{"durationMs":3,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 3ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 12:05:27","url":"/api/auth/login"}
+{"durationMs":703,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 703ms","method":"POST","status":200,"timestamp":"2026-08-11 12:05:28","url":"/api/auth/login"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786286341483-379231173.jpg 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:28","url":"/uploads/1786286341483-379231173.jpg"}
+{"durationMs":89,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 89ms","method":"GET","status":200,"timestamp":"2026-08-11 12:05:28","url":"/api/message/conversations"}
+{"durationMs":75,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 75ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:28","url":"/api/message/conversations"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:28","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":105,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 105ms","method":"GET","status":200,"timestamp":"2026-08-11 12:05:31","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":0,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 0ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:31","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":0,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 0ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:31","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:31","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:31","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":8,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 8ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:31","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":9,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 9ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:31","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:31","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:31","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 12:05:31","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/upload/session/start 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 12:06:33","url":"/api/upload/session/start"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/upload/single 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 12:06:33","url":"/api/upload/single"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/upload/single 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 12:06:39","url":"/api/upload/single"}
+{"durationMs":112,"ip":"::1","level":"info","message":"POST /api/upload/single 200 - 112ms","method":"POST","status":200,"timestamp":"2026-08-11 12:06:39","url":"/api/upload/single"}
+{"durationMs":23,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 200 - 23ms","method":"GET","status":200,"timestamp":"2026-08-11 12:06:40","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 12:06:45","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /favicon.ico 404 - 1ms","method":"GET","status":404,"timestamp":"2026-08-11 12:06:45","url":"/favicon.ico"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:10:10"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:10:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:10:30"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:10:31"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:10:41"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:10:42"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:12:29"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:12:32"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:13:36"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:13:37"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:13:48"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:13:48"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:14:05"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:14:05"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:14:09"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:14:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:14:21"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:14:21"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:14:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:14:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:14:41"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:14:42"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:14:45"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:14:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:22:24"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:22:25"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:22:57"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:22:57"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:24:15"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:24:15"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:24:25"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:24:25"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:24:28"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:24:28"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:24:33"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:24:34"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:25:12"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:25:13"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:25:16"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:25:17"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:25:30"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:25:30"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:25:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:25:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:25:37"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:25:38"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:25:40"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:25:41"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:25:54"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:25:55"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:26:01"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:26:02"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:26:04"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:26:04"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:26:10"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:26:11"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:33:38"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:33:39"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:33:45"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:33:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:33:48"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:33:48"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:33:52"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:33:52"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:34:51"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:34:51"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:36:22"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:36:23"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:36:31"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:36:33"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:36:33"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:36:36"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:36:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:36:45"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:36:45"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:36:49"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:36:50"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:36:53"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:36:54"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:00"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:00"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:06"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:07"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:10"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:14"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:15"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:20"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:21"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:28"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:29"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:34"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:34"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:42"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:42"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:44"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:46"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:55"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:37:56"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:58"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:37:59"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:38:00"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:38:05"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:38:05"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:38:07"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:38:07"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:38:10"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:38:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:38:15"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:38:16"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:38:28"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:38:28"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:38:31"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:38:31"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:38:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:38:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:38:40"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:38:41"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:38:56"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:39:01"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:39:06"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:39:08"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:39:11"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:39:14"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:39:25"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:39:30"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:39:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:39:37"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:39:41"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:39:43"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:39:46"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:39:48"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:39:51"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:39:57"}
+{"durationMs":139,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 139ms","method":"GET","status":200,"timestamp":"2026-08-11 12:39:59","url":"/api/message/conversations"}
+{"durationMs":92,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 92ms","method":"GET","status":304,"timestamp":"2026-08-11 12:39:59","url":"/api/message/conversations"}
+{"durationMs":907,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 907ms","method":"GET","status":304,"timestamp":"2026-08-11 12:40:00","url":"/api/auth/me"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786286341483-379231173.jpg 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 12:40:00","url":"/uploads/1786286341483-379231173.jpg"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 12:40:00","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":345,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 345ms","method":"GET","status":304,"timestamp":"2026-08-11 12:40:00","url":"/api/auth/me"}
+{"durationMs":377,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 377ms","method":"GET","status":304,"timestamp":"2026-08-11 12:40:01","url":"/api/message/conversations"}
+{"durationMs":92,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 92ms","method":"GET","status":304,"timestamp":"2026-08-11 12:40:01","url":"/api/message/conversations"}
+{"durationMs":92,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 92ms","method":"GET","status":304,"timestamp":"2026-08-11 12:42:02","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786286341483-379231173.jpg 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 12:42:02","url":"/uploads/1786286341483-379231173.jpg"}
+{"durationMs":88,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 88ms","method":"GET","status":304,"timestamp":"2026-08-11 12:42:02","url":"/api/auth/me"}
+{"durationMs":384,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 384ms","method":"GET","status":304,"timestamp":"2026-08-11 12:42:02","url":"/api/message/conversations"}
+{"durationMs":91,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 91ms","method":"GET","status":304,"timestamp":"2026-08-11 12:42:02","url":"/api/message/conversations"}
+{"durationMs":91,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 91ms","method":"GET","status":304,"timestamp":"2026-08-11 12:42:02","url":"/api/message/conversations"}
+{"durationMs":357,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 357ms","method":"GET","status":304,"timestamp":"2026-08-11 12:42:02","url":"/api/message/conversations"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 12:42:02","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":753,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 753ms","method":"GET","status":304,"timestamp":"2026-08-11 12:55:59","url":"/api/message/conversations"}
+{"durationMs":753,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 753ms","method":"GET","status":304,"timestamp":"2026-08-11 12:55:59","url":"/api/auth/me"}
+{"durationMs":0,"ip":"::1","level":"info","message":"GET /uploads/1786286341483-379231173.jpg 304 - 0ms","method":"GET","status":304,"timestamp":"2026-08-11 12:55:59","url":"/uploads/1786286341483-379231173.jpg"}
+{"durationMs":198,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 198ms","method":"GET","status":304,"timestamp":"2026-08-11 12:55:59","url":"/api/message/conversations"}
+{"durationMs":196,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 196ms","method":"GET","status":304,"timestamp":"2026-08-11 12:55:59","url":"/api/auth/me"}
+{"durationMs":74,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 74ms","method":"GET","status":304,"timestamp":"2026-08-11 12:55:59","url":"/api/message/conversations"}
+{"durationMs":190,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 190ms","method":"GET","status":304,"timestamp":"2026-08-11 12:55:59","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 12:55:59","url":"/uploads/1786344359897-530328506.png"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:56:21"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:56:22"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:56:24"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:56:25"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:56:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:56:35"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:56:47"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:56:47"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:56:49"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:56:49"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:56:50"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:56:51"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:56:58"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:56:58"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:57:01"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:57:02"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:57:04"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:57:04"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:57:09"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:57:09"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:57:13"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:57:14"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:57:16"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:57:16"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:57:19"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:57:20"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:57:23"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:57:23"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:57:25"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:57:25"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:57:28"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:57:28"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:03"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:04"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:06"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:07"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:12"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:13"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:16"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:17"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:19"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:20"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:25"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:25"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:28"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:29"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:35"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:42"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:42"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:45"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:49"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:50"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:58:59"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:58:59"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:59:02"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:59:02"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 12:59:05"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 12:59:06"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:00"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:02"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:04"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:05"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:08"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:11"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:14"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:15"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:16"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:22"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:24"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:34"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:35"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:36"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:37"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:40"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:41"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:42"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:45"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:45"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:49"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:50"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:04:53"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:04:54"}
+{"durationMs":28,"ip":"::1","level":"info","message":"GET /uploads/1786286341483-379231173.jpg 304 - 28ms","method":"GET","status":304,"timestamp":"2026-08-11 13:09:40","url":"/uploads/1786286341483-379231173.jpg"}
+{"durationMs":442,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 442ms","method":"GET","status":304,"timestamp":"2026-08-11 13:09:40","url":"/api/message/conversations"}
+{"durationMs":114,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 114ms","method":"GET","status":304,"timestamp":"2026-08-11 13:09:40","url":"/api/message/conversations"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 13:09:40","url":"/uploads/1786344359897-530328506.png"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:11:11"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:11:15"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:11:17"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:11:21"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:11:25"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:11:27"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:11:28"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:11:40"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:11:45"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:11:54"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:11:55"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:08"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:09"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:12"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:12:13"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:15"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:17"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:20"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:30"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:12:32"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:36"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:12:40"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:45"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:54"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:55"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:12:57"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:13:00"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:13:01"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:13:03"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:13:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:13:14"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:13:18"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:13:23"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:13:26"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:13:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:13:40"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:13:41"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:13:55"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:13:57"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:07"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:09"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:10"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:14:12"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:14"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:14:18"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:20"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:14:27"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:37"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:14:41"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:44"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:14:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:49"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:54"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:56"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:14:58"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:15:02"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:05"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:15:08"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:11"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:13"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:15:16"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:18"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:21"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:24"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:34"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:39"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:40"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:15:47"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:15:53"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:15:54"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:16:09"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:16:11"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:16:19"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:16:20"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:16:22"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:16:24"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:16:27"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:16:31"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:16:33"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:16:44"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:16:45"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:16:53"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:16:55"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:17:01"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:17:10"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:17:12"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:17:17"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:17:22"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:17:29"}
+{"durationMs":556,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 556ms","method":"GET","status":200,"timestamp":"2026-08-11 13:17:51","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":8,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 8ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":18,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 18ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":18,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 18ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":20,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 20ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":21,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 21ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":22,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 22ms","method":"GET","status":304,"timestamp":"2026-08-11 13:17:51","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":383,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 383ms","method":"GET","status":200,"timestamp":"2026-08-11 13:17:54","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":364,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 364ms","method":"GET","status":200,"timestamp":"2026-08-11 13:17:56","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":1997,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 1997ms","method":"GET","status":200,"timestamp":"2026-08-11 13:17:58","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":1248,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 1248ms","method":"GET","status":304,"timestamp":"2026-08-11 13:18:00","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":547,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 547ms","method":"GET","status":304,"timestamp":"2026-08-11 13:18:00","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":1049,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 1049ms","method":"GET","status":304,"timestamp":"2026-08-11 13:18:01","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":156,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 156ms","method":"GET","status":304,"timestamp":"2026-08-11 13:18:01","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":1182,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 1182ms","method":"GET","status":304,"timestamp":"2026-08-11 13:18:03","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":111,"ip":"::1","level":"info","message":"GET /api/user/userlist 200 - 111ms","method":"GET","status":200,"timestamp":"2026-08-11 13:21:23","url":"/api/user/userlist"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:23","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":27,"ip":"::1","level":"info","message":"GET /uploads/1786286510216-538923172.png 200 - 27ms","method":"GET","status":200,"timestamp":"2026-08-11 13:21:23","url":"/uploads/1786286510216-538923172.png"}
+{"durationMs":618,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 618ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:24","url":"/api/user/userlist"}
+{"durationMs":1047,"ip":"::1","level":"info","message":"POST /api/invitation/send/6a7891b185774e5fee54cf67 201 - 1047ms","method":"POST","status":201,"timestamp":"2026-08-11 13:21:29","url":"/api/invitation/send/6a7891b185774e5fee54cf67"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786286510216-538923172.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:35","url":"/uploads/1786286510216-538923172.png"}
+{"durationMs":7,"ip":"::1","level":"warn","message":"GET /favicon.ico 404 - 7ms","method":"GET","status":404,"timestamp":"2026-08-11 13:21:35","url":"/favicon.ico"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786286341483-379231173.jpg 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:39","url":"/uploads/1786286341483-379231173.jpg"}
+{"durationMs":90,"ip":"::1","level":"info","message":"POST /api/upload/single 200 - 90ms","method":"POST","status":200,"timestamp":"2026-08-11 13:21:46","url":"/api/upload/single"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/user/profile 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 13:21:46","url":"/api/user/profile"}
+{"durationMs":968,"ip":"::1","level":"info","message":"PUT /api/user/profile 200 - 968ms","method":"PUT","status":200,"timestamp":"2026-08-11 13:21:47","url":"/api/user/profile"}
+{"durationMs":66,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 200 - 66ms","method":"GET","status":200,"timestamp":"2026-08-11 13:21:47","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":637,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 637ms","method":"GET","status":200,"timestamp":"2026-08-11 13:21:48","url":"/api/message/conversations"}
+{"durationMs":356,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 356ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:48","url":"/api/message/conversations"}
+{"durationMs":1693,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 1693ms","method":"GET","status":200,"timestamp":"2026-08-11 13:21:56","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":7,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 7ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":8,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 8ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 13:21:56","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":3,"ip":"::1","level":"info","message":"POST /api/auth/logout 200 - 3ms","method":"POST","status":200,"timestamp":"2026-08-11 13:21:56","url":"/api/auth/logout"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 13:21:57","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 13:21:57","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 13:22:00","url":"/api/auth/login"}
+{"durationMs":702,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 702ms","method":"POST","status":200,"timestamp":"2026-08-11 13:22:01","url":"/api/auth/login"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:01","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":347,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 347ms","method":"GET","status":200,"timestamp":"2026-08-11 13:22:01","url":"/api/message/conversations"}
+{"durationMs":697,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 697ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:02","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:02","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":259,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 259ms","method":"GET","status":200,"timestamp":"2026-08-11 13:22:05","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":8,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 8ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 13:22:05","url":"/uploads/1786430199415-896258942.jpg"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:24:37"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:24:44"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:24:45"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:24:51"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:24:56"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:25:00"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:25:03"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:25:04"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 13:25:10"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 13:25:15"}
+{"durationMs":414,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 414ms","method":"GET","status":200,"timestamp":"2026-08-11 13:25:52","url":"/api/message/conversations"}
+{"durationMs":1118,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 1118ms","method":"GET","status":304,"timestamp":"2026-08-11 14:25:28","url":"/api/message/conversations"}
+{"durationMs":144,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 144ms","method":"GET","status":304,"timestamp":"2026-08-11 14:25:28","url":"/api/message/conversations"}
+{"durationMs":1572,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 1572ms","method":"GET","status":200,"timestamp":"2026-08-11 14:25:29","url":"/api/auth/me"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-11 14:25:29","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-11 14:25:29","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":113,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 113ms","method":"GET","status":304,"timestamp":"2026-08-11 14:25:29","url":"/api/auth/me"}
+{"durationMs":108,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 108ms","method":"GET","status":304,"timestamp":"2026-08-11 14:25:29","url":"/api/message/conversations"}
+{"durationMs":94,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 94ms","method":"GET","status":304,"timestamp":"2026-08-11 14:25:29","url":"/api/message/conversations"}
+{"durationMs":88,"ip":"::1","level":"info","message":"GET /api/user/userlist 200 - 88ms","method":"GET","status":200,"timestamp":"2026-08-11 14:26:25","url":"/api/user/userlist"}
+{"durationMs":156,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 156ms","method":"GET","status":200,"timestamp":"2026-08-11 14:26:54","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":7,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 7ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 14:26:54","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":4,"ip":"::1","level":"info","message":"POST /api/auth/logout 200 - 4ms","method":"POST","status":200,"timestamp":"2026-08-11 14:28:39","url":"/api/auth/logout"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 14:28:40","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 14:28:40","url":"/api/auth/me"}
+{"durationMs":90,"ip":"::1","level":"info","message":"POST /api/upload/avatar 200 - 90ms","method":"POST","status":200,"timestamp":"2026-08-11 14:33:44","url":"/api/upload/avatar"}
+{"durationMs":72,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 200 - 72ms","method":"GET","status":200,"timestamp":"2026-08-11 14:33:44","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":7,"ip":"::1","level":"info","message":"OPTIONS /api/auth/signup 204 - 7ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 14:33:46","url":"/api/auth/signup"}
+{"durationMs":5834,"ip":"::1","level":"info","message":"POST /api/auth/signup 201 - 5834ms","method":"POST","status":201,"timestamp":"2026-08-11 14:33:52","url":"/api/auth/signup"}
+{"durationMs":388,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 388ms","method":"GET","status":200,"timestamp":"2026-08-11 14:34:37","url":"/api/auth/me"}
+{"durationMs":279,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 279ms","method":"GET","status":304,"timestamp":"2026-08-11 14:34:37","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/resend-email-otp 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 14:34:55","url":"/api/auth/resend-email-otp"}
+{"durationMs":11950,"ip":"::1","level":"info","message":"POST /api/auth/resend-email-otp 200 - 11950ms","method":"POST","status":200,"timestamp":"2026-08-11 14:35:07","url":"/api/auth/resend-email-otp"}
+{"durationMs":3,"ip":"::1","level":"warn","message":"GET /api/auth/resend-email-otp 404 - 3ms","method":"GET","status":404,"timestamp":"2026-08-11 14:36:52","url":"/api/auth/resend-email-otp"}
+{"durationMs":17,"ip":"::1","level":"info","message":"POST /api/upload/avatar 200 - 17ms","method":"POST","status":200,"timestamp":"2026-08-11 14:41:58","url":"/api/upload/avatar"}
+{"durationMs":7,"ip":"::1","level":"info","message":"GET /uploads/1786439518910-632506112.png 200 - 7ms","method":"GET","status":200,"timestamp":"2026-08-11 14:41:59","url":"/uploads/1786439518910-632506112.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/signup 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 14:42:01","url":"/api/auth/signup"}
+{"error":"connect ETIMEDOUT 192.178.158.109:587","level":"error","message":"Error sending email:","stack":"Error: connect ETIMEDOUT 192.178.158.109:587\n    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)","timestamp":"2026-08-11 14:42:23"}
+{"durationMs":22040,"ip":"::1","level":"info","message":"POST /api/auth/signup 201 - 22040ms","method":"POST","status":201,"timestamp":"2026-08-11 14:42:23","url":"/api/auth/signup"}
+{"durationMs":47,"ip":"::1","level":"info","message":"POST /api/upload/avatar 200 - 47ms","method":"POST","status":200,"timestamp":"2026-08-11 14:48:42","url":"/api/upload/avatar"}
+{"durationMs":18,"ip":"::1","level":"info","message":"GET /uploads/1786439922155-425256031.png 200 - 18ms","method":"GET","status":200,"timestamp":"2026-08-11 14:48:42","url":"/uploads/1786439922155-425256031.png"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/auth/signup 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 14:48:44","url":"/api/auth/signup"}
+{"durationMs":763,"ip":"::1","level":"warn","message":"POST /api/auth/signup 400 - 763ms","method":"POST","status":400,"timestamp":"2026-08-11 14:48:45","url":"/api/auth/signup"}
+{"durationMs":9,"ip":"::1","level":"info","message":"POST /api/upload/avatar 200 - 9ms","method":"POST","status":200,"timestamp":"2026-08-11 14:50:04","url":"/api/upload/avatar"}
+{"durationMs":15,"ip":"::1","level":"info","message":"GET /uploads/1786440004332-766922015.png 200 - 15ms","method":"GET","status":200,"timestamp":"2026-08-11 14:50:04","url":"/uploads/1786440004332-766922015.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/signup 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 14:50:05","url":"/api/auth/signup"}
+{"durationMs":5909,"ip":"::1","level":"info","message":"POST /api/auth/signup 201 - 5909ms","method":"POST","status":201,"timestamp":"2026-08-11 14:50:11","url":"/api/auth/signup"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/auth/resend-email-otp 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 14:50:32","url":"/api/auth/resend-email-otp"}
+{"durationMs":18512,"ip":"::1","level":"info","message":"POST /api/auth/resend-email-otp 200 - 18512ms","method":"POST","status":200,"timestamp":"2026-08-11 14:50:50","url":"/api/auth/resend-email-otp"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 14:59:06"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 14:59:07"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 14:59:13"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 14:59:13"}
+{"level":"info","message":"Verification OTP generated for testuser@example.com: 123456","timestamp":"2026-08-11 14:59:41"}
+{"error":"Timeout","level":"error","message":"Error sending email to testuser@example.com (Network/SMTP timeout):","stack":"Error: Timeout\n    at SMTPConnection._onTimeout (C:\\Desktop\\rtc\\Backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1019:30)\n    at SMTPConnection._onSocketTimeout (C:\\Desktop\\rtc\\Backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:228:44)\n    at TLSSocket.emit (node:events:508:28)\n    at Socket._onTimeout (node:net:604:8)\n    at listOnTimeout (node:internal/timers:605:17)\n    at process.processTimers (node:internal/timers:541:7)","timestamp":"2026-08-11 15:00:12"}
+{"durationMs":342,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 342ms","method":"GET","status":200,"timestamp":"2026-08-11 15:02:13","url":"/api/auth/me"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 84ms","method":"GET","status":304,"timestamp":"2026-08-11 15:02:13","url":"/api/auth/me"}
+{"durationMs":14,"ip":"::1","level":"info","message":"GET /uploads/1786440004332-766922015.png 304 - 14ms","method":"GET","status":304,"timestamp":"2026-08-11 15:02:14","url":"/uploads/1786440004332-766922015.png"}
+{"durationMs":47,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 47ms","method":"GET","status":200,"timestamp":"2026-08-11 15:02:15","url":"/api/message/conversations"}
+{"durationMs":124,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 124ms","method":"GET","status":304,"timestamp":"2026-08-11 15:02:15","url":"/api/message/conversations"}
+{"durationMs":95,"ip":"::1","level":"info","message":"GET /api/user/userlist 200 - 95ms","method":"GET","status":200,"timestamp":"2026-08-11 15:02:28","url":"/api/user/userlist"}
+{"durationMs":4,"ip":"::1","level":"info","message":"POST /api/auth/logout 200 - 4ms","method":"POST","status":200,"timestamp":"2026-08-11 15:02:53","url":"/api/auth/logout"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:02:54","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:02:54","url":"/api/auth/me"}
+{"durationMs":3,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 3ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:02:58","url":"/api/auth/login"}
+{"durationMs":684,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 684ms","method":"POST","status":200,"timestamp":"2026-08-11 15:02:59","url":"/api/auth/login"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 15:02:59","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":102,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 102ms","method":"GET","status":200,"timestamp":"2026-08-11 15:02:59","url":"/api/message/conversations"}
+{"durationMs":93,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 93ms","method":"GET","status":304,"timestamp":"2026-08-11 15:02:59","url":"/api/message/conversations"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 15:02:59","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/user/userlist 200 - 79ms","method":"GET","status":200,"timestamp":"2026-08-11 15:03:05","url":"/api/user/userlist"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 79ms","method":"GET","status":304,"timestamp":"2026-08-11 15:03:49","url":"/api/user/userlist"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786440004332-766922015.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 15:03:49","url":"/uploads/1786440004332-766922015.png"}
+{"durationMs":62,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 200 - 62ms","method":"GET","status":200,"timestamp":"2026-08-11 15:03:49","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":635,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 635ms","method":"GET","status":304,"timestamp":"2026-08-11 15:03:50","url":"/api/user/userlist"}
+{"durationMs":1551,"ip":"::1","level":"info","message":"POST /api/invitation/send/6a7ae5737ae364bd59deb55a 201 - 1551ms","method":"POST","status":201,"timestamp":"2026-08-11 15:03:53","url":"/api/invitation/send/6a7ae5737ae364bd59deb55a"}
+{"durationMs":0,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 0ms","method":"GET","status":401,"timestamp":"2026-08-11 15:03:56","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:03:56","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:04:00","url":"/api/auth/login"}
+{"durationMs":902,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 902ms","method":"POST","status":200,"timestamp":"2026-08-11 15:04:01","url":"/api/auth/login"}
+{"durationMs":16,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 200 - 16ms","method":"GET","status":200,"timestamp":"2026-08-11 15:04:01","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 81ms","method":"GET","status":200,"timestamp":"2026-08-11 15:04:01","url":"/api/message/conversations"}
+{"durationMs":60,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 60ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:01","url":"/api/message/conversations"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 200 - 83ms","method":"GET","status":200,"timestamp":"2026-08-11 15:04:06","url":"/api/invitation/invitation"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:06","url":"/api/invitation/invitation"}
+{"durationMs":274,"ip":"::1","level":"info","message":"GET /api/group/invitations 200 - 274ms","method":"GET","status":200,"timestamp":"2026-08-11 15:04:06","url":"/api/group/invitations"}
+{"durationMs":40,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 40ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:06","url":"/api/group/invitations"}
+{"durationMs":40,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 40ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:08","url":"/api/message/conversations"}
+{"durationMs":193,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 193ms","method":"GET","status":200,"timestamp":"2026-08-11 15:04:09","url":"/api/auth/me"}
+{"durationMs":154,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 154ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:09","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:09","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":50,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 50ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:09","url":"/api/message/conversations"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 80ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:09","url":"/api/auth/me"}
+{"durationMs":65,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 65ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:09","url":"/api/message/conversations"}
+{"durationMs":49,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 49ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:11","url":"/api/group/invitations"}
+{"durationMs":104,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 104ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:11","url":"/api/invitation/invitation"}
+{"durationMs":48,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 48ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:11","url":"/api/group/invitations"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 80ms","method":"GET","status":304,"timestamp":"2026-08-11 15:04:11","url":"/api/invitation/invitation"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:06:02"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:06:02"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:06:08"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:06:09"}
+{"durationMs":62,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 62ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:14","url":"/api/message/conversations"}
+{"durationMs":42,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 42ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:14","url":"/api/message/conversations"}
+{"durationMs":111,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 111ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:14","url":"/api/auth/me"}
+{"durationMs":78,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 78ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:14","url":"/api/auth/me"}
+{"durationMs":41,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 41ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:14","url":"/api/message/conversations"}
+{"durationMs":51,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 200 - 51ms","method":"GET","status":200,"timestamp":"2026-08-11 15:07:14","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":263,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 263ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:15","url":"/api/message/conversations"}
+{"durationMs":51,"ip":"::1","level":"info","message":"GET /api/group/invitations 200 - 51ms","method":"GET","status":200,"timestamp":"2026-08-11 15:07:18","url":"/api/group/invitations"}
+{"durationMs":103,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 200 - 103ms","method":"GET","status":200,"timestamp":"2026-08-11 15:07:18","url":"/api/invitation/invitation"}
+{"durationMs":50,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 50ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:18","url":"/api/group/invitations"}
+{"durationMs":18,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 200 - 18ms","method":"GET","status":200,"timestamp":"2026-08-11 15:07:18","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":89,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 89ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:18","url":"/api/invitation/invitation"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/invitation/6a7aec810d59db988df29ecb?invitationStatus=accepted 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:07:24","url":"/api/invitation/6a7aec810d59db988df29ecb?invitationStatus=accepted"}
+{"durationMs":298,"ip":"::1","level":"info","message":"PATCH /api/invitation/6a7aec810d59db988df29ecb?invitationStatus=accepted 200 - 298ms","method":"PATCH","status":200,"timestamp":"2026-08-11 15:07:25","url":"/api/invitation/6a7aec810d59db988df29ecb?invitationStatus=accepted"}
+{"durationMs":43,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 43ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:25","url":"/api/group/invitations"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 200 - 85ms","method":"GET","status":200,"timestamp":"2026-08-11 15:07:25","url":"/api/invitation/invitation"}
+{"durationMs":89,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 89ms","method":"GET","status":200,"timestamp":"2026-08-11 15:07:25","url":"/api/message/conversations"}
+{"durationMs":94,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 94ms","method":"GET","status":200,"timestamp":"2026-08-11 15:07:33","url":"/api/message/conversations"}
+{"durationMs":103,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 103ms","method":"GET","status":304,"timestamp":"2026-08-11 15:07:33","url":"/api/message/conversations"}
+{"durationMs":89,"ip":"::1","level":"info","message":"GET /api/user/userlist 200 - 89ms","method":"GET","status":200,"timestamp":"2026-08-11 15:07:35","url":"/api/user/userlist"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/group/create 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:07:51","url":"/api/group/create"}
+{"durationMs":275,"ip":"::1","level":"info","message":"POST /api/group/create 201 - 275ms","method":"POST","status":201,"timestamp":"2026-08-11 15:07:51","url":"/api/group/create"}
+{"durationMs":41,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 41ms","method":"GET","status":200,"timestamp":"2026-08-11 15:07:56","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":76,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 76ms","method":"GET","status":304,"timestamp":"2026-08-11 15:08:31","url":"/api/user/userlist"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:08:31","url":"/api/user/userlist"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 86ms","method":"GET","status":200,"timestamp":"2026-08-11 15:08:36","url":"/api/message/conversations"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-11 15:08:36","url":"/api/message/conversations"}
+{"durationMs":39,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 304 - 39ms","method":"GET","status":304,"timestamp":"2026-08-11 15:08:37","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 85ms","method":"GET","status":200,"timestamp":"2026-08-11 15:09:26","url":"/api/message/conversations"}
+{"durationMs":94,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 94ms","method":"GET","status":304,"timestamp":"2026-08-11 15:09:26","url":"/api/message/conversations"}
+{"durationMs":40,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 40ms","method":"GET","status":200,"timestamp":"2026-08-11 15:09:27","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":23,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 200 - 23ms","method":"GET","status":200,"timestamp":"2026-08-11 15:10:02","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":78,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 78ms","method":"GET","status":200,"timestamp":"2026-08-11 15:10:12","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":78,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 78ms","method":"GET","status":304,"timestamp":"2026-08-11 15:11:17","url":"/api/user/userlist"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 79ms","method":"GET","status":304,"timestamp":"2026-08-11 15:11:17","url":"/api/user/userlist"}
+{"durationMs":164,"ip":"::1","level":"info","message":"POST /api/invitation/send/6a7ae9467ae364bd59deb55c 201 - 164ms","method":"POST","status":201,"timestamp":"2026-08-11 15:11:19","url":"/api/invitation/send/6a7ae9467ae364bd59deb55c"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:11:26","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:11:26","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:11:37","url":"/api/auth/login"}
+{"durationMs":432,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 432ms","method":"POST","status":200,"timestamp":"2026-08-11 15:11:37","url":"/api/auth/login"}
+{"durationMs":7,"ip":"::1","level":"info","message":"GET /uploads/1786440004332-766922015.png 200 - 7ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:37","url":"/uploads/1786440004332-766922015.png"}
+{"durationMs":36,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 36ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:37","url":"/api/message/conversations"}
+{"durationMs":37,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 37ms","method":"GET","status":304,"timestamp":"2026-08-11 15:11:37","url":"/api/message/conversations"}
+{"durationMs":82,"ip":"::1","level":"info","message":"GET /api/user/userlist 200 - 82ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:42","url":"/api/user/userlist"}
+{"durationMs":21,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 200 - 21ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:42","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 84ms","method":"GET","status":304,"timestamp":"2026-08-11 15:11:43","url":"/api/user/userlist"}
+{"durationMs":77,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 200 - 77ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:43","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":77,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 200 - 77ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:43","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":38,"ip":"::1","level":"info","message":"GET /api/group/invitations 200 - 38ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:44","url":"/api/group/invitations"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 200 - 81ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:44","url":"/api/invitation/invitation"}
+{"durationMs":41,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 41ms","method":"GET","status":304,"timestamp":"2026-08-11 15:11:44","url":"/api/group/invitations"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 80ms","method":"GET","status":304,"timestamp":"2026-08-11 15:11:44","url":"/api/invitation/invitation"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/invitation/6a7aee3f744310b19fbaacef?invitationStatus=accepted 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:11:46","url":"/api/invitation/6a7aee3f744310b19fbaacef?invitationStatus=accepted"}
+{"durationMs":286,"ip":"::1","level":"info","message":"PATCH /api/invitation/6a7aee3f744310b19fbaacef?invitationStatus=accepted 200 - 286ms","method":"PATCH","status":200,"timestamp":"2026-08-11 15:11:46","url":"/api/invitation/6a7aee3f744310b19fbaacef?invitationStatus=accepted"}
+{"durationMs":41,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 41ms","method":"GET","status":304,"timestamp":"2026-08-11 15:11:46","url":"/api/group/invitations"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 200 - 79ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:46","url":"/api/invitation/invitation"}
+{"durationMs":87,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 87ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:46","url":"/api/message/conversations"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 85ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:51","url":"/api/message/conversations"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 85ms","method":"GET","status":304,"timestamp":"2026-08-11 15:11:51","url":"/api/message/conversations"}
+{"durationMs":38,"ip":"::1","level":"info","message":"GET /api/message/6a7aee5a744310b19fbaacf0 200 - 38ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:53","url":"/api/message/6a7aee5a744310b19fbaacf0"}
+{"durationMs":77,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 77ms","method":"GET","status":200,"timestamp":"2026-08-11 15:11:55","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 81ms","method":"GET","status":200,"timestamp":"2026-08-11 15:12:05","url":"/api/message/conversations"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 83ms","method":"GET","status":200,"timestamp":"2026-08-11 15:12:05","url":"/api/auth/me"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:05","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 79ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:05","url":"/api/message/conversations"}
+{"durationMs":78,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 78ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:05","url":"/api/auth/me"}
+{"durationMs":87,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 87ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:05","url":"/api/message/conversations"}
+{"durationMs":90,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 90ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:05","url":"/api/message/conversations"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786440004332-766922015.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:05","url":"/uploads/1786440004332-766922015.png"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:05","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":12,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 12ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:05","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":72,"ip":"::1","level":"info","message":"GET /api/message/6a7aed54744310b19fbaaceb 200 - 72ms","method":"GET","status":200,"timestamp":"2026-08-11 15:12:08","url":"/api/message/6a7aed54744310b19fbaaceb"}
+{"durationMs":40,"ip":"::1","level":"info","message":"GET /api/message/6a7aee5a744310b19fbaacf0 304 - 40ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:09","url":"/api/message/6a7aee5a744310b19fbaacf0"}
+{"durationMs":77,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 304 - 77ms","method":"GET","status":304,"timestamp":"2026-08-11 15:12:11","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786440004332-766922015.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:15:38","url":"/uploads/1786440004332-766922015.png"}
+{"durationMs":17,"ip":"::1","level":"info","message":"POST /api/upload/single 200 - 17ms","method":"POST","status":200,"timestamp":"2026-08-11 15:15:43","url":"/api/upload/single"}
+{"durationMs":3,"ip":"::1","level":"info","message":"OPTIONS /api/user/profile 204 - 3ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:15:43","url":"/api/user/profile"}
+{"durationMs":57,"ip":"::1","level":"info","message":"PUT /api/user/profile 200 - 57ms","method":"PUT","status":200,"timestamp":"2026-08-11 15:15:43","url":"/api/user/profile"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:15:43","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786441543559-409677299.png 200 - 4ms","method":"GET","status":200,"timestamp":"2026-08-11 15:15:43","url":"/uploads/1786441543559-409677299.png"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 80ms","method":"GET","status":200,"timestamp":"2026-08-11 15:15:43","url":"/api/message/conversations"}
+{"durationMs":82,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 82ms","method":"GET","status":304,"timestamp":"2026-08-11 15:15:43","url":"/api/message/conversations"}
+{"durationMs":66,"ip":"::1","level":"info","message":"POST /api/upload/single 200 - 66ms","method":"POST","status":200,"timestamp":"2026-08-11 15:15:58","url":"/api/upload/single"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/user/profile 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:15:58","url":"/api/user/profile"}
+{"durationMs":45,"ip":"::1","level":"info","message":"PUT /api/user/profile 200 - 45ms","method":"PUT","status":200,"timestamp":"2026-08-11 15:15:59","url":"/api/user/profile"}
+{"durationMs":507,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 507ms","method":"GET","status":200,"timestamp":"2026-08-11 15:15:59","url":"/api/message/conversations"}
+{"durationMs":584,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 200 - 584ms","method":"GET","status":200,"timestamp":"2026-08-11 15:15:59","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":151,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 151ms","method":"GET","status":304,"timestamp":"2026-08-11 15:15:59","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:16:02","url":"/uploads/1786441558517-176683286.png"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:18:27"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:18:28"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:18:36"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:18:37"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:18:43"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:18:44"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:18:53"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:18:54"}
+{"durationMs":1162,"ip":"::1","level":"info","message":"GET /api/user/userlist 200 - 1162ms","method":"GET","status":200,"timestamp":"2026-08-11 15:18:57","url":"/api/user/userlist"}
+{"durationMs":106,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 106ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:28","url":"/api/message/conversations"}
+{"durationMs":105,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 105ms","method":"GET","status":200,"timestamp":"2026-08-11 15:21:28","url":"/api/auth/me"}
+{"durationMs":12,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 304 - 12ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:28","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:28","url":"/api/auth/me"}
+{"durationMs":101,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 101ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:28","url":"/api/message/conversations"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:28","url":"/api/message/conversations"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 85ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:28","url":"/api/message/conversations"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:28","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 83ms","method":"GET","status":200,"timestamp":"2026-08-11 15:21:38","url":"/api/message/conversations"}
+{"durationMs":92,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 92ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:38","url":"/api/auth/me"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:38","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 84ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:38","url":"/api/message/conversations"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:38","url":"/api/auth/me"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:38","url":"/api/message/conversations"}
+{"durationMs":89,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 89ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:38","url":"/api/message/conversations"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:38","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":7,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 7ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:38","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":27,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 200 - 27ms","method":"GET","status":200,"timestamp":"2026-08-11 15:21:38","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:40","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":107,"ip":"::1","level":"info","message":"GET /api/group/6a7aed6f744310b19fbaacec/search-users?query= 200 - 107ms","method":"GET","status":200,"timestamp":"2026-08-11 15:21:42","url":"/api/group/6a7aed6f744310b19fbaacec/search-users?query="}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/group/6a7aed6f744310b19fbaacec/invitation 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:21:47","url":"/api/group/6a7aed6f744310b19fbaacec/invitation"}
+{"durationMs":446,"ip":"::1","level":"info","message":"POST /api/group/6a7aed6f744310b19fbaacec/invitation 200 - 446ms","method":"POST","status":200,"timestamp":"2026-08-11 15:21:47","url":"/api/group/6a7aed6f744310b19fbaacec/invitation"}
+{"durationMs":94,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 94ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:58","url":"/api/auth/me"}
+{"durationMs":100,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 100ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:58","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:58","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 79ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:58","url":"/api/auth/me"}
+{"durationMs":94,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 94ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:58","url":"/api/message/conversations"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 83ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:58","url":"/api/message/conversations"}
+{"durationMs":90,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 90ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:58","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:21:58","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:03","url":"/api/invitation/invitation"}
+{"durationMs":88,"ip":"::1","level":"info","message":"GET /api/group/invitations 200 - 88ms","method":"GET","status":200,"timestamp":"2026-08-11 15:22:03","url":"/api/group/invitations"}
+{"durationMs":87,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 87ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:03","url":"/api/group/invitations"}
+{"durationMs":100,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 100ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:03","url":"/api/invitation/invitation"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/group/invitation/6a7af0b30f1f3d34a6f4e5be/respond 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:22:07","url":"/api/group/invitation/6a7af0b30f1f3d34a6f4e5be/respond"}
+{"durationMs":345,"ip":"::1","level":"info","message":"POST /api/group/invitation/6a7af0b30f1f3d34a6f4e5be/respond 200 - 345ms","method":"POST","status":200,"timestamp":"2026-08-11 15:22:07","url":"/api/group/invitation/6a7af0b30f1f3d34a6f4e5be/respond"}
+{"durationMs":41,"ip":"::1","level":"info","message":"GET /api/group/invitations 200 - 41ms","method":"GET","status":200,"timestamp":"2026-08-11 15:22:07","url":"/api/group/invitations"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 83ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:07","url":"/api/invitation/invitation"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 81ms","method":"GET","status":200,"timestamp":"2026-08-11 15:22:07","url":"/api/message/conversations"}
+{"durationMs":95,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 95ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:11","url":"/api/message/conversations"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 84ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:11","url":"/api/message/conversations"}
+{"durationMs":78,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 78ms","method":"GET","status":200,"timestamp":"2026-08-11 15:22:12","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":78,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 78ms","method":"GET","status":200,"timestamp":"2026-08-11 15:22:14","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:20","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":23,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 200 - 23ms","method":"GET","status":200,"timestamp":"2026-08-11 15:22:20","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":2,"ip":"::1","level":"warn","message":"POST /api/multer/upload 404 - 2ms","method":"POST","status":404,"timestamp":"2026-08-11 15:22:37","url":"/api/multer/upload"}
+{"durationMs":89,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 89ms","method":"GET","status":200,"timestamp":"2026-08-11 15:22:59","url":"/api/message/conversations"}
+{"durationMs":92,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 92ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:59","url":"/api/auth/me"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 83ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:59","url":"/api/message/conversations"}
+{"durationMs":82,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 82ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:59","url":"/api/auth/me"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-11 15:22:59","url":"/api/message/conversations"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 15:23:00","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":163,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 163ms","method":"GET","status":304,"timestamp":"2026-08-11 15:23:00","url":"/api/message/conversations"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 15:23:00","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":30,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 30ms","method":"GET","status":304,"timestamp":"2026-08-11 15:23:00","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:23:00","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 84ms","method":"GET","status":200,"timestamp":"2026-08-11 15:23:04","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":6,"ip":"::1","level":"warn","message":"POST /api/multer/upload 404 - 6ms","method":"POST","status":404,"timestamp":"2026-08-11 15:23:12","url":"/api/multer/upload"}
+{"error":"Unsupported file type","level":"error","message":"Unhandled Error:","stack":"Error: Unsupported file type\n    at checkFileType (file:///C:/Desktop/rtc/Backend/src/config/multer.js:17:16)\n    at wrappedFileFilter (C:\\Desktop\\rtc\\Backend\\node_modules\\multer\\index.js:45:7)\n    at Multipart.<anonymous> (C:\\Desktop\\rtc\\Backend\\node_modules\\multer\\lib\\make-middleware.js:193:7)\n    at Multipart.emit (node:events:508:28)\n    at HeaderParser.cb (C:\\Desktop\\rtc\\Backend\\node_modules\\busboy\\lib\\types\\multipart.js:358:14)\n    at HeaderParser.push (C:\\Desktop\\rtc\\Backend\\node_modules\\busboy\\lib\\types\\multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (C:\\Desktop\\rtc\\Backend\\node_modules\\busboy\\lib\\types\\multipart.js:394:37)\n    at feed (C:\\Desktop\\rtc\\Backend\\node_modules\\streamsearch\\lib\\sbmh.js:219:14)\n    at SBMH.push (C:\\Desktop\\rtc\\Backend\\node_modules\\streamsearch\\lib\\sbmh.js:104:16)\n    at Multipart._write (C:\\Desktop\\rtc\\Backend\\node_modules\\busboy\\lib\\types\\multipart.js:567:19)","timestamp":"2026-08-11 15:25:30"}
+{"durationMs":25,"ip":"::1","level":"error","message":"POST /api/upload/avatar 500 - 25ms","method":"POST","status":500,"timestamp":"2026-08-11 15:25:30","url":"/api/upload/avatar"}
+{"durationMs":126,"ip":"::1","level":"info","message":"POST /api/upload/avatar 200 - 126ms","method":"POST","status":200,"timestamp":"2026-08-11 15:25:37","url":"/api/upload/avatar"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/group/6a7aed6f744310b19fbaacec/avatar 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:25:37","url":"/api/group/6a7aed6f744310b19fbaacec/avatar"}
+{"durationMs":233,"ip":"::1","level":"info","message":"PATCH /api/group/6a7aed6f744310b19fbaacec/avatar 200 - 233ms","method":"PATCH","status":200,"timestamp":"2026-08-11 15:25:37","url":"/api/group/6a7aed6f744310b19fbaacec/avatar"}
+{"durationMs":34,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 200 - 34ms","method":"GET","status":200,"timestamp":"2026-08-11 15:25:37","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 200 - 79ms","method":"GET","status":200,"timestamp":"2026-08-11 15:25:37","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/group/6a7aed6f744310b19fbaacec/members/6a7ae5737ae364bd59deb55a/role 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:25:53","url":"/api/group/6a7aed6f744310b19fbaacec/members/6a7ae5737ae364bd59deb55a/role"}
+{"durationMs":275,"ip":"::1","level":"info","message":"PATCH /api/group/6a7aed6f744310b19fbaacec/members/6a7ae5737ae364bd59deb55a/role 200 - 275ms","method":"PATCH","status":200,"timestamp":"2026-08-11 15:25:53","url":"/api/group/6a7aed6f744310b19fbaacec/members/6a7ae5737ae364bd59deb55a/role"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/group/6a7aed6f744310b19fbaacec/members/6a7ae9467ae364bd59deb55c 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:26:00","url":"/api/group/6a7aed6f744310b19fbaacec/members/6a7ae9467ae364bd59deb55c"}
+{"durationMs":230,"ip":"::1","level":"info","message":"DELETE /api/group/6a7aed6f744310b19fbaacec/members/6a7ae9467ae364bd59deb55c 200 - 230ms","method":"DELETE","status":200,"timestamp":"2026-08-11 15:26:00","url":"/api/group/6a7aed6f744310b19fbaacec/members/6a7ae9467ae364bd59deb55c"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 80ms","method":"GET","status":200,"timestamp":"2026-08-11 15:26:08","url":"/api/message/conversations"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 80ms","method":"GET","status":200,"timestamp":"2026-08-11 15:26:08","url":"/api/auth/me"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 200 - 6ms","method":"GET","status":200,"timestamp":"2026-08-11 15:26:08","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":82,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 82ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:08","url":"/api/auth/me"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 84ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:08","url":"/api/message/conversations"}
+{"durationMs":88,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 88ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:09","url":"/api/message/conversations"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 85ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:09","url":"/api/message/conversations"}
+{"durationMs":62,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 200 - 62ms","method":"GET","status":200,"timestamp":"2026-08-11 15:26:09","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":41,"ip":"::1","level":"info","message":"GET /api/message/6a7aee5a744310b19fbaacf0 200 - 41ms","method":"GET","status":200,"timestamp":"2026-08-11 15:26:10","url":"/api/message/6a7aee5a744310b19fbaacf0"}
+{"durationMs":41,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 41ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:11","url":"/api/group/invitations"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:11","url":"/api/invitation/invitation"}
+{"durationMs":48,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 48ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:11","url":"/api/group/invitations"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 80ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:11","url":"/api/invitation/invitation"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/user/userlist 200 - 79ms","method":"GET","status":200,"timestamp":"2026-08-11 15:26:13","url":"/api/user/userlist"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:13","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:13","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":77,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 77ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:13","url":"/api/user/userlist"}
+{"durationMs":44,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 44ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:14","url":"/api/group/invitations"}
+{"durationMs":93,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 93ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:14","url":"/api/invitation/invitation"}
+{"durationMs":47,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 47ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:14","url":"/api/group/invitations"}
+{"durationMs":90,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 90ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:14","url":"/api/invitation/invitation"}
+{"durationMs":88,"ip":"::1","level":"info","message":"GET /api/group/6a7aed6f744310b19fbaacec/search-users?query= 304 - 88ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:22","url":"/api/group/6a7aed6f744310b19fbaacec/search-users?query="}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/group/6a7aed6f744310b19fbaacec/invitation 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:26:24","url":"/api/group/6a7aed6f744310b19fbaacec/invitation"}
+{"durationMs":306,"ip":"::1","level":"info","message":"POST /api/group/6a7aed6f744310b19fbaacec/invitation 200 - 306ms","method":"POST","status":200,"timestamp":"2026-08-11 15:26:25","url":"/api/group/6a7aed6f744310b19fbaacec/invitation"}
+{"durationMs":97,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 97ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:25","url":"/api/invitation/invitation"}
+{"durationMs":87,"ip":"::1","level":"info","message":"GET /api/group/invitations 200 - 87ms","method":"GET","status":200,"timestamp":"2026-08-11 15:26:25","url":"/api/group/invitations"}
+{"durationMs":90,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 90ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:25","url":"/api/invitation/invitation"}
+{"durationMs":94,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 94ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:25","url":"/api/group/invitations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/group/invitation/6a7af1c80f1f3d34a6f4e5c7/respond 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:26:30","url":"/api/group/invitation/6a7af1c80f1f3d34a6f4e5c7/respond"}
+{"durationMs":388,"ip":"::1","level":"info","message":"POST /api/group/invitation/6a7af1c80f1f3d34a6f4e5c7/respond 200 - 388ms","method":"POST","status":200,"timestamp":"2026-08-11 15:26:30","url":"/api/group/invitation/6a7af1c80f1f3d34a6f4e5c7/respond"}
+{"durationMs":40,"ip":"::1","level":"info","message":"GET /api/group/invitations 200 - 40ms","method":"GET","status":200,"timestamp":"2026-08-11 15:26:30","url":"/api/group/invitations"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:30","url":"/api/invitation/invitation"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 84ms","method":"GET","status":200,"timestamp":"2026-08-11 15:26:30","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:36","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":82,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 82ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:36","url":"/api/message/conversations"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 79ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:36","url":"/api/message/conversations"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 304 - 80ms","method":"GET","status":304,"timestamp":"2026-08-11 15:26:38","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 85ms","method":"GET","status":200,"timestamp":"2026-08-11 15:27:11","url":"/api/message/conversations"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-11 15:27:11","url":"/api/auth/me"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:27:11","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:27:11","url":"/api/message/conversations"}
+{"durationMs":82,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 82ms","method":"GET","status":304,"timestamp":"2026-08-11 15:27:11","url":"/api/auth/me"}
+{"durationMs":82,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 82ms","method":"GET","status":304,"timestamp":"2026-08-11 15:27:11","url":"/api/message/conversations"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 85ms","method":"GET","status":304,"timestamp":"2026-08-11 15:27:11","url":"/api/message/conversations"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:27:11","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:27:11","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 79ms","method":"GET","status":200,"timestamp":"2026-08-11 15:27:13","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/group/6a7aed6f744310b19fbaacec/search-users?query= 200 - 84ms","method":"GET","status":200,"timestamp":"2026-08-11 15:27:15","url":"/api/group/6a7aed6f744310b19fbaacec/search-users?query="}
+{"durationMs":35,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 35ms","method":"GET","status":304,"timestamp":"2026-08-11 15:29:22","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":140,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 140ms","method":"GET","status":304,"timestamp":"2026-08-11 15:29:22","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":97,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 97ms","method":"GET","status":200,"timestamp":"2026-08-11 15:29:53","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:29:59","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":7,"ip":"::1","level":"info","message":"POST /api/auth/logout 200 - 7ms","method":"POST","status":200,"timestamp":"2026-08-11 15:30:20","url":"/api/auth/logout"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:30:21","url":"/api/auth/me"}
+{"durationMs":0,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 0ms","method":"GET","status":401,"timestamp":"2026-08-11 15:30:21","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:30:23","url":"/api/auth/login"}
+{"durationMs":638,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 638ms","method":"POST","status":200,"timestamp":"2026-08-11 15:30:24","url":"/api/auth/login"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:30:24","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":91,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 91ms","method":"GET","status":200,"timestamp":"2026-08-11 15:30:24","url":"/api/message/conversations"}
+{"durationMs":91,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 91ms","method":"GET","status":304,"timestamp":"2026-08-11 15:30:24","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:30:24","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:30:24","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 83ms","method":"GET","status":200,"timestamp":"2026-08-11 15:30:26","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":1,"ip":"::1","level":"info","message":"POST /api/auth/logout 200 - 1ms","method":"POST","status":200,"timestamp":"2026-08-11 15:30:37","url":"/api/auth/logout"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:30:38","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:30:38","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:30:42","url":"/api/auth/login"}
+{"durationMs":581,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 581ms","method":"POST","status":200,"timestamp":"2026-08-11 15:30:43","url":"/api/auth/login"}
+{"durationMs":25,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 200 - 25ms","method":"GET","status":200,"timestamp":"2026-08-11 15:30:43","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 83ms","method":"GET","status":200,"timestamp":"2026-08-11 15:30:43","url":"/api/message/conversations"}
+{"durationMs":88,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 88ms","method":"GET","status":304,"timestamp":"2026-08-11 15:30:43","url":"/api/message/conversations"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 15:30:43","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":10,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 10ms","method":"GET","status":304,"timestamp":"2026-08-11 15:30:43","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":111,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 111ms","method":"GET","status":200,"timestamp":"2026-08-11 15:30:45","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":729,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 729ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 79ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/api/auth/me"}
+{"durationMs":379,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 379ms","method":"GET","status":200,"timestamp":"2026-08-11 15:40:05","url":"/api/message/conversations"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/api/message/conversations"}
+{"durationMs":484,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 484ms","method":"GET","status":200,"timestamp":"2026-08-11 15:40:05","url":"/api/auth/me"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 80ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/api/auth/me"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 84ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:05","url":"/api/message/conversations"}
+{"durationMs":8514,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 8514ms","method":"GET","status":200,"timestamp":"2026-08-11 15:40:13","url":"/api/message/conversations"}
+{"durationMs":82,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 82ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:13","url":"/api/message/conversations"}
+{"durationMs":81,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 81ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:13","url":"/api/message/conversations"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 85ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:13","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:13","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:13","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:13","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-11 15:40:13","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":401,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 401ms","method":"GET","status":200,"timestamp":"2026-08-11 15:40:16","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:43:05"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:43:06"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:43:09"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:43:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:43:17"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:43:18"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-11 15:43:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-11 15:43:35"}
+{"durationMs":137,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 137ms","method":"GET","status":200,"timestamp":"2026-08-11 15:44:07","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":10,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 200 - 10ms","method":"GET","status":200,"timestamp":"2026-08-11 15:44:12","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":28,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 200 - 28ms","method":"GET","status":200,"timestamp":"2026-08-11 15:44:12","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"POST /api/auth/logout 200 - 3ms","method":"POST","status":200,"timestamp":"2026-08-11 15:44:28","url":"/api/auth/logout"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:44:29","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-11 15:44:29","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-11 15:44:45","url":"/api/auth/login"}
+{"durationMs":689,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 689ms","method":"POST","status":200,"timestamp":"2026-08-11 15:44:46","url":"/api/auth/login"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-11 15:44:46","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":139,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 139ms","method":"GET","status":200,"timestamp":"2026-08-11 15:44:46","url":"/api/message/conversations"}
+{"durationMs":196,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 196ms","method":"GET","status":304,"timestamp":"2026-08-11 15:44:46","url":"/api/message/conversations"}
+{"durationMs":107,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 200 - 107ms","method":"GET","status":200,"timestamp":"2026-08-11 15:44:46","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":149,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 200 - 149ms","method":"GET","status":200,"timestamp":"2026-08-11 15:44:46","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 80ms","method":"GET","status":200,"timestamp":"2026-08-11 15:44:49","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":78,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 304 - 78ms","method":"GET","status":304,"timestamp":"2026-08-11 15:52:56","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":78,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 304 - 78ms","method":"GET","status":304,"timestamp":"2026-08-11 15:52:58","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":132,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 132ms","method":"GET","status":200,"timestamp":"2026-08-11 15:53:19","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-12 14:03:11"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-12 14:03:12"}
+{"durationMs":11,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 11ms","method":"OPTIONS","status":204,"timestamp":"2026-08-12 14:03:21","url":"/api/auth/login"}
+{"durationMs":784,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 784ms","method":"POST","status":200,"timestamp":"2026-08-12 14:03:22","url":"/api/auth/login"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:22","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":154,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 154ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:22","url":"/api/message/conversations"}
+{"durationMs":150,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 150ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:22","url":"/api/message/conversations"}
+{"durationMs":9,"ip":"::1","level":"info","message":"GET /uploads/1786441558517-176683286.png 304 - 9ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:22","url":"/uploads/1786441558517-176683286.png"}
+{"durationMs":18,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 304 - 18ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:22","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:22","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":15,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 15ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:23","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":157,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 304 - 157ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:24","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":124,"ip":"::1","level":"info","message":"GET /api/message/6a7aee5a744310b19fbaacf0 304 - 124ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:33","url":"/api/message/6a7aee5a744310b19fbaacf0"}
+{"durationMs":157,"ip":"::1","level":"info","message":"GET /api/message/6a7aed6f744310b19fbaacec 200 - 157ms","method":"GET","status":200,"timestamp":"2026-08-12 14:03:34","url":"/api/message/6a7aed6f744310b19fbaacec"}
+{"durationMs":338,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 338ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-12 14:03:36","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":2,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 2ms","method":"GET","status":401,"timestamp":"2026-08-12 14:03:57","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-12 14:03:57","url":"/api/auth/me"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-12 14:04:07","url":"/api/auth/login"}
+{"durationMs":446,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 446ms","method":"POST","status":200,"timestamp":"2026-08-12 14:04:07","url":"/api/auth/login"}
+{"durationMs":15,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 200 - 15ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:07","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":129,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 129ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:08","url":"/api/message/conversations"}
+{"durationMs":165,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 165ms","method":"GET","status":304,"timestamp":"2026-08-12 14:04:08","url":"/api/message/conversations"}
+{"durationMs":67,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 200 - 67ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:08","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":215,"ip":"::1","level":"info","message":"GET /uploads/1786442137083-950341933.png 200 - 215ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:08","url":"/uploads/1786442137083-950341933.png"}
+{"durationMs":145,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 145ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:11","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":9,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 200 - 9ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:11","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":11,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 200 - 11ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:11","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":15,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 200 - 15ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:11","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":19,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 200 - 19ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:11","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":26,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 200 - 26ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:11","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":34,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 200 - 34ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:11","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":21,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 200 - 21ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:11","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":32,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 200 - 32ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:11","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 200 - 80ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:12","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":112,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 200 - 112ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:12","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":485,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 485ms","method":"GET","status":200,"timestamp":"2026-08-12 14:04:14","url":"/api/message/6a78917685774e5fee54cf66"}
+{"error":"No matching document found for id \"6a797c5bf9eb51aeb902ec56\" version 0 modifiedPaths \"readBy, deliveredTo\"","level":"error","message":"message:read error:","timestamp":"2026-08-12 14:04:17"}

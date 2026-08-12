@@ -1,9 +1,6 @@
 import { create } from "zustand";
 import { axiosInstance as axios } from "@/core/api/axiosInstance.js";
-import { socket, disconnectSocket } from "@/core/socket/socket.js";
-import { hasAuthCookie } from "@/core/utils/authCookie.js";
-import useAuthStore from "@/modules/auth/stores/useAuthStore.js";
-import toast from "react-hot-toast";
+import { socket } from "@/core/socket/socket.js";
 
 const useChatStore = create((set, get) => ({
     conversations: [],
@@ -16,7 +13,6 @@ const useChatStore = create((set, get) => ({
     hasMoreMessages: true,
     _requestToken: 0,
     _conversationsRequestToken: 0,
-
 
     fetchConversations: async () => {
         const token = get()._conversationsRequestToken + 1;
@@ -151,7 +147,7 @@ const useChatStore = create((set, get) => ({
         }));
     },
 
-    sendMessage: async (payload) => {
+    sendMessage: (payload) => {
         const { content = "", attachments = [] } =
             typeof payload === "string" ? { content: payload } : payload || {};
         const { activeConversation } = get();
@@ -162,22 +158,6 @@ const useChatStore = create((set, get) => ({
         const hasAttachments = attachments.length > 0;
 
         if (!hasText && !hasAttachments) return;
-
-        if (!hasAuthCookie()) {
-            toast.error("Session expired. Cannot send message.");
-            disconnectSocket();
-            useAuthStore.getState().logout();
-            return;
-        }
-
-        try {
-            await axios.get("/auth/me");
-        } catch (error) {
-            toast.error("Session expired. Cannot send message.");
-            disconnectSocket();
-            useAuthStore.getState().logout();
-            return;
-        }
 
         socket.emit("message:send", {
             conversationId: activeConversation._id,
@@ -321,6 +301,114 @@ const useChatStore = create((set, get) => ({
             isTyping,
         });
     },
+
+    createGroup: async ({ name, members }) => {
+        const res = await axios.post("/group/create", { name, members });
+        const createdGroup = res.data?.data || res.data;
+        if (createdGroup?._id) {
+            set((state) => {
+                const exists = state.conversations.some((c) => c._id === createdGroup._id);
+                return {
+                    conversations: exists ? state.conversations : [createdGroup, ...state.conversations],
+                    activeConversation: createdGroup,
+                };
+            });
+        }
+        return createdGroup;
+    },
+
+    sendGroupInvitation: async (groupId, payload) => {
+        const res = await axios.post(`/group/${groupId}/invitation`, payload);
+        return res.data;
+    },
+
+    fetchGroupInvitations: async () => {
+        const res = await axios.get("/group/invitations");
+        const data = res.data?.invitations || res.data?.data || (Array.isArray(res.data) ? res.data : []);
+        return Array.isArray(data) ? data : [];
+    },
+
+    respondToGroupInvitation: async (invitationId, action) => {
+        const res = await axios.post(`/group/invitation/${invitationId}/respond`, { action });
+        const { conversation } = res.data?.data || res.data || {};
+        if (action === "accepted" && conversation?._id) {
+            set((state) => {
+                const exists = state.conversations.some((c) => c._id === conversation._id);
+                const updated = exists
+                    ? state.conversations.map((c) => (c._id === conversation._id ? conversation : c))
+                    : [conversation, ...state.conversations];
+                return {
+                    conversations: updated,
+                    activeConversation: conversation,
+                };
+            });
+        }
+        return res.data;
+    },
+
+    addOrUpdateConversation: (conversation) => {
+        if (!conversation?._id) return;
+        set((state) => {
+            const idx = state.conversations.findIndex((c) => c._id === conversation._id);
+            let updatedConvs = [];
+            if (idx !== -1) {
+                updatedConvs = [...state.conversations];
+                updatedConvs[idx] = { ...updatedConvs[idx], ...conversation };
+            } else {
+                updatedConvs = [conversation, ...state.conversations];
+            }
+
+            const updatedActive =
+                state.activeConversation?._id === conversation._id
+                    ? { ...state.activeConversation, ...conversation }
+                    : state.activeConversation;
+
+            return {
+                conversations: updatedConvs,
+                activeConversation: updatedActive,
+            };
+        });
+    },
+
+    removeConversation: (conversationId) => {
+        set((state) => ({
+            conversations: state.conversations.filter((c) => c._id !== conversationId),
+            activeConversation:
+                state.activeConversation?._id === conversationId ? null : state.activeConversation,
+        }));
+    },
+
+    updateGroupAvatar: async (groupId, avatarUrl) => {
+        const res = await axios.patch(`/group/${groupId}/avatar`, { avatarUrl });
+        const updated = res.data?.conversation || res.data?.data || res.data;
+        if (updated?._id) {
+            useChatStore.getState().addOrUpdateConversation(updated);
+        }
+        return updated;
+    },
+
+    updateMemberRole: async (groupId, targetUserId, newRole) => {
+        const res = await axios.patch(`/group/${groupId}/members/${targetUserId}/role`, { newRole });
+        const updated = res.data?.conversation || res.data?.data || res.data;
+        if (updated?._id) {
+            useChatStore.getState().addOrUpdateConversation(updated);
+        }
+        return updated;
+    },
+
+    leaveGroup: async (groupId) => {
+        await axios.post(`/group/${groupId}/leave`);
+        useChatStore.getState().removeConversation(groupId);
+    },
+
+    kickMember: async (groupId, targetUserId) => {
+        const res = await axios.delete(`/group/${groupId}/members/${targetUserId}`);
+        const updated = res.data?.conversation || res.data?.data || res.data;
+        if (updated?._id) {
+            useChatStore.getState().addOrUpdateConversation(updated);
+        }
+        return updated;
+    },
 }));
 
 socket.on("message:new", (message) => useChatStore.getState().receiveMessage(message));
@@ -332,6 +420,23 @@ socket.on("message:reactionUpdated", (message) => {
 });
 socket.on("conversation:updated", (payload) => {
     useChatStore.getState().updateConversationPreview(payload);
+});
+socket.on("conversation:new", (conversation) => {
+    useChatStore.getState().addOrUpdateConversation(conversation);
+});
+socket.on("group:created", (conversation) => {
+    useChatStore.getState().addOrUpdateConversation(conversation);
+});
+socket.on("group:updated", (conversation) => {
+    useChatStore.getState().addOrUpdateConversation(conversation);
+});
+socket.on("conversation:removed", ({ conversationId }) => {
+    useChatStore.getState().removeConversation(conversationId);
+});
+socket.on("group:memberJoined", ({ conversation }) => {
+    if (conversation) {
+        useChatStore.getState().addOrUpdateConversation(conversation);
+    }
 });
 socket.on("typing", ({ userId, isTyping }) => {
     const { activeConversation } = useChatStore.getState();

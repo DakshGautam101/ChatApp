@@ -38,6 +38,8 @@ const attachAuthResponse = (res, user) => {
     return token;
 };
 
+import logger from "../utils/logger.js";
+
 const createSafeUserResponse = async (userId) => {
     return User.findById(userId).select("-emailVerificationOtp -emailVerificationOtpExpires -password");
 };
@@ -46,7 +48,7 @@ const sendVerificationEmail = async (email, otp) => {
     try {
         await verifyEmail(email, otp);
     } catch (error) {
-        console.error("Email verification failed", error);
+        logger.error("Email verification failed:", { error: error.message, stack: error.stack });
     }
 };
 

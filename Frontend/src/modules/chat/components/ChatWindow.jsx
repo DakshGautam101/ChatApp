@@ -4,20 +4,22 @@ import useAuthStore from "@/modules/auth/stores/useAuthStore";
 import useFileStore from "../stores/useFileStore";
 import { Button } from "@/core/components/ui/button";
 import { Input } from "@/core/components/ui/input";
-import { Send, MessageCircle, ChevronDown, Link } from "lucide-react";
+import { Send, MessageCircle, ChevronDown, Link, Users, UserPlus, ShieldCheck, Camera } from "lucide-react";
 import { cn } from "@/core/utils/utils";
 import AnimatedBackground from "@/core/components/AnimatedBackground";
 import Avatar from "@/core/components/Avatar";
 import MessageBubble from "./MessageBubble";
 import FileAttachmentBar from "./FileAttachmentBar";
 import ImageViewDialog from "./ImageViewDialog";
+import InviteToGroupModal from "../groupChat/InviteToGroupModal";
+import GroupMembersModal from "../groupChat/GroupMembersModal";
+import { axiosInstance } from "@/core/api/axiosInstance";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 let typingTimeout = null;
 
 export default function ChatWindow() {
-    const { user , isAuthneticated } = useAuthStore();
+    const { user } = useAuthStore();
     const {
         activeConversation,
         messages,
@@ -30,6 +32,7 @@ export default function ChatWindow() {
         typingUsers,
         loadOlderMessages,
         reactToMessage,
+        updateGroupAvatar,
     } = useChatStore();
 
     const { items, addFiles, sendItemsAsOptimisticMessage, retryUpload } = useFileStore();
@@ -46,13 +49,40 @@ export default function ChatWindow() {
     const olderLoadPrevHeightRef = useRef(null);
     const olderLoadPrevScrollRef = useRef(null);
     const fileInputRef = useRef(null);
+    const groupAvatarInputRef = useRef(null);
 
     const [chatViewerOpen, setChatViewerOpen] = useState(false);
     const [chatViewerImages, setChatViewerImages] = useState([]);
     const [chatViewerIndex, setChatViewerIndex] = useState(0);
-    const navigate = useNavigate();
+
+    const [showInviteModal, setShowInviteModal] = useState(false);
+    const [showMembersModal, setShowMembersModal] = useState(false);
+    const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
     const canSend = draft.trim().length > 0 || (items && items.length > 0);
+
+    const handleGroupAvatarChange = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file || !activeConversation?._id) return;
+        setUploadingAvatar(true);
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+            const res = await axiosInstance.post("/upload/avatar", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            const fileUrl = res.data?.file?.url || res.data?.url;
+            if (fileUrl) {
+                await updateGroupAvatar(activeConversation._id, fileUrl);
+                toast.success("Group avatar updated successfully");
+            }
+        } catch (err) {
+            toast.error(err?.response?.data?.message || "Failed to upload group avatar");
+        } finally {
+            setUploadingAvatar(false);
+            e.target.value = "";
+        }
+    };
 
     useLayoutEffect(() => {
         previousMessageCount.current = 0;
@@ -101,24 +131,16 @@ export default function ChatWindow() {
         if (isAppendingAtBottom) {
             const lastMessage = messages[messages.length - 1];
             const isMine = (lastMessage?.sender?._id || lastMessage?.sender) === user?._id;
-            const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 200;
-
-            if (isMine || isNearBottom) {
-                isAutoScrollingRef.current = true;
-                if (bottomRef.current) {
-                    bottomRef.current.scrollIntoView({ block: "end", behavior: isMine ? "smooth" : "auto" });
-                } else {
-                    container.scrollTop = container.scrollHeight;
-                }
-                setShowScrollButton(false);
-                setTimeout(() => {
-                    isAutoScrollingRef.current = false;
-                }, 300);
+            if (isMine || container.scrollHeight - container.scrollTop - container.clientHeight < 150) {
+                requestAnimationFrame(() => {
+                    if (bottomRef.current) {
+                        bottomRef.current.scrollIntoView({ block: "end", behavior: "smooth" });
+                    }
+                });
             }
         }
-
         previousMessageCount.current = messages.length;
-    }, [messages, activeConversation?._id, isLoadingMessages, isLoadingOlderMessages, user?._id]);
+    }, [messages, isLoadingMessages, isLoadingOlderMessages, user?._id]);
 
     useEffect(() => {
         const container = scrollContainerRef.current;
@@ -148,7 +170,17 @@ export default function ChatWindow() {
         );
     }
 
-    const other = activeConversation.participants.find((participant) => participant.user._id !== user?._id)?.user;
+    const isGroup = activeConversation.type === "group";
+    const otherParticipant = activeConversation.participants?.find(
+        (p) => (p.user?._id || p.user) !== user?._id
+    );
+    const other = isGroup ? null : otherParticipant?.user;
+
+    const currentParticipant = activeConversation.participants?.find(
+        (p) => (p.user?._id || p.user) === user?._id
+    );
+    const isAdmin = isGroup && currentParticipant?.role === "admin";
+
     const othersTyping = typingUsers[activeConversation._id];
     const isOtherTyping = othersTyping && othersTyping.size > 0;
 
@@ -257,33 +289,110 @@ export default function ChatWindow() {
     return (
         <div className="relative flex h-full min-h-0 flex-col bg-slate-50/50">
             {/* Header */}
-            <div className="flex items-center gap-3.5 border-b border-slate-200/80 bg-white p-4 z-10 shadow-xs">
-                <Avatar
-                    src={other?.avatar}
-                    name={other?.username || other?.email}
-                    size="md"
-                    showStatus={true}
-                    status={other?.status || "online"}
-                />
-                <div className="flex-1 min-w-0">
-                    <div className="font-bold text-slate-900 truncate text-base">
-                        {other?.username || other?.email || "Chat"}
-                    </div>
-                    {isOtherTyping ? (
-                        <div className="flex items-center gap-1 text-xs text-blue-600 font-semibold animate-fade-in">
-                            <span>typing</span>
-                            <span className="flex gap-0.5 ml-0.5">
-                                <span className="h-1 w-1 animate-dot-bounce rounded-full bg-blue-600" />
-                                <span className="h-1 w-1 animate-dot-bounce rounded-full bg-blue-600 [animation-delay:150ms]" />
-                                <span className="h-1 w-1 animate-dot-bounce rounded-full bg-blue-600 [animation-delay:300ms]" />
-                            </span>
+            <div className="flex items-center justify-between gap-3 border-b border-slate-200/80 bg-white p-3.5 z-10 shadow-xs">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                    {isGroup ? (
+                        <div className="relative shrink-0 group">
+                            {activeConversation.avatarUrl ? (
+                                <Avatar
+                                    src={activeConversation.avatarUrl}
+                                    name={activeConversation.name}
+                                    size="md"
+                                />
+                            ) : (
+                                <div className="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-xs">
+                                    <Users className="h-5 w-5" />
+                                </div>
+                            )}
+                            {isAdmin && (
+                                <button
+                                    onClick={() => groupAvatarInputRef.current?.click()}
+                                    disabled={uploadingAvatar}
+                                    className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                                    title="Upload group avatar"
+                                >
+                                    {uploadingAvatar ? (
+                                        <span className="loading loading-spinner loading-xs text-white"></span>
+                                    ) : (
+                                        <Camera className="h-4 w-4" />
+                                    )}
+                                </button>
+                            )}
+                            <input
+                                type="file"
+                                ref={groupAvatarInputRef}
+                                onChange={handleGroupAvatarChange}
+                                accept="image/*"
+                                className="hidden"
+                            />
                         </div>
                     ) : (
-                        <div className="text-xs text-slate-500 truncate animate-fade-in font-normal">
-                            {other?.email}
-                        </div>
+                        <Avatar
+                            src={other?.avatar}
+                            name={other?.username || other?.email}
+                            size="md"
+                            showStatus={true}
+                            status={other?.status || "offline"}
+                        />
                     )}
+
+                    <div className="flex-1 min-w-0">
+                        <div className="font-bold text-slate-900 truncate text-base flex items-center gap-2">
+                            <span>{isGroup ? activeConversation.name : (other?.username || other?.email || "Chat")}</span>
+                            {isGroup && isAdmin && (
+                                <span className="badge badge-sm bg-amber-50 text-amber-700 border-amber-200 font-bold text-[10px]">
+                                    Admin
+                                </span>
+                            )}
+                        </div>
+                        {isOtherTyping ? (
+                            <div className="flex items-center gap-1 text-xs text-blue-600 font-semibold animate-fade-in">
+                                <span>typing</span>
+                                <span className="flex gap-0.5 ml-0.5">
+                                    <span className="h-1 w-1 animate-dot-bounce rounded-full bg-blue-600" />
+                                    <span className="h-1 w-1 animate-dot-bounce rounded-full bg-blue-600 [animation-delay:150ms]" />
+                                    <span className="h-1 w-1 animate-dot-bounce rounded-full bg-blue-600 [animation-delay:300ms]" />
+                                </span>
+                            </div>
+                        ) : (
+                            <div className="text-xs text-slate-500 truncate animate-fade-in font-normal flex items-center gap-1">
+                                {isGroup ? (
+                                    <button
+                                        onClick={() => setShowMembersModal(true)}
+                                        className="hover:text-blue-600 hover:underline flex items-center gap-1"
+                                    >
+                                        <Users className="h-3 w-3 text-slate-400" />
+                                        <span>{activeConversation.participants?.length || 0} members</span>
+                                    </button>
+                                ) : (
+                                    <span>{other?.email}</span>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
+
+                {isGroup && (
+                    <div className="flex items-center gap-1.5 shrink-0">
+                        <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => setShowMembersModal(true)}
+                            className="h-8 gap-1 rounded-lg text-xs font-semibold border-slate-200 text-slate-700 hover:bg-slate-100"
+                        >
+                            <Users className="h-3.5 w-3.5 text-slate-500" />
+                            <span className="hidden sm:inline">Members</span>
+                        </Button>
+                        {isAdmin && <Button
+                            size="sm"
+                            onClick={() => setShowInviteModal(true)}
+                            className="h-8 gap-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-xs border-none"
+                        >
+                            <UserPlus className="h-3.5 w-3.5" />
+                            <span>Invite</span>
+                        </Button>}
+                    </div>
+                )}
             </div>
 
             {/* Messages Scroll Area */}
@@ -400,6 +509,19 @@ export default function ChatWindow() {
                 onOpenChange={setChatViewerOpen}
                 images={chatViewerImages}
                 initialIndex={chatViewerIndex}
+            />
+
+            {/* Group Modals */}
+            <InviteToGroupModal
+                open={showInviteModal}
+                onOpenChange={setShowInviteModal}
+                group={activeConversation}
+            />
+
+            <GroupMembersModal
+                open={showMembersModal}
+                onOpenChange={setShowMembersModal}
+                group={activeConversation}
             />
         </div>
     );

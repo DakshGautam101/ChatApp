@@ -5,8 +5,9 @@ export const getMessages = async (req, res, next) => {
     try {
         const { conversationId } = req.params;
         const { before } = req.query;
+        const userId = req.user.id;
 
-        const result = await getMessagesService(conversationId, before);
+        const result = await getMessagesService(conversationId, before, userId);
 
         return sendSuccess(res, 200, result);
     } catch (error) {
