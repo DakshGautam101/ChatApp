@@ -1,4 +1,5 @@
 import { sendSuccess } from "../utils/response.js";
+import Message from "../models/messages.model.js";
 import {
     createGroupService,
     sendGroupInvitationService,
@@ -91,7 +92,20 @@ export const respondToGroupInvitation = async (req, res, next) => {
         const io = getIO();
         if (io) {
             if (action === "accepted" && conversation) {
-                io.to(`user_${userId}`).emit("conversation:new", conversation);
+                const convObj = conversation.toObject ? conversation.toObject() : JSON.parse(JSON.stringify(conversation));
+                const participant = convObj.participants?.find(
+                    (p) => (p.user?._id || p.user).toString() === userId.toString()
+                );
+                if (participant && participant.joinedAt) {
+                    const latestMessage = await Message.findOne({
+                        conversation: convObj._id,
+                        createdAt: { $gte: participant.joinedAt },
+                    });
+                    if (!latestMessage) {
+                        convObj.lastMessage = { text: null, sender: null, at: null };
+                    }
+                }
+                io.to(`user_${userId}`).emit("conversation:new", convObj);
                 io.to(`conv_${conversation._id}`).emit("group:memberJoined", {
                     conversation,
                     userId,

@@ -161,7 +161,9 @@ const useFileStore = create((set, get) => ({
             fileType: item.file?.type || item.attachment?.fileType || "",
             size: item.file?.size || item.attachment?.size,
             url: item.file
-                ? (item.file.type.startsWith("image/") ? URL.createObjectURL(item.file) : "")
+                ? (item.file.type.startsWith("image/") || item.file.type.startsWith("video/")
+                    ? URL.createObjectURL(item.file)
+                    : "")
                 : (item.attachment?.url || ""),
             status: item.status,
             progress: item.progress,

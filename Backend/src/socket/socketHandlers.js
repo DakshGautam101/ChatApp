@@ -113,10 +113,13 @@ function init(io) {
 
                 await Conversation.updateOne(
                     { _id: conversationId },
-                    { $set: { lastMessage: { text: previewText, sender: userId } } }
+                    { $set: { lastMessage: { text: previewText, sender: userId, at: new Date() } } }
                 );
 
-                const populated = await message.populate("sender", "username email avatar");
+                const populated = await message.populate([
+                    { path: "sender", select: "username email avatar" },
+                    { path: "reactions.user", select: "username email avatar" },
+                ]);
 
                 socket.emit("message:statusUpdated", {
                     messageId: populated._id.toString(),
@@ -128,7 +131,7 @@ function init(io) {
                 recipients.forEach((recipientId) => {
                     io.to(`user_${recipientId}`).emit("conversation:updated", {
                         conversationId,
-                        lastMessage: { text: previewText, sender: userId },
+                        lastMessage: { text: previewText, sender: userId, at: new Date() },
                     });
                 });
             } catch (err) {
@@ -151,12 +154,12 @@ function init(io) {
                 if (!message) return;
 
                 const existing = message.reactions.find(
-                    (reaction) => reaction.user.toString() === userId
+                    (reaction) => (reaction.user._id || reaction.user).toString() === userId
                 );
 
                 if (existing) {
                     message.reactions = message.reactions.filter(
-                        (reaction) => reaction.user.toString() !== userId
+                        (reaction) => (reaction.user._id || reaction.user).toString() !== userId
                     );
                 } else {
                     message.reactions.push({
@@ -166,7 +169,10 @@ function init(io) {
                 }
 
                 await message.save();
-                const populated = await message.populate("sender", "username email avatar");
+                const populated = await message.populate([
+                    { path: "sender", select: "username email avatar" },
+                    { path: "reactions.user", select: "username email avatar" },
+                ]);
                 io.to(`conv_${conversationId}`).emit("message:reactionUpdated", populated);
             } catch (err) {
                 logger.error("message:react error:", { error: err.message });

@@ -1,15 +1,46 @@
 import { forwardRef } from "react";
 import { Check, CheckCheck } from "lucide-react";
 import { cn } from "@/core/utils/utils";
+import Avatar from "@/core/components/Avatar";
 import { MessageAttachments } from "./MessageAttachments";
 import { MessageReactions, ReactionPicker } from "./MessageReactions";
 
+const SENDER_COLORS = [
+    "text-blue-600 font-semibold",
+    "text-emerald-600 font-semibold",
+    "text-violet-600 font-semibold",
+    "text-amber-600 font-semibold",
+    "text-rose-600 font-semibold",
+    "text-cyan-600 font-semibold",
+    "text-indigo-600 font-semibold",
+    "text-teal-600 font-semibold",
+];
+
+function getSenderColor(senderId) {
+    if (!senderId) return "text-slate-600 font-semibold";
+    const str = senderId.toString();
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % SENDER_COLORS.length;
+    return SENDER_COLORS[index];
+}
+
 export const MessageBubble = forwardRef(function MessageBubble(
-    { message, isMine, isFirstUnread, reactToMessage, onImageClick, onRetry },
+    { message, isMine, isFirstUnread, isGroup, reactToMessage, onImageClick, onRetry },
     ref
 ) {
     const hasAttachments = message.attachments?.length > 0;
     const showSeparateTextBubble = message.content?.trim() && !hasAttachments;
+
+    const senderObj = typeof message.sender === "object" ? message.sender : null;
+    const senderName = isMine
+        ? "You"
+        : senderObj?.username || senderObj?.email?.split("@")[0] || "User";
+    const senderAvatar = senderObj?.avatar;
+    const senderId = senderObj?._id || message.sender;
+    const nameColorClass = isMine ? "text-blue-600 font-semibold" : getSenderColor(senderId);
 
     return (
         <div className="w-full flex flex-col gap-1">
@@ -23,8 +54,25 @@ export const MessageBubble = forwardRef(function MessageBubble(
                 </div>
             )}
 
-            <div className={cn("group flex flex-col gap-1 w-full animate-message-in", isMine ? "items-end" : "items-start")}>
-                <div className={cn("group relative flex flex-col gap-1 max-w-[75%]", isMine ? "items-end" : "items-start")}>
+            <div className={cn("group flex items-end gap-2 w-full animate-message-in", isMine ? "justify-end" : "justify-start")}>
+                {/* Avatar for incoming group message */}
+                {isGroup && !isMine && (
+                    <Avatar
+                        src={senderAvatar}
+                        name={senderName}
+                        size="sm"
+                        className="mb-1 shrink-0 shadow-xs"
+                    />
+                )}
+
+                <div className={cn("group relative flex flex-col gap-0.5 max-w-[75%]", isMine ? "items-end" : "items-start")}>
+                    {/* Sender Name in Group Chat */}
+                    {isGroup && (
+                        <div className={cn("text-[11px] px-1 mb-0.5 tracking-tight flex items-center gap-1", nameColorClass)}>
+                            <span>{senderName}</span>
+                        </div>
+                    )}
+
                     {/* Floating Reaction Picker */}
                     <ReactionPicker
                         isMine={isMine}
@@ -42,7 +90,7 @@ export const MessageBubble = forwardRef(function MessageBubble(
                         />
                     )}
 
-                    {/* Text Message Content (only shown if not already rendered as attachment caption) */}
+                    {/* Text Message Content */}
                     {showSeparateTextBubble && (
                         <div
                             className={cn(
@@ -57,7 +105,7 @@ export const MessageBubble = forwardRef(function MessageBubble(
                     )}
 
                     {/* Status & Reaction Badges */}
-                    <div className={cn("flex items-center gap-2", isMine ? "flex-row-reverse" : "flex-row")}>
+                    <div className={cn("flex items-center gap-2 mt-0.5", isMine ? "flex-row-reverse" : "flex-row")}>
                         {isMine && (
                             <span className="inline-flex items-center">
                                 {message.status === "read" ? (
@@ -73,9 +121,20 @@ export const MessageBubble = forwardRef(function MessageBubble(
                         <MessageReactions reactions={message.reactions} />
                     </div>
                 </div>
+
+                {/* Avatar for outgoing group message */}
+                {isGroup && isMine && (
+                    <Avatar
+                        src={senderAvatar}
+                        name="You"
+                        size="sm"
+                        className="mb-1 shrink-0 shadow-xs"
+                    />
+                )}
             </div>
         </div>
     );
 });
 
 export default MessageBubble;
+

@@ -111,7 +111,7 @@ export default function CreateGroupModal({ open, onOpenChange }) {
                             id="group-name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="e.g. Project Alpha Team"
+                            placeholder="Enter your group name :"
                             maxLength={50}
                             className="rounded-xl bg-slate-50 border-slate-200 focus:bg-white focus:ring-2 focus:ring-blue-500/20 text-slate-900 h-11"
                         />

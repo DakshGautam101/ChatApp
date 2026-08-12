@@ -184,6 +184,36 @@ export default function ChatWindow() {
     const othersTyping = typingUsers[activeConversation._id];
     const isOtherTyping = othersTyping && othersTyping.size > 0;
 
+    const getTypingText = () => {
+        if (!isOtherTyping) return null;
+        const currentUserId = (user?._id || user?.id)?.toString();
+        const typingIds = Array.from(othersTyping).filter((id) => id !== currentUserId);
+        if (typingIds.length === 0) return null;
+
+        const names = typingIds.map((id) => {
+            const participant = activeConversation.participants?.find(
+                (p) => (p.user?._id || p.user)?.toString() === id
+            );
+            const u = participant?.user;
+            if (typeof u === "object" && u !== null) {
+                return u.username || u.email?.split("@")[0] || "Someone";
+            }
+            return "Someone";
+        });
+
+        if (names.length === 1) {
+            return `${names[0]} is typing...`;
+        } else if (names.length === 2) {
+            return `${names[0]} and ${names[1]} are typing...`;
+        } else if (names.length === 3) {
+            return `${names[0]}, ${names[1]}, and ${names[2]} are typing...`;
+        } else {
+            return `${names[0]}, ${names[1]} and ${names.length - 2} others are typing...`;
+        }
+    };
+
+    const typingText = getTypingText();
+
     const handleChange = (e) => {
         setDraft(e.target.value);
         emitTyping(true);
@@ -345,9 +375,9 @@ export default function ChatWindow() {
                                 </span>
                             )}
                         </div>
-                        {isOtherTyping ? (
-                            <div className="flex items-center gap-1 text-xs text-blue-600 font-semibold animate-fade-in">
-                                <span>typing</span>
+                        {typingText ? (
+                            <div className="flex items-center gap-1.5 text-xs text-blue-600 font-semibold animate-fade-in">
+                                <span>{typingText}</span>
                                 <span className="flex gap-0.5 ml-0.5">
                                     <span className="h-1 w-1 animate-dot-bounce rounded-full bg-blue-600" />
                                     <span className="h-1 w-1 animate-dot-bounce rounded-full bg-blue-600 [animation-delay:150ms]" />
@@ -430,6 +460,7 @@ export default function ChatWindow() {
                                 ref={isFirstUnread ? firstUnreadRef : null}
                                 message={message}
                                 isMine={isMine}
+                                isGroup={isGroup}
                                 isFirstUnread={isFirstUnread}
                                 reactToMessage={reactToMessage}
                                 onImageClick={handleChatMessageImageClick}
@@ -452,6 +483,18 @@ export default function ChatWindow() {
                     >
                         <ChevronDown className="h-5 w-5" />
                     </Button>
+                </div>
+            )}
+
+            {/* Animated Typing Bar above input form */}
+            {typingText && (
+                <div className="px-4 py-2 bg-white/95 backdrop-blur-md border-t border-slate-200/60 flex items-center gap-2.5 text-xs text-blue-600 font-semibold animate-fade-in z-10 shadow-2xs">
+                    <div className="flex gap-1 items-center bg-blue-50 px-2 py-1 rounded-full border border-blue-200/60">
+                        <span className="h-1.5 w-1.5 animate-dot-bounce rounded-full bg-blue-600" />
+                        <span className="h-1.5 w-1.5 animate-dot-bounce rounded-full bg-blue-600 [animation-delay:150ms]" />
+                        <span className="h-1.5 w-1.5 animate-dot-bounce rounded-full bg-blue-600 [animation-delay:300ms]" />
+                    </div>
+                    <span>{typingText}</span>
                 </div>
             )}
 
