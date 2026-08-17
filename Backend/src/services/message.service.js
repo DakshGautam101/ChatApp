@@ -62,14 +62,13 @@ export const sendMessageService = async ({ userId, conversationId, content, atta
 
     const io = getIO();
     if (io) {
-        // Broadcast new message to conversation room and all participant user rooms (deduplicated by socket.io)
+       
         const participantRooms = conversation.participants.map(
             (p) => `user_${(p.user?._id || p.user).toString()}`
         );
 
         io.to(`conv_${conversationId}`).to(participantRooms).emit("message:new", populated);
 
-        // Notify user rooms and store notifications
         for (const recipientId of recipients) {
             const isOnline = getSockets(recipientId).length > 0;
 
@@ -95,7 +94,6 @@ export const sendMessageService = async ({ userId, conversationId, content, atta
                 logger.error("Failed to create notification:", e);
             }
 
-            // Dispatch offline email directly if recipient is offline
             if (!isOnline && process.env.ENABLE_OFFLINE_EMAIL === "true") {
                 User.findById(recipientId)
                     .select("username email")

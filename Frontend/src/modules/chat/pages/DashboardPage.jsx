@@ -23,10 +23,13 @@ import toast from 'react-hot-toast';
 
 const DashboardPage = () => {
     const { user, logout, updateProfile } = useAuthStore();
-    const conversations = useChatStore((state) => state.conversations);
     const activeConversation = useChatStore((state) => state.activeConversation);
+    const activeConversationId = activeConversation?._id?.toString();
     const openConversation = useChatStore((state) => state.openConversation);
     const closeConversation = useChatStore((state) => state.closeConversation);
+    const totalUnreadMessages = useChatStore((state) =>
+        state.conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0)
+    );
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [pendingInvitationsCount, setPendingInvitationsCount] = useState(0);
@@ -44,18 +47,16 @@ const DashboardPage = () => {
 
     // Auto select conversation if URL has :conversationId
     useEffect(() => {
-        if (params.conversationId && conversations.length > 0 && activeConversation?._id !== params.conversationId) {
-            const found = conversations.find((c) => c._id === params.conversationId);
-            if (found) {
-                openConversation(found);
+        if (params.conversationId) {
+            const { conversations, activeConversation, openConversation } = useChatStore.getState();
+            if (activeConversation?._id !== params.conversationId && conversations.length > 0) {
+                const found = conversations.find((c) => c._id === params.conversationId);
+                if (found) {
+                    openConversation(found);
+                }
             }
         }
-    }, [params.conversationId, conversations, activeConversation?._id, openConversation]);
-
-    const totalUnreadMessages = conversations.reduce(
-        (sum, c) => sum + (c.unreadCount || 0),
-        0
-    );
+    }, [params.conversationId]);
 
     const fetchPendingCount = async () => {
         try {

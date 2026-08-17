@@ -27,7 +27,10 @@ const useChatStore = create((set, get) => ({
 
     fetchConversations: async () => {
         const token = get()._conversationsRequestToken + 1;
-        set({ isLoadingConversations: true, _conversationsRequestToken: token });
+        if (get().conversations.length === 0) {
+            set({ isLoadingConversations: true });
+        }
+        set({ _conversationsRequestToken: token });
         try {
             const res = await axios.get("/message/conversations");
             if (get()._conversationsRequestToken !== token) return; 
@@ -79,15 +82,29 @@ const useChatStore = create((set, get) => ({
         }
     },
     openConversation: async (conversation) => {
+        if (!conversation?._id) return;
+        const convId = conversation._id.toString();
+        const currentActive = get().activeConversation;
+        const isAlreadyActive = currentActive?._id?.toString() === convId;
+
+        // If conversation is already active and has messages loaded, avoid wiping messages or flashing loader
+        if (isAlreadyActive && get().messages.length > 0) {
+            set((state) => ({
+                conversations: state.conversations.map((c) =>
+                    (c._id?.toString() === convId) ? { ...c, unreadCount: 0 } : c
+                ),
+            }));
+            return;
+        }
+
         const token = get()._requestToken + 1;
-        const convId = conversation._id?.toString();
         set((state) => ({
             activeConversation: conversation,
             conversations: state.conversations.map((c) =>
                 (c._id?.toString() === convId) ? { ...c, unreadCount: 0 } : c
             ),
-            messages: [],
-            isLoadingMessages: true,
+            messages: isAlreadyActive ? state.messages : [],
+            isLoadingMessages: isAlreadyActive ? false : true,
             isLoadingOlderMessages: false,
             hasMoreMessages: true,
             _requestToken: token,

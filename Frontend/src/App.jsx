@@ -63,7 +63,7 @@ const App = () => {
     return (
         <ErrorBoundary>
             <Suspense fallback={<LoadingComponent />}>
-                <Routes location={location} key={location.pathname}>
+                <Routes>
                     <Route
                         path="/login"
                         element={
@@ -98,9 +98,7 @@ const App = () => {
                         path="/"
                         element={
                             <ProtectedRoute>
-                                <AnimatedPage>
-                                    <DashboardPage />
-                                </AnimatedPage>
+                                <DashboardPage />
                             </ProtectedRoute>
                         }
                     />
@@ -108,9 +106,7 @@ const App = () => {
                         path="/chats"
                         element={
                             <ProtectedRoute>
-                                <AnimatedPage>
-                                    <DashboardPage />
-                                </AnimatedPage>
+                                <DashboardPage />
                             </ProtectedRoute>
                         }
                     />
@@ -118,9 +114,7 @@ const App = () => {
                         path="/chats/:conversationId"
                         element={
                             <ProtectedRoute>
-                                <AnimatedPage>
-                                    <DashboardPage />
-                                </AnimatedPage>
+                                <DashboardPage />
                             </ProtectedRoute>
                         }
                     />
@@ -128,9 +122,7 @@ const App = () => {
                         path="/people"
                         element={
                             <ProtectedRoute>
-                                <AnimatedPage>
-                                    <DashboardPage />
-                                </AnimatedPage>
+                                <DashboardPage />
                             </ProtectedRoute>
                         }
                     />
@@ -138,9 +130,7 @@ const App = () => {
                         path="/invitations"
                         element={
                             <ProtectedRoute>
-                                <AnimatedPage>
-                                    <DashboardPage />
-                                </AnimatedPage>
+                                <DashboardPage />
                             </ProtectedRoute>
                         }
                     />
