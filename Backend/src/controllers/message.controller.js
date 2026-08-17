@@ -1,5 +1,23 @@
-import { getMessagesService, getConversationsService } from "../services/message.service.js";
+import { getMessagesService, getConversationsService, sendMessageService } from "../services/message.service.js";
 import { sendSuccess } from "../utils/response.js";
+
+export const sendMessage = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const { conversationId, content, attachments } = req.body;
+
+        const message = await sendMessageService({
+            userId,
+            conversationId,
+            content,
+            attachments,
+        });
+
+        return sendSuccess(res, 201, { message }, "Message sent successfully");
+    } catch (error) {
+        next(error);
+    }
+};
 
 export const getMessages = async (req, res, next) => {
     try {

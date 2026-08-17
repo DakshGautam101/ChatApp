@@ -1,6 +1,7 @@
 import Invitation from "../models/invitation.model.js";
 import User from "../models/user.model.js";
 import Conversation from "../models/conversation.model.js";
+import Notification from "../models/notification.model.js";
 import { getIO } from "../socket/socket.js";
 
 export const sendInvitationService = async (senderId, receiverId) => {
@@ -89,6 +90,20 @@ export const sendInvitationService = async (senderId, receiverId) => {
                 username: sender.username,
             },
         });
+
+        try {
+            const notif = await Notification.create({
+                recipient: receiverId,
+                sender: senderId,
+                type: "invitation",
+                title: "New Friend Invitation",
+                message: `${sender.username || sender.email} sent you a friend invitation`,
+                invitation: invitation._id,
+                isRead: false,
+            });
+            const populatedNotif = await notif.populate("sender", "username email avatar status");
+            io.to(`user_${receiverId}`).emit("notification:new", populatedNotif);
+        } catch (e) {}
     }
 
     return { invitation, statusCode: 201 };
@@ -122,6 +137,8 @@ export const changeInvitationStatusService = async (invitationId, receiverId, st
         throw { status: 404, message: "User not found" };
     }
 
+    let createdConversation = null;
+
     if (status === "accepted") {
         invitation.status = "accepted";
 
@@ -152,6 +169,7 @@ export const changeInvitationStatusService = async (invitationId, receiverId, st
                 ],
             });
         }
+        createdConversation = await conversation.populate("participants.user", "username email avatar");
     } else {
         invitation.status = "rejected";
         invitation.rejectedUntil = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -176,13 +194,17 @@ export const changeInvitationStatusService = async (invitationId, receiverId, st
                 username: receiver.username,
             },
         });
+        if (createdConversation) {
+            io.to(`user_${sender._id}`).emit("conversation:new", createdConversation);
+            io.to(`user_${receiver._id}`).emit("conversation:new", createdConversation);
+        }
     }
 
     return invitation;
 };
 
 export const getUserInvitationsService = async (userId) => {
-    const [received, sent] = await Promise.all([
+    const [rawReceived, rawSent] = await Promise.all([
         Invitation.find({ receiver: userId })
             .populate("sender", "username email avatar status")
             .sort({ createdAt: -1 })
@@ -193,6 +215,9 @@ export const getUserInvitationsService = async (userId) => {
             .sort({ createdAt: -1 })
             .lean(),
     ]);
+
+    const received = rawReceived.filter((i) => i.sender && (i.sender._id || i.sender.id));
+    const sent = rawSent.filter((i) => i.receiver && (i.receiver._id || i.receiver.id));
 
     return { received, sent };
 };

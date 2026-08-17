@@ -5,10 +5,14 @@ import mongoose from "mongoose";
 import Message from "../models/messages.model.js";
 import Conversation from "../models/conversation.model.js";
 import logger from "../utils/logger.js";
+import User from "../models/user.model.js";
+import Notification from "../models/notification.model.js";
+import { sendMessageService } from "../services/message.service.js";
+import cacheService from "../services/cache.service.js";
 
 function init(io) {
     setIO(io);
-    io.use((socket, next) => {
+    io.use(async (socket, next) => {
         const cookies = cookie.parse(socket.handshake.headers.cookie || "");
         const token = socket.handshake.auth?.token || cookies.token;
 
@@ -16,8 +20,15 @@ function init(io) {
             return next(new Error("Unauthorized"));
         }
         try {
-            const user = jwt.verify(token, process.env.JWT_SECRET);
-            socket.user = user;
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const dbUser = await User.findById(decoded.id).select("tokenVersion isVerified");
+            if (!dbUser || (dbUser.tokenVersion ?? 0) !== (decoded.tokenVersion ?? 0)) {
+                return next(new Error("Token has been revoked"));
+            }
+            if (!dbUser.isVerified) {
+                return next(new Error("Account is not verified"));
+            }
+            socket.user = decoded;
             next();
         } catch (err) {
             next(new Error("Invalid token"));
@@ -30,9 +41,17 @@ function init(io) {
 
         socket.join(`user_${userId}`);
         addSocket(userId, socket.id);
+        User.findByIdAndUpdate(userId, { status: "online" }).catch(() => {});
+        cacheService.set(`user:status:${userId}`, "online", 3600);
+        io.emit("user:status", { userId, status: "online" });
 
         socket.on("disconnect", () => {
             removeSocket(userId, socket.id);
+            if (getSockets(userId).length === 0) {
+                User.findByIdAndUpdate(userId, { status: "offline" }).catch(() => {});
+                cacheService.set(`user:status:${userId}`, "offline", 3600);
+                io.emit("user:status", { userId, status: "offline" });
+            }
         });
 
         socket.on("conversation:join", async (conversationId) => {
@@ -75,67 +94,26 @@ function init(io) {
 
         socket.on("message:send", async ({ conversationId, content, attachments = [] }) => {
             try {
-                const hasText = content && content.trim();
-                const hasAttachment = attachments.length > 0;
-
-                if (!hasText && !hasAttachment) {
-                    return;
+                const dbUser = await User.findById(userId).select("tokenVersion");
+                if (!dbUser || (dbUser.tokenVersion ?? 0) !== (socket.user?.tokenVersion ?? 0)) {
+                    socket.emit("error", { message: "Unauthorized" });
+                    return socket.disconnect(true);
                 }
 
-                const conversation = await Conversation.findOne({
-                    _id: conversationId,
-                    "participants.user": userId,
-                });
-                if (!conversation) return;
-
-                const recipients = conversation.participants
-                    .map((p) => p.user.toString())
-                    .filter((id) => id !== userId);
-
-                const recipientIsOnline = recipients.some((id) => getSockets(id).length > 0);
-
-                const message = await Message.create({
-                    conversation: conversationId,
-                    sender: userId,
-                    content: content.trim(),
+                const populated = await sendMessageService({
+                    userId,
+                    conversationId,
+                    content,
                     attachments,
-                    status: recipientIsOnline ? "delivered" : "sent",
                 });
-
-                let previewText = content.trim();
-                if (!previewText && attachments.length > 0) {
-                    const type = attachments[0].fileType || "";
-                    if (type.startsWith("image/")) previewText = "📷 Photo";
-                    else if (type.startsWith("video/")) previewText = "🎥 Video";
-                    else if (type === "application/pdf") previewText = "📄 PDF";
-                    else previewText = "📎 Attachment";
-                }
-
-                await Conversation.updateOne(
-                    { _id: conversationId },
-                    { $set: { lastMessage: { text: previewText, sender: userId, at: new Date() } } }
-                );
-
-                const populated = await message.populate([
-                    { path: "sender", select: "username email avatar" },
-                    { path: "reactions.user", select: "username email avatar" },
-                ]);
 
                 socket.emit("message:statusUpdated", {
                     messageId: populated._id.toString(),
                     status: populated.status,
                 });
-                io.to(`conv_${conversationId}`).emit("message:new", populated);
-
-                // notify offline/not-in-room recipients so their sidebar can update
-                recipients.forEach((recipientId) => {
-                    io.to(`user_${recipientId}`).emit("conversation:updated", {
-                        conversationId,
-                        lastMessage: { text: previewText, sender: userId, at: new Date() },
-                    });
-                });
             } catch (err) {
                 logger.error("message:send error:", { error: err.message });
+                socket.emit("error", { message: err.message || "Failed to send message" });
             }
         });
 
@@ -180,7 +158,7 @@ function init(io) {
         });
 
         socket.on("typing", ({ conversationId, isTyping }) => {
-            socket.to(`conv_${conversationId}`).emit("typing", { userId, isTyping });
+            socket.to(`conv_${conversationId}`).emit("typing", { conversationId, userId, isTyping });
         });
 
         socket.on("message:read", async ({ conversationId, lastMessageId }) => {
@@ -252,23 +230,37 @@ function init(io) {
                     }
                 }
 
+                const participantRooms = conversation.participants.map(
+                    (p) => `user_${(p.user?._id || p.user).toString()}`
+                );
+
                 if (readMessageIds.length) {
-                    io.to(`conv_${conversationId}`).emit("message:statusUpdated", {
+                    io.to(`conv_${conversationId}`).to(participantRooms).emit("message:statusUpdated", {
                         messageIds: readMessageIds,
                         status: "read",
                     });
                 }
                 if (deliveredMessageIds.length) {
-                    io.to(`conv_${conversationId}`).emit("message:statusUpdated", {
+                    io.to(`conv_${conversationId}`).to(participantRooms).emit("message:statusUpdated", {
                         messageIds: deliveredMessageIds,
                         status: "delivered",
                     });
                 }
 
-                socket.to(`conv_${conversationId}`).emit("message:readReceipt", {
+                io.to(`conv_${conversationId}`).to(participantRooms).emit("message:readReceipt", {
+                    conversationId,
                     userId,
                     lastMessageId,
                 });
+                io.to(`user_${userId}`).emit("conversation:read", {
+                    conversationId,
+                });
+
+                try {
+                    await cacheService.del(`user:conversations:${userId}`);
+                } catch (cacheErr) {
+                    logger.warn(`Cache invalidation notice in message:read: ${cacheErr.message}`);
+                }
             } catch (err) {
                 logger.error("message:read error:", { error: err.message });
             }

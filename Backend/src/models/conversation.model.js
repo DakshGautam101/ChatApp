@@ -52,6 +52,14 @@ const conversationSchema = new mongoose.Schema({
         type : String , 
         default : null
     },
+    isConvertedFromGroup: {
+        type: Boolean,
+        default: false,
+    },
+    formerGroupName: {
+        type: String,
+        default: null,
+    },
     createdBy : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User',   

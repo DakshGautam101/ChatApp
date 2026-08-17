@@ -10,21 +10,27 @@ function getIO() {
 }
 
 function addSocket(userId, socketId) {
-    if (!userSockets.has(userId)) {
-        userSockets.set(userId, new Set());
+    if (!userId) return;
+    const key = userId.toString();
+    if (!userSockets.has(key)) {
+        userSockets.set(key, new Set());
     }
-    userSockets.get(userId).add(socketId);
+    userSockets.get(key).add(socketId);
 }
 
 function removeSocket(userId, socketId) {
-    const s = userSockets.get(userId);
+    if (!userId) return;
+    const key = userId.toString();
+    const s = userSockets.get(key);
     if (!s) return;
     s.delete(socketId);
-    if (s.size === 0) userSockets.delete(userId);
+    if (s.size === 0) userSockets.delete(key);
 }
 
 function getSockets(userId) {
-    return userSockets.has(userId) ? Array.from(userSockets.get(userId)) : [];
+    if (!userId) return [];
+    const key = userId.toString();
+    return userSockets.has(key) ? Array.from(userSockets.get(key)) : [];
 }
 
 export { addSocket, removeSocket, getSockets, setIO, getIO };

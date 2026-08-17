@@ -13,18 +13,18 @@ const validate = (validations) => {
       return next();
     }
 
-    const formattedErrors = {};
-    errors.array().forEach((err) => {
-      const field = err.path || err.param;
-      if (field) {
-        if (!formattedErrors[field]) {
-          formattedErrors[field] = [];
-        }
-        formattedErrors[field].push(err.msg);
-      }
-    });
+    const errorArray = errors.array().map((err) => ({
+      field: err.path || err.param || "unknown",
+      message: err.msg,
+    }));
 
-    return res.status(400).json({ success: false, errors: formattedErrors });
+    const firstErrorMessage = errorArray[0]?.message || "Validation failed";
+
+    return res.status(400).json({
+      success: false,
+      message: firstErrorMessage,
+      errors: errorArray,
+    });
   };
 };
 

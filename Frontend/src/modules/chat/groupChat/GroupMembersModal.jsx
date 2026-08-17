@@ -20,9 +20,11 @@ export default function GroupMembersModal({ open, onOpenChange, group }) {
     const [actionLoading, setActionLoading] = useState({});
     const [leaving, setLeaving] = useState(false);
 
-    const participants = group?.participants || [];
+    const participants = (group?.participants || []).filter(
+        (p) => p.user && (p.user._id || p.user.id || p.user)
+    );
     const currentParticipant = participants.find(
-        (p) => (p.user?._id || p.user)?.toString() === currentUser?._id
+        (p) => (p.user?._id || p.user?.id || p.user)?.toString() === currentUser?._id
     );
     const isCurrentAdmin = currentParticipant?.role === "admin";
 

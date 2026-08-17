@@ -2,20 +2,50 @@ import { io as clientIo } from "socket.io-client";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-const getToken = () => {
-    if (typeof window === "undefined") return null;
-    return localStorage.getItem("chatapp_token");
-};
-
 export const socket = clientIo(API_URL, {
     withCredentials: true,
-    auth: { token: getToken() },
-    transports: ["websocket"],
+    transports: ["polling", "websocket"],
+    autoConnect: false,
 });
 
 socket.on("connect", () => console.log("socket connected", socket.id));
 socket.on("disconnect", () => console.log("socket disconnected"));
-socket.on("connect_error", (error) => console.error("socket connect error", error.message));
+socket.on("connect_error", (error) => {
+    console.error("socket connect error", error.message);
+    if (
+        error.message === "Token has been revoked" ||
+        error.message === "Unauthorized" ||
+        error.message === "Invalid token"
+    ) {
+        disconnectSocket();
+        if (typeof window !== "undefined") {
+            const currentPath = window.location.pathname;
+            const publicAuthPaths = ["/login", "/signup", "/verify-email"];
+            if (!publicAuthPaths.includes(currentPath)) {
+                window.location.href = "/login";
+            }
+        }
+    }
+});
+
+socket.on("error", (error) => {
+    const errorMsg = typeof error === "string" ? error : error?.message;
+    console.error("socket general error", errorMsg);
+    if (
+        errorMsg === "Unauthorized" ||
+        errorMsg === "Token has been revoked" ||
+        errorMsg === "Invalid token"
+    ) {
+        disconnectSocket();
+        if (typeof window !== "undefined") {
+            const currentPath = window.location.pathname;
+            const publicAuthPaths = ["/login", "/signup", "/verify-email"];
+            if (!publicAuthPaths.includes(currentPath)) {
+                window.location.href = "/login";
+            }
+        }
+    }
+});
 
 socket.on("invitation:created", (data) => {
     console.log("invitation received", data);
@@ -30,15 +60,6 @@ socket.on("notification:new", (data) => {
 });
 
 export const ensureSocket = () => {
-    const token = getToken();
-
-    if (!token) {
-        if (socket.connected) socket.disconnect();
-        return;
-    }
-
-    socket.auth = { token };
-
     if (!socket.connected) {
         socket.connect();
     }

@@ -4,35 +4,53 @@ const registerSchema = [
     body("username")
         .trim()
         .notEmpty().withMessage("Username is required")
-        .isLength({ min: 3 }).withMessage("Username must be at least 3 characters long"),
+        .isLength({ min: 3, max: 30 }).withMessage("Username must be between 3 and 30 characters"),
     body("email")
         .trim()
-        .isEmail().withMessage("Please provide a valid email"),
+        .notEmpty().withMessage("Email is required")
+        .isEmail().withMessage("Please provide a valid email address")
+        .normalizeEmail(),
+    body("phone")
+        .trim()
+        .notEmpty().withMessage("Phone number is required")
+        .matches(/^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]{6,15}$/).withMessage("Please provide a valid phone number"),
     body("password")
+        .notEmpty().withMessage("Password is required")
         .isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
 ];
 
 const loginSchema = [
     body("email")
         .trim()
-        .isEmail().withMessage("Please provide a valid email"),
+        .notEmpty().withMessage("Email is required")
+        .isEmail().withMessage("Please provide a valid email address")
+        .normalizeEmail(),
     body("password")
+        .notEmpty().withMessage("Password is required")
         .isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
 ];
 
 const verifyOtpSchema = [
     body("email")
         .trim()
-        .isEmail().withMessage("Please provide a valid email"),
+        .notEmpty().withMessage("Email is required")
+        .isEmail().withMessage("Please provide a valid email address")
+        .normalizeEmail(),
     body("otp")
-        .isLength({ min: 4 }).withMessage("OTP must be at least 4 characters long"),
+        .trim()
+        .notEmpty().withMessage("OTP is required")
+        .isLength({ min: 6, max: 6 }).withMessage("OTP must be exactly 6 digits")
+        .matches(/^\d{6}$/).withMessage("OTP must contain only digits"),
 ];
 
 const resendOtpSchema = [
     body("email")
         .trim()
-        .isEmail().withMessage("Please provide a valid email"),
+        .notEmpty().withMessage("Email is required")
+        .isEmail().withMessage("Please provide a valid email address")
+        .normalizeEmail(),
 ];
 
 export { registerSchema, loginSchema, verifyOtpSchema, resendOtpSchema };
+
 

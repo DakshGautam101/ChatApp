@@ -2,9 +2,10 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import useChatStore from "../stores/useChatStore";
 import useAuthStore from "@/modules/auth/stores/useAuthStore";
 import useFileStore from "../stores/useFileStore";
+import { socket } from "@/core/socket/socket.js";
 import { Button } from "@/core/components/ui/button";
 import { Input } from "@/core/components/ui/input";
-import { Send, MessageCircle, ChevronDown, Link, Users, UserPlus, ShieldCheck, Camera } from "lucide-react";
+import { Send, MessageCircle, ChevronDown, ArrowUp, Link, Users, UserPlus, ShieldCheck, Camera } from "lucide-react";
 import { cn } from "@/core/utils/utils";
 import AnimatedBackground from "@/core/components/AnimatedBackground";
 import Avatar from "@/core/components/Avatar";
@@ -20,32 +21,30 @@ let typingTimeout = null;
 
 export default function ChatWindow() {
     const { user } = useAuthStore();
-    const {
-        activeConversation,
-        messages,
-        isLoadingMessages,
-        isLoadingOlderMessages,
-        hasMoreMessages,
-        sendMessage,
-        addOptimisticMessage,
-        emitTyping,
-        typingUsers,
-        loadOlderMessages,
-        reactToMessage,
-        updateGroupAvatar,
-    } = useChatStore();
+    const activeConversation = useChatStore((state) => state.activeConversation);
+    const messages = useChatStore((state) => state.messages);
+    const isLoadingMessages = useChatStore((state) => state.isLoadingMessages);
+    const isLoadingOlderMessages = useChatStore((state) => state.isLoadingOlderMessages);
+    const hasMoreMessages = useChatStore((state) => state.hasMoreMessages);
+    const sendMessage = useChatStore((state) => state.sendMessage);
+    const addOptimisticMessage = useChatStore((state) => state.addOptimisticMessage);
+    const emitTyping = useChatStore((state) => state.emitTyping);
+    const typingUsers = useChatStore((state) => state.typingUsers);
+    const loadOlderMessages = useChatStore((state) => state.loadOlderMessages);
+    const reactToMessage = useChatStore((state) => state.reactToMessage);
+    const updateGroupAvatar = useChatStore((state) => state.updateGroupAvatar);
 
     const { items, addFiles, sendItemsAsOptimisticMessage, retryUpload } = useFileStore();
 
     const [draft, setDraft] = useState("");
     const [showScrollButton, setShowScrollButton] = useState(false);
+    const [firstUnreadId, setFirstUnreadId] = useState(undefined);
     const bottomRef = useRef(null);
     const firstUnreadRef = useRef(null);
     const scrollContainerRef = useRef(null);
     const previousMessageCount = useRef(0);
     const initialScrollDoneRef = useRef(false);
     const isAutoScrollingRef = useRef(false);
-    const unreadMessageIdRef = useRef(null);
     const olderLoadPrevHeightRef = useRef(null);
     const olderLoadPrevScrollRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -60,6 +59,23 @@ export default function ChatWindow() {
     const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
     const canSend = draft.trim().length > 0 || (items && items.length > 0);
+
+    const isUnreadForMe = (m) => {
+        if (!m || !user) return false;
+        const senderId = (m.sender?._id || m.sender)?.toString();
+        const myId = (user._id || user.id)?.toString();
+        if (!senderId || !myId || senderId === myId) return false;
+
+        if (Array.isArray(m.readBy) && m.readBy.length > 0) {
+            const hasRead = m.readBy.some((r) => {
+                const rUserId = (r.user?._id || r.user)?.toString();
+                return rUserId === myId;
+            });
+            if (hasRead) return false;
+        }
+
+        return m.status !== "read";
+    };
 
     const handleGroupAvatarChange = async (e) => {
         const file = e.target.files?.[0];
@@ -87,45 +103,65 @@ export default function ChatWindow() {
     useLayoutEffect(() => {
         previousMessageCount.current = 0;
         initialScrollDoneRef.current = false;
-        unreadMessageIdRef.current = null;
         isAutoScrollingRef.current = false;
+        // setShowJumpToUnread(false);
+        setFirstUnreadId(undefined);
     }, [activeConversation?._id]);
 
+    // Effect A — compute the first unread message id once messages load
     useLayoutEffect(() => {
+        if (isLoadingMessages || messages.length === 0) return;
+        if (initialScrollDoneRef.current) return;
+        if (firstUnreadId !== undefined) return;
+
+        const firstUnread = messages.find(isUnreadForMe);
+        setFirstUnreadId(firstUnread ? (firstUnread._id?.toString?.() || firstUnread._id) : null);
+    }, [messages, isLoadingMessages, firstUnreadId]);
+
+    // Effect B — scroll once firstUnreadId is known. Because this depends on
+    // firstUnreadId (state), it only runs on the render AFTER the correct
+    // bubble has already received firstUnreadRef — so the ref is guaranteed set.
+    useLayoutEffect(() => {
+        if (firstUnreadId === undefined) return;
+        if (initialScrollDoneRef.current) return;
         const container = scrollContainerRef.current;
         if (!container || isLoadingMessages || messages.length === 0) return;
 
-        if (!initialScrollDoneRef.current) {
-            isAutoScrollingRef.current = true;
+        isAutoScrollingRef.current = true;
 
-            const firstUnread = messages.find(
-                (m) => (m.sender?._id || m.sender) !== user?._id && m.status !== "read"
-            );
-            if (firstUnread) {
-                unreadMessageIdRef.current = firstUnread._id;
+        requestAnimationFrame(() => {
+            if (firstUnreadId && firstUnreadRef.current) {
+                firstUnreadRef.current.scrollIntoView({ block: "center", behavior: "auto" });
+            } else if (bottomRef.current) {
+                bottomRef.current.scrollIntoView({ block: "end", behavior: "auto" });
             } else {
-                unreadMessageIdRef.current = null;
+                container.scrollTop = container.scrollHeight;
             }
 
-            requestAnimationFrame(() => {
-                if (unreadMessageIdRef.current && firstUnreadRef.current) {
-                    firstUnreadRef.current.scrollIntoView({ block: "start", behavior: "auto" });
-                } else if (bottomRef.current) {
-                    bottomRef.current.scrollIntoView({ block: "end", behavior: "auto" });
-                } else {
-                    container.scrollTop = container.scrollHeight;
-                }
+            setShowScrollButton(false);
+            // setShowJumpToUnread(false);
+            initialScrollDoneRef.current = true;
+            previousMessageCount.current = messages.length;
 
-                setShowScrollButton(false);
-                initialScrollDoneRef.current = true;
-                previousMessageCount.current = messages.length;
+            const last = messages[messages.length - 1];
+            if (last && activeConversation?._id) {
+                socket.emit("message:read", {
+                    conversationId: activeConversation._id,
+                    lastMessageId: last._id,
+                });
+            }
 
-                setTimeout(() => {
-                    isAutoScrollingRef.current = false;
-                }, 300);
-            });
-            return;
-        }
+            setTimeout(() => {
+                isAutoScrollingRef.current = false;
+            }, 300);
+        });
+    }, [firstUnreadId, messages, isLoadingMessages, activeConversation?._id]);
+
+    // Effect C — auto-scroll to bottom for new messages after the initial load
+    useLayoutEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container || isLoadingMessages || messages.length === 0) return;
+        if (!initialScrollDoneRef.current) return;
 
         const isAppendingAtBottom = messages.length > previousMessageCount.current && !isLoadingOlderMessages;
         if (isAppendingAtBottom) {
@@ -171,13 +207,14 @@ export default function ChatWindow() {
     }
 
     const isGroup = activeConversation.type === "group";
+    const currentUserId = (user?._id || user?.id)?.toString();
     const otherParticipant = activeConversation.participants?.find(
-        (p) => (p.user?._id || p.user) !== user?._id
+        (p) => p.user && (p.user?._id || p.user?.id || p.user)?.toString() !== currentUserId
     );
     const other = isGroup ? null : otherParticipant?.user;
 
     const currentParticipant = activeConversation.participants?.find(
-        (p) => (p.user?._id || p.user) === user?._id
+        (p) => (p.user?._id || p.user)?.toString() === currentUserId
     );
     const isAdmin = isGroup && currentParticipant?.role === "admin";
 
@@ -273,6 +310,14 @@ export default function ChatWindow() {
         const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 200;
         setShowScrollButton(!isNearBottom);
 
+        if (firstUnreadId && firstUnreadRef.current) {
+            const rect = firstUnreadRef.current.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            const isVisible = rect.top >= containerRect.top && rect.bottom <= containerRect.bottom;
+         
+        } else {
+        }
+
         if (
             isLoadingMessages ||
             !initialScrollDoneRef.current ||
@@ -294,6 +339,12 @@ export default function ChatWindow() {
         const container = scrollContainerRef.current;
         if (container) {
             container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
+        }
+    };
+
+    const jumpToUnread = () => {
+        if (firstUnreadRef.current) {
+            firstUnreadRef.current.scrollIntoView({ block: "center", behavior: "smooth" });
         }
     };
 
@@ -368,10 +419,18 @@ export default function ChatWindow() {
 
                     <div className="flex-1 min-w-0">
                         <div className="font-bold text-slate-900 truncate text-base flex items-center gap-2">
-                            <span>{isGroup ? activeConversation.name : (other?.username || other?.email || "Chat")}</span>
+                            <span>{isGroup ? (activeConversation.name || "Group Chat") : (other?.username || other?.email || "User")}</span>
                             {isGroup && isAdmin && (
                                 <span className="badge badge-sm bg-amber-50 text-amber-700 border-amber-200 font-bold text-[10px]">
                                     Admin
+                                </span>
+                            )}
+                            {!isGroup && activeConversation.isConvertedFromGroup && (
+                                <span
+                                    className="badge badge-sm bg-amber-50 text-amber-700 border-amber-200 font-bold text-[10px]"
+                                    title={activeConversation.formerGroupName ? `Converted from group: ${activeConversation.formerGroupName}` : "Converted from group"}
+                                >
+                                    From Group{activeConversation.formerGroupName ? `: ${activeConversation.formerGroupName}` : ""}
                                 </span>
                             )}
                         </div>
@@ -392,7 +451,7 @@ export default function ChatWindow() {
                                         className="hover:text-blue-600 hover:underline flex items-center gap-1"
                                     >
                                         <Users className="h-3 w-3 text-slate-400" />
-                                        <span>{activeConversation.participants?.length || 0} members</span>
+                                        <span>{(activeConversation.participants?.filter((p) => p.user && (p.user._id || p.user.id || p.user)).length) || 0} members</span>
                                     </button>
                                 ) : (
                                     <span>{other?.email}</span>
@@ -451,8 +510,12 @@ export default function ChatWindow() {
                     </div>
                 ) : (
                     messages.map((message) => {
-                        const isMine = (message.sender?._id || message.sender) === user?._id;
-                        const isFirstUnread = unreadMessageIdRef.current && message._id === unreadMessageIdRef.current;
+                        const msgIdStr = (message._id?.toString?.() || message._id);
+                        const senderIdStr = (message.sender?._id || message.sender)?.toString();
+                        const myIdStr = (user?._id || user?.id)?.toString();
+                        const isMine = Boolean(senderIdStr && myIdStr && senderIdStr === myIdStr);
+                        const unreadIdStr = firstUnreadId?.toString?.();
+                        const isFirstUnread = Boolean(unreadIdStr && msgIdStr === unreadIdStr);
 
                         return (
                             <MessageBubble
@@ -471,6 +534,8 @@ export default function ChatWindow() {
                 )}
                 <div ref={bottomRef} className="h-1" />
             </div>
+
+
 
             {/* Scroll to bottom button */}
             {showScrollButton && (

@@ -7,6 +7,7 @@ import invitationRoutes from "./routes/invitation.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
 import groupRoutes from "./routes/group.routes.js";
+import notificationRoutes from "./routes/notification.routes.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
@@ -38,8 +39,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/invitation", invitationRoutes);
 app.use("/api/message", messageRoutes);
+app.use("/api/messages", messageRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/group", groupRoutes);
+app.use("/api/notification", notificationRoutes);
 
 app.use(errorHandler);
 

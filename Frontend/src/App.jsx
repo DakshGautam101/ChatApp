@@ -1,12 +1,18 @@
-import React, { useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import { useAuthStore, LoginPage, SignUpPage, EmailVerification } from './modules/auth';
-import { DashboardPage } from './modules/chat';
+import React, { useEffect, lazy, Suspense } from 'react';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
+import useAuthStore from './modules/auth/stores/useAuthStore';
 import ErrorBoundary from './core/components/ErrorBoundary';
-import { Loader2 } from 'lucide-react';
+import ProtectedRoute from './core/components/ProtectedRoute';
+import PublicOnlyRoute from './core/components/PublicOnlyRoute';
 import { disconnectSocket, ensureSocket } from './core/socket/socket';
 import { Toaster } from 'react-hot-toast';
 import LoadingComponent from './core/components/LoadingComponent';
+
+const LoginPage = lazy(() => import('./modules/auth/pages/LoginPage'));
+const SignUpPage = lazy(() => import('./modules/auth/pages/SignUpPage'));
+const EmailVerification = lazy(() => import('./modules/auth/pages/EmailVerification').then(m => ({ default: m.EmailVerification })));
+const DashboardPage = lazy(() => import('./modules/chat/pages/DashboardPage'));
+
 function AnimatedPage({ children }) {
     return (
         <div className="min-h-screen animate-fade-in">
@@ -51,52 +57,103 @@ const App = () => {
     }, [isAuthenticated, isLoading]);
 
     if (isLoading) {
-        return (
-            <LoadingComponent/>
-        );
+        return <LoadingComponent />;
     }
 
     return (
         <ErrorBoundary>
-            <Routes location={location} key={location.pathname}>
-                <Route
-                    path="/"
-                    element={
-                        <AnimatedPage>
-                            {isAuthenticated ? <DashboardPage /> : <LoginPage />}
-                        </AnimatedPage>
-                    }
-                />
-                <Route
-                    path="/login"
-                    element={
-                        <AnimatedPage>
-                            <LoginPage />
-                        </AnimatedPage>
-                    }
-                />
-                <Route
-                    path="/signup"
-                    element={
-                        <AnimatedPage>
-                            <SignUpPage />
-                        </AnimatedPage>
-                    }
-                />
-                <Route
-                    path="/verify-email"
-                    element={
-                        <AnimatedPage>
-                            <EmailVerification />
-                        </AnimatedPage>
-                    }
-                />
-            </Routes>
-            <Toaster
-                position="top-center"
-            />
-        </ErrorBoundary>
-    )
-}
+            <Suspense fallback={<LoadingComponent />}>
+                <Routes location={location} key={location.pathname}>
+                    <Route
+                        path="/login"
+                        element={
+                            <PublicOnlyRoute>
+                                <AnimatedPage>
+                                    <LoginPage />
+                                </AnimatedPage>
+                            </PublicOnlyRoute>
+                        }
+                    />
+                    <Route
+                        path="/signup"
+                        element={
+                            <PublicOnlyRoute>
+                                <AnimatedPage>
+                                    <SignUpPage />
+                                </AnimatedPage>
+                            </PublicOnlyRoute>
+                        }
+                    />
+                    <Route
+                        path="/verify-email"
+                        element={
+                            <AnimatedPage>
+                                <EmailVerification />
+                            </AnimatedPage>
+                        }
+                    />
 
-export default App
+                    {/* Protected Dashboard Routes */}
+                    <Route
+                        path="/"
+                        element={
+                            <ProtectedRoute>
+                                <AnimatedPage>
+                                    <DashboardPage />
+                                </AnimatedPage>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/chats"
+                        element={
+                            <ProtectedRoute>
+                                <AnimatedPage>
+                                    <DashboardPage />
+                                </AnimatedPage>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/chats/:conversationId"
+                        element={
+                            <ProtectedRoute>
+                                <AnimatedPage>
+                                    <DashboardPage />
+                                </AnimatedPage>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/people"
+                        element={
+                            <ProtectedRoute>
+                                <AnimatedPage>
+                                    <DashboardPage />
+                                </AnimatedPage>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/invitations"
+                        element={
+                            <ProtectedRoute>
+                                <AnimatedPage>
+                                    <DashboardPage />
+                                </AnimatedPage>
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="*"
+                        element={<Navigate to={isAuthenticated ? "/chats" : "/login"} replace />}
+                    />
+                </Routes>
+            </Suspense>
+            <Toaster position="top-center" />
+        </ErrorBoundary>
+    );
+};
+
+export default App;

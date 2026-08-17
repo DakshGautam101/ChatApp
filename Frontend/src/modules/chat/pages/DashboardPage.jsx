@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useLocation, useNavigate, useParams, Outlet, NavLink } from 'react-router-dom';
 import useAuthStore from '@/modules/auth/stores/useAuthStore';
-import { MessageSquare, Power, UserPlus, Users, MessagesSquare, Camera, Trash2, Edit3, X } from 'lucide-react';
+import { MessageSquare, Power, UserPlus, Users, MessagesSquare, Camera, Trash2 } from 'lucide-react';
 import { Button } from '@/core/components/ui/button';
 import {
     Dialog,
@@ -11,27 +12,92 @@ import {
 } from "@/core/components/ui/dialog";
 import Avatar from '@/core/components/Avatar';
 import UserList from '@/modules/user/components/UserList';
-import Notifications from '@/modules/notifications/components/Notifications';
+import NotificationDropdown from '@/modules/notifications/components/NotificationDropdown';
 import Invitation from '@/modules/invitation/components/Invitation';
 import ConversationList from '../components/ConversationList';
 import ChatWindow from '../components/ChatWindow';
 import useChatStore from '../stores/useChatStore';
 import { axiosInstance } from '@/core/api/axiosInstance';
+import { socket } from '@/core/socket/socket';
 import toast from 'react-hot-toast';
 
 const DashboardPage = () => {
-
     const { user, logout, updateProfile } = useAuthStore();
-    const { activeConversation, closeConversation } = useChatStore();
-    const [mobileTab, setMobileTab] = useState("chats");
+    const conversations = useChatStore((state) => state.conversations);
+    const activeConversation = useChatStore((state) => state.activeConversation);
+    const openConversation = useChatStore((state) => state.openConversation);
+    const closeConversation = useChatStore((state) => state.closeConversation);
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
+    const [pendingInvitationsCount, setPendingInvitationsCount] = useState(0);
     const fileInputRef = useRef(null);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const params = useParams();
+
+    const activeTab = location.pathname.startsWith("/people")
+        ? "people"
+        : location.pathname.startsWith("/invitations")
+            ? "invitations"
+            : "chats";
+
+    // Auto select conversation if URL has :conversationId
+    useEffect(() => {
+        if (params.conversationId && conversations.length > 0 && activeConversation?._id !== params.conversationId) {
+            const found = conversations.find((c) => c._id === params.conversationId);
+            if (found) {
+                openConversation(found);
+            }
+        }
+    }, [params.conversationId, conversations, activeConversation?._id, openConversation]);
+
+    const totalUnreadMessages = conversations.reduce(
+        (sum, c) => sum + (c.unreadCount || 0),
+        0
+    );
+
+    const fetchPendingCount = async () => {
+        try {
+            const [directRes, groupRes] = await Promise.all([
+                axiosInstance.get("/invitation/invitation"),
+                axiosInstance.get("/group/invitations"),
+            ]);
+            const received = Array.isArray(directRes.data?.received) ? directRes.data.received : [];
+            const groupInvites = Array.isArray(groupRes.data?.invitations)
+                ? groupRes.data.invitations
+                : Array.isArray(groupRes.data?.data)
+                    ? groupRes.data.data
+                    : [];
+            const pendingDirect = received.filter((i) => i?.status === "pending").length;
+            const pendingGroup = groupInvites.filter((i) => i?.status === "pending").length;
+            setPendingInvitationsCount(pendingDirect + pendingGroup);
+        } catch (e) {
+            // Ignore fetch error
+        }
+    };
+
+    useEffect(() => {
+        fetchPendingCount();
+        if (!socket) return;
+
+        socket.on("invitation:created", fetchPendingCount);
+        socket.on("invitation:statusChanged", fetchPendingCount);
+        socket.on("group:invitation", fetchPendingCount);
+        socket.on("group:invitationStatusChanged", fetchPendingCount);
+
+        return () => {
+            socket.off("invitation:created", fetchPendingCount);
+            socket.off("invitation:statusChanged", fetchPendingCount);
+            socket.off("group:invitation", fetchPendingCount);
+            socket.off("group:invitationStatusChanged", fetchPendingCount);
+        };
+    }, []);
 
     const handleLogout = async () => {
         try {
             await logout();
-            window.location.href = "/login";
+            navigate("/login", { replace: true });
         } catch (error) {
             toast.error(error?.response?.data?.message || "Couldn't log out. Please try again.");
         }
@@ -83,6 +149,12 @@ const DashboardPage = () => {
         }
     };
 
+    const navItems = [
+        { key: "people", path: "/people", label: "People", icon: Users },
+        { key: "invitations", path: "/invitations", label: "Invitations", icon: UserPlus, badge: pendingInvitationsCount },
+        { key: "chats", path: "/chats", label: "Chats", icon: MessagesSquare, badge: totalUnreadMessages },
+    ];
+
     return (
         <div className="flex h-screen flex-col bg-slate-50 overflow-hidden">
             <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/80 backdrop-blur-md shadow-xs animate-fade-in-down">
@@ -99,7 +171,13 @@ const DashboardPage = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
+                        {/* Notification Bell Dropdown */}
+                        <NotificationDropdown
+                            onNavigateTab={(tabKey) => navigate(`/${tabKey}`)}
+                            pendingInvitationsCount={pendingInvitationsCount}
+                        />
+
                         <div
                             onClick={() => setShowProfileModal(true)}
                             className="flex items-center gap-2 cursor-pointer group rounded-full p-1 hover:bg-slate-100 transition-colors"
@@ -116,6 +194,7 @@ const DashboardPage = () => {
                                 {user?.username || "Profile"}
                             </span>
                         </div>
+
                         <Button
                             onClick={handleLogout}
                             variant="outline"
@@ -132,21 +211,24 @@ const DashboardPage = () => {
             {/* Mobile tab switcher */}
             <div className="p-2 border-b border-slate-200 bg-white lg:hidden relative z-30">
                 <div className="flex bg-slate-100 p-1 rounded-xl">
-                    {[
-                        { key: "people", label: "People", icon: Users },
-                        { key: "invitations", label: "Invitations", icon: UserPlus },
-                        { key: "chats", label: "Chats", icon: MessagesSquare },
-                    ].map(({ key, label, icon: Icon }) => (
+                    {navItems.map(({ key, path, label, icon: Icon, badge }) => (
                         <button
                             key={key}
-                            onClick={() => setMobileTab(key)}
-                            className={`flex flex-1 items-center justify-center gap-1.5 py-2 px-3 text-xs font-medium rounded-lg transition-all ${mobileTab === key
+                            onClick={() => navigate(path)}
+                            className={`flex flex-1 items-center justify-center gap-1.5 py-2 px-3 text-xs font-medium rounded-lg transition-all ${activeTab === key
                                 ? "bg-white text-blue-600 shadow-sm font-bold"
                                 : "text-slate-500 hover:text-slate-900"
                                 }`}
                         >
-                            <Icon className="h-4 w-4" />
-                            {label}
+                            <div className="relative flex items-center gap-1.5">
+                                <Icon className="h-4 w-4" />
+                                <span>{label}</span>
+                                {badge > 0 && (
+                                    <span className={`px-1.5 py-0.5 text-[10px] font-extrabold rounded-full text-white ${key === "invitations" ? "bg-amber-500" : "bg-blue-600"}`}>
+                                        {badge}
+                                    </span>
+                                )}
+                            </div>
                         </button>
                     ))}
                 </div>
@@ -156,21 +238,22 @@ const DashboardPage = () => {
             <div className="border-b border-slate-200/80 bg-white hidden lg:flex relative z-30">
                 <div className="mx-auto flex w-full max-w-6xl px-6 py-2">
                     <div className="flex bg-slate-100/80 p-1 rounded-xl">
-                        {[
-                            { key: "people", label: "People", icon: Users },
-                            { key: "invitations", label: "Invitations", icon: UserPlus },
-                            { key: "chats", label: "Chats", icon: MessagesSquare },
-                        ].map(({ key, label, icon: Icon }) => (
+                        {navItems.map(({ key, path, label, icon: Icon, badge }) => (
                             <button
                                 key={key}
-                                onClick={() => setMobileTab(key)}
-                                className={`flex items-center gap-2 px-5 py-2 text-sm font-medium rounded-lg transition-all ${mobileTab === key
+                                onClick={() => navigate(path)}
+                                className={`flex items-center gap-2 px-5 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === key
                                     ? "bg-white text-blue-600 shadow-sm font-bold"
                                     : "text-slate-600 hover:text-slate-900"
                                     }`}
                             >
                                 <Icon className="h-4 w-4" />
-                                {label}
+                                <span>{label}</span>
+                                {badge > 0 && (
+                                    <span className={`px-1.5 py-0.5 text-[10px] font-extrabold rounded-full text-white ${key === "invitations" ? "bg-amber-500" : "bg-blue-600"}`}>
+                                        {badge}
+                                    </span>
+                                )}
                             </button>
                         ))}
                     </div>
@@ -178,19 +261,19 @@ const DashboardPage = () => {
             </div>
 
             <main className="mx-auto flex flex-1 min-h-0 w-full max-w-6xl flex-col px-4 py-6 sm:px-6 overflow-hidden relative">
-                {mobileTab === "people" && (
+                {activeTab === "people" && (
                     <section key="people" className="flex-1 min-h-0 animate-fade-in">
                         <UserList />
                     </section>
                 )}
 
-                {mobileTab === "invitations" && (
+                {activeTab === "invitations" && (
                     <section key="invitations" className="flex-1 min-h-0 animate-fade-in">
                         <Invitation />
                     </section>
                 )}
 
-                {mobileTab === "chats" && (
+                {activeTab === "chats" && (
                     <section
                         key="chats"
                         className="flex-1 min-h-0 grid overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xl shadow-blue-900/5 lg:grid-cols-[320px_1fr] animate-fade-in"
@@ -221,7 +304,10 @@ const DashboardPage = () => {
                         >
                             {activeConversation && (
                                 <button
-                                    onClick={closeConversation}
+                                    onClick={() => {
+                                        closeConversation();
+                                        navigate("/chats");
+                                    }}
                                     className="border-b border-border/50 glass-subtle p-3 text-sm font-medium text-muted-foreground hover:text-foreground lg:hidden flex items-center gap-2"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -233,8 +319,6 @@ const DashboardPage = () => {
                     </section>
                 )}
             </main>
-
-            <Notifications />
 
             <Dialog open={showProfileModal} onOpenChange={setShowProfileModal}>
                 <DialogContent className="sm:max-w-md">

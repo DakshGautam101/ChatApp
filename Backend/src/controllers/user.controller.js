@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import { fetchUserList } from "../services/user.service.js";
 import { sendSuccess, sendError } from "../utils/response.js";
+import cacheService from "../services/cache.service.js";
 
 const getUserList = async function (req, res, next) {
     try {
@@ -26,6 +27,8 @@ const updateProfile = async function (req, res, next) {
         if (!updatedUser) {
             return sendError(res, 404, "User not found");
         }
+
+        await cacheService.del(`user:profile:${userId}`);
 
         return sendSuccess(res, 200, { user: updatedUser }, "Profile updated successfully");
     } catch (error) {

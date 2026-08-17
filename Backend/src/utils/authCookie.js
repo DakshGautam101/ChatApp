@@ -10,9 +10,11 @@ export const setAuthCookie = (res, token) => {
 };
 
 export const clearAuthCookie = (res) => {
-    res.clearCookie("token", {
+    res.cookie("token", "", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        expires: new Date(0),
+        maxAge: 0,
     });
 };

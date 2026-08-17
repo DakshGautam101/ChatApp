@@ -194,17 +194,38 @@ export const leaveGroup = async (req, res, next) => {
         const { groupId } = req.params;
         const userId = req.user.id;
 
-        const conversation = await leaveGroupService({ groupId, userId });
+        const result = await leaveGroupService({ groupId, userId });
 
         const io = getIO();
         if (io) {
+            // Tell the leaving user the conversation is removed from their list
             io.to(`user_${userId}`).emit("conversation:removed", { conversationId: groupId });
-            if (conversation) {
-                io.to(`conv_${groupId}`).emit("group:updated", conversation);
+
+            if (result?.disbanded) {
+                // If disbanded, notify any remaining members that group is removed
+                (result.remainingMemberIds || []).forEach((mId) => {
+                    io.to(`user_${mId}`).emit("conversation:removed", {
+                        conversationId: groupId,
+                        disbanded: true,
+                    });
+                });
+                io.to(`conv_${groupId}`).emit("conversation:removed", {
+                    conversationId: groupId,
+                    disbanded: true,
+                });
+            } else if (result?.convertedToPrivate && result?.conversation) {
+                // Notify remaining 2 members that the group was converted to 1-to-1 private chat
+                (result.remainingMemberIds || []).forEach((mId) => {
+                    io.to(`user_${mId}`).emit("conversation:new", result.conversation);
+                    io.to(`user_${mId}`).emit("group:updated", result.conversation);
+                });
+                io.to(`conv_${groupId}`).emit("group:updated", result.conversation);
+            } else if (result?.conversation) {
+                io.to(`conv_${groupId}`).emit("group:updated", result.conversation);
             }
         }
 
-        return sendSuccess(res, 200, {}, "Left group successfully");
+        return sendSuccess(res, 200, { result }, "Left group successfully");
     } catch (error) {
         logger.error("leaveGroup error:", { error: error.message, stack: error.stack });
         return next(error);
@@ -216,17 +237,38 @@ export const kickMember = async (req, res, next) => {
         const { groupId, targetUserId } = req.params;
         const requesterId = req.user.id;
 
-        const conversation = await kickMemberService({ groupId, targetUserId, requesterId });
+        const result = await kickMemberService({ groupId, targetUserId, requesterId });
 
         const io = getIO();
         if (io) {
+            // Tell the kicked user the conversation is removed from their list
             io.to(`user_${targetUserId}`).emit("conversation:removed", { conversationId: groupId });
-            if (conversation) {
-                io.to(`conv_${groupId}`).emit("group:updated", conversation);
+
+            if (result?.disbanded) {
+                // If disbanded, notify any remaining members that group is removed
+                (result.remainingMemberIds || []).forEach((mId) => {
+                    io.to(`user_${mId}`).emit("conversation:removed", {
+                        conversationId: groupId,
+                        disbanded: true,
+                    });
+                });
+                io.to(`conv_${groupId}`).emit("conversation:removed", {
+                    conversationId: groupId,
+                    disbanded: true,
+                });
+            } else if (result?.convertedToPrivate && result?.conversation) {
+                // Notify remaining 2 members that the group was converted to 1-to-1 private chat
+                (result.remainingMemberIds || []).forEach((mId) => {
+                    io.to(`user_${mId}`).emit("conversation:new", result.conversation);
+                    io.to(`user_${mId}`).emit("group:updated", result.conversation);
+                });
+                io.to(`conv_${groupId}`).emit("group:updated", result.conversation);
+            } else if (result?.conversation) {
+                io.to(`conv_${groupId}`).emit("group:updated", result.conversation);
             }
         }
 
-        return sendSuccess(res, 200, { conversation }, "Member removed from group");
+        return sendSuccess(res, 200, { conversation: result?.conversation }, "Member removed from group");
     } catch (error) {
         logger.error("kickMember error:", { error: error.message, stack: error.stack });
         return next(error);

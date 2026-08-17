@@ -62,14 +62,18 @@ export default function Invitation() {
             const directData = directRes.data || {};
             const groupData = groupRes.data || {};
 
-            setReceived(Array.isArray(directData.received) ? directData.received : []);
-            setSent(Array.isArray(directData.sent) ? directData.sent : []);
-
-            const groupInvites =
+            const rawReceived = Array.isArray(directData.received) ? directData.received : [];
+            const rawSent = Array.isArray(directData.sent) ? directData.sent : [];
+            const rawGroup =
                 groupData.invitations ||
                 groupData.data ||
                 (Array.isArray(groupData) ? groupData : []);
-            setGroupInvitations(Array.isArray(groupInvites) ? groupInvites : []);
+
+            setReceived(rawReceived.filter((i) => i.sender && (i.sender._id || i.sender.id)));
+            setSent(rawSent.filter((i) => i.receiver && (i.receiver._id || i.receiver.id)));
+            setGroupInvitations(
+                rawGroup.filter((i) => i.group && i.sender && (i.sender._id || i.sender.id))
+            );
         } catch (err) {
             setError(err?.response?.data?.message || "Couldn't load invitations. Please try again.");
         } finally {
@@ -248,7 +252,7 @@ export default function Invitation() {
                                                 />
                                                 <div className="min-w-0">
                                                     <p className="truncate text-sm font-bold text-slate-900">
-                                                        {invite.sender?.username || "Unknown"}
+                                                        {invite.sender?.username || invite.sender?.email || "User"}
                                                     </p>
                                                     <p className="truncate text-xs font-medium text-slate-500">
                                                         {invite.sender?.email}
@@ -404,7 +408,7 @@ export default function Invitation() {
                                                 />
                                                 <div className="min-w-0">
                                                     <p className="truncate text-sm font-bold text-slate-900">
-                                                        {invite.receiver?.username || "Unknown"}
+                                                        {invite.receiver?.username || invite.receiver?.email || "User"}
                                                     </p>
                                                     <p className="truncate text-xs font-medium text-slate-500">
                                                         {invite.receiver?.email}

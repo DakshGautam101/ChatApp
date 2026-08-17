@@ -1,6 +1,17 @@
+import React from "react";
 import { create } from "zustand";
 import { axiosInstance as axios } from "@/core/api/axiosInstance.js";
 import { socket } from "@/core/socket/socket.js";
+import useAuthStore from "@/modules/auth/stores/useAuthStore";
+import toast from "react-hot-toast";
+
+function sortConversations(convs) {
+    return [...convs].sort((a, b) => {
+        const timeA = new Date(a.lastMessage?.at || a.lastMessage?.createdAt || a.updatedAt || a.createdAt || 0).getTime();
+        const timeB = new Date(b.lastMessage?.at || b.lastMessage?.createdAt || b.updatedAt || b.createdAt || 0).getTime();
+        return timeB - timeA;
+    });
+}
 
 const useChatStore = create((set, get) => ({
     conversations: [],
@@ -21,15 +32,44 @@ const useChatStore = create((set, get) => ({
             const res = await axios.get("/message/conversations");
             if (get()._conversationsRequestToken !== token) return; 
 
-            const fetched = res.data.conversations || [];
+            const currentUserId = (useAuthStore.getState().user?._id || useAuthStore.getState().user?.id)?.toString();
+            const rawFetched = res.data.conversations || [];
+            const fetched = rawFetched.filter((c) => {
+                if (c.type === "group") {
+                    const validMembers = (c.participants || []).filter((p) => p.user && (p.user._id || p.user.id || p.user));
+                    return validMembers.length > 1;
+                }
+                const other = (c.participants || []).find(
+                    (p) => p.user && String(p.user?._id || p.user?.id || p.user) !== currentUserId
+                )?.user;
+                return !!other;
+            });
+
             set((state) => {
-                const localById = new Map(state.conversations.map((c) => [c._id, c]));
+                const activeId = state.activeConversation?._id?.toString();
+                const localById = new Map(state.conversations.map((c) => [c._id?.toString(), c]));
                 const merged = fetched.map((incoming) => {
-                    const local = localById.get(incoming._id);
-                    if (!local?.lastMessage?.at || !incoming.lastMessage?.at) return incoming;
-                    return new Date(local.lastMessage.at) > new Date(incoming.lastMessage.at) ? local : incoming;
+                    const incomingId = incoming._id?.toString();
+                    const local = localById.get(incomingId);
+                    const isActive = activeId && activeId === incomingId;
+
+                    let base = incoming;
+                    if (local?.lastMessage?.at && incoming.lastMessage?.at) {
+                        const localTime = new Date(local.lastMessage.at).getTime();
+                        const incomingTime = new Date(incoming.lastMessage.at).getTime();
+                        if (localTime > incomingTime) {
+                            base = { ...incoming, lastMessage: local.lastMessage };
+                        }
+                    } else if (local?.lastMessage?.at && !incoming.lastMessage?.at) {
+                        base = { ...incoming, lastMessage: local.lastMessage };
+                    }
+
+                    return {
+                        ...base,
+                        unreadCount: isActive ? 0 : (incoming.unreadCount ?? 0),
+                    };
                 });
-                return { conversations: merged };
+                return { conversations: sortConversations(merged) };
             });
         }
         catch (error) {
@@ -40,14 +80,18 @@ const useChatStore = create((set, get) => ({
     },
     openConversation: async (conversation) => {
         const token = get()._requestToken + 1;
-        set({
+        const convId = conversation._id?.toString();
+        set((state) => ({
             activeConversation: conversation,
+            conversations: state.conversations.map((c) =>
+                (c._id?.toString() === convId) ? { ...c, unreadCount: 0 } : c
+            ),
             messages: [],
             isLoadingMessages: true,
             isLoadingOlderMessages: false,
             hasMoreMessages: true,
             _requestToken: token,
-        });
+        }));
         socket.emit("conversation:join", conversation._id);
 
         try {
@@ -56,13 +100,14 @@ const useChatStore = create((set, get) => ({
 
             const loadedMessages = res.data.messages || [];
             set({ messages: loadedMessages, hasMoreMessages: res.data.hasMore });
-
-            const last = loadedMessages[loadedMessages.length - 1];
-            if (last) {
-                socket.emit("message:read", {
-                    conversationId: conversation._id,
-                    lastMessageId: last._id,
-                });
+            if (loadedMessages.length > 0) {
+                const lastMsg = loadedMessages[loadedMessages.length - 1];
+                if (lastMsg?._id) {
+                    socket.emit("message:read", {
+                        conversationId: conversation._id,
+                        lastMessageId: lastMsg._id,
+                    });
+                }
             }
         } catch (error) {
             console.error("fetchConversation error:", error);
@@ -147,7 +192,7 @@ const useChatStore = create((set, get) => ({
         }));
     },
 
-    sendMessage: (payload) => {
+    sendMessage: async (payload) => {
         const { content = "", attachments = [] } =
             typeof payload === "string" ? { content: payload } : payload || {};
         const { activeConversation } = get();
@@ -159,11 +204,20 @@ const useChatStore = create((set, get) => ({
 
         if (!hasText && !hasAttachments) return;
 
-        socket.emit("message:send", {
-            conversationId: activeConversation._id,
-            content: content.trim(),
-            attachments,
-        });
+        try {
+            const res = await axios.post("/message/send", {
+                conversationId: activeConversation._id,
+                content: content.trim(),
+                attachments,
+            });
+            const sentMsg = res.data?.message || res.data?.data?.message || res.data;
+            if (sentMsg?._id) {
+                get().receiveMessage(sentMsg);
+            }
+        } catch (error) {
+            console.error("Failed to send message:", error);
+            throw error;
+        }
     },
 
     uploadFile: async (file) => {
@@ -196,9 +250,16 @@ const useChatStore = create((set, get) => ({
     },
 
     receiveMessage: (message) => {
+        if (!message) return;
         const { activeConversation, conversations } = get();
+        const currentUserId = (useAuthStore.getState().user?._id || useAuthStore.getState().user?.id)?.toString();
+        const messageSenderId = (message.sender?._id || message.sender)?.toString();
+        const isFromOther = messageSenderId && messageSenderId !== currentUserId;
+        const convId = (message.conversation?._id || message.conversation)?.toString();
+        const activeConvId = activeConversation?._id?.toString();
+        const isActive = activeConvId && activeConvId === convId;
 
-        if (activeConversation?._id === message.conversation) {
+        if (isActive) {
             set((state) => {
                 const optIdx = state.messages.findIndex(
                     (m) =>
@@ -212,22 +273,78 @@ const useChatStore = create((set, get) => ({
                     next[optIdx] = message;
                     return { messages: next };
                 }
-                return { messages: [...state.messages, message] };
+                const msgIdStr = (message._id?.toString?.() || message._id);
+                const exists = state.messages.some((m) => (m._id?.toString?.() || m._id) === msgIdStr);
+                return { messages: exists ? state.messages : [...state.messages, message] };
             });
-            socket.emit("message:read", {
-                conversationId: message.conversation,
-                lastMessageId: message._id,
+            if (isFromOther) {
+                socket.emit("message:read", {
+                    conversationId: convId,
+                    lastMessageId: message._id,
+                });
+            }
+        }
+
+        if (isFromOther && !isActive) {
+            const senderName = typeof message.sender === "object"
+                ? (message.sender?.username || message.sender?.email || "Someone")
+                : "Someone";
+            let preview = message.content;
+            if (!preview && message.attachments?.length) {
+                const type = message.attachments[0].fileType || "";
+                if (type.startsWith("image/")) preview = "📷 Photo";
+                else if (type.startsWith("video/")) preview = "🎥 Video";
+                else if (type === "application/pdf") preview = "📄 PDF";
+                else preview = "📎 Attachment";
+            }
+            if (!preview) preview = "Sent a message";
+
+            toast((t) =>
+                React.createElement("div", {
+                    onClick: () => {
+                        toast.dismiss(t.id);
+                        const conv = get().conversations.find((c) => (c._id?.toString() || c._id) === convId);
+                        if (conv) {
+                            get().openConversation(conv);
+                        }
+                    },
+                    className: "flex items-center gap-3 cursor-pointer select-none"
+                },
+                React.createElement("div", {
+                    className: "flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-600 font-bold text-white text-xs shadow-xs"
+                }, senderName.charAt(0).toUpperCase()),
+                React.createElement("div", {
+                    className: "min-w-0 flex-1"
+                },
+                React.createElement("p", {
+                    className: "text-xs font-bold text-slate-900 truncate"
+                }, `💬 ${senderName}`),
+                React.createElement("p", {
+                    className: "text-xs font-medium text-slate-600 truncate"
+                }, preview)
+                )
+            ), {
+                duration: 4000,
+                position: "top-right",
+                style: {
+                    borderRadius: '12px',
+                    background: '#ffffff',
+                    color: '#0f172a',
+                    boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid #cbd5e1',
+                    padding: '10px 14px',
+                },
             });
         }
 
-        const idx = conversations.findIndex((conversation) => conversation._id === message.conversation);
+        const idx = conversations.findIndex((c) => (c._id?.toString() || c._id) === convId);
         if (idx !== -1) {
             const updated = [...conversations];
-            const [conversation] = updated.splice(idx, 1);
+            const conversation = { ...updated[idx] };
             let preview = message.content;
 
             if (!preview && message.attachments?.length) {
-                const type = message.attachments[0].fileType;
+                const type = message.attachments[0].fileType || "";
 
                 if (type.startsWith("image/")) preview = "📷 Photo";
                 else if (type.startsWith("video/")) preview = "🎥 Video";
@@ -238,9 +355,19 @@ const useChatStore = create((set, get) => ({
             conversation.lastMessage = {
                 text: preview,
                 sender: message.sender?._id || message.sender,
+                at: message.createdAt || new Date().toISOString(),
             };
-            updated.unshift(conversation);
-            set({ conversations: updated });
+
+            if (isActive) {
+                conversation.unreadCount = 0;
+            } else if (isFromOther) {
+                conversation.unreadCount = (conversation.unreadCount || 0) + 1;
+            }
+
+            updated[idx] = conversation;
+            set({ conversations: sortConversations(updated) });
+        } else {
+            get().fetchConversations();
         }
     },
 
@@ -275,13 +402,23 @@ const useChatStore = create((set, get) => ({
 
     updateConversationPreview: ({ conversationId, lastMessage }) => {
         set((state) => {
-            const idx = state.conversations.findIndex((conversation) => conversation._id === conversationId);
-            if (idx === -1) return state;
+            const convId = conversationId?.toString();
+            const idx = state.conversations.findIndex((c) => (c._id?.toString() || c._id) === convId);
+            if (idx === -1) {
+                setTimeout(() => get().fetchConversations(), 100);
+                return state;
+            }
             const updated = [...state.conversations];
-            const [conversation] = updated.splice(idx, 1);
+            const conversation = { ...updated[idx] };
             conversation.lastMessage = lastMessage;
-            updated.unshift(conversation);
-            return { conversations: updated };
+
+            const activeConvId = state.activeConversation?._id?.toString();
+            if (activeConvId === convId) {
+                conversation.unreadCount = 0;
+            }
+
+            updated[idx] = conversation;
+            return { conversations: sortConversations(updated) };
         });
     },
 
@@ -364,17 +501,19 @@ const useChatStore = create((set, get) => ({
                     : state.activeConversation;
 
             return {
-                conversations: updatedConvs,
+                conversations: sortConversations(updatedConvs),
                 activeConversation: updatedActive,
             };
         });
     },
 
     removeConversation: (conversationId) => {
+        if (!conversationId) return;
+        const convId = conversationId.toString();
         set((state) => ({
-            conversations: state.conversations.filter((c) => c._id !== conversationId),
+            conversations: state.conversations.filter((c) => (c._id?.toString() || c._id) !== convId),
             activeConversation:
-                state.activeConversation?._id === conversationId ? null : state.activeConversation,
+                (state.activeConversation?._id?.toString() === convId) ? null : state.activeConversation,
         }));
     },
 
@@ -409,8 +548,81 @@ const useChatStore = create((set, get) => ({
         }
         return updated;
     },
+
+    emitTyping: (isTyping) => {
+        const { activeConversation } = get();
+        if (!activeConversation?._id) return;
+        socket.emit("typing", {
+            conversationId: activeConversation._id,
+            isTyping,
+        });
+    },
+
+    handleTypingEvent: ({ conversationId, userId, isTyping }) => {
+        if (!conversationId || !userId) return;
+        set((state) => {
+            const currentSet = new Set(state.typingUsers[conversationId] || []);
+            if (isTyping) {
+                currentSet.add(userId);
+            } else {
+                currentSet.delete(userId);
+            }
+            return {
+                typingUsers: {
+                    ...state.typingUsers,
+                    [conversationId]: currentSet,
+                },
+            };
+        });
+    },
+
+    handleUserStatusEvent: ({ userId, status }) => {
+        if (!userId) return;
+        set((state) => {
+            const targetId = userId.toString();
+            const updatedConversations = state.conversations.map((c) => ({
+                ...c,
+                participants: c.participants?.map((p) => {
+                    const pId = (p.user?._id || p.user?.id || p.user)?.toString();
+                    if (pId === targetId) {
+                        return typeof p.user === "object" && p.user !== null
+                            ? { ...p, user: { ...p.user, status } }
+                            : p;
+                    }
+                    return p;
+                }),
+            }));
+
+            let updatedActive = state.activeConversation;
+            if (updatedActive?.participants) {
+                updatedActive = {
+                    ...updatedActive,
+                    participants: updatedActive.participants.map((p) => {
+                        const pId = (p.user?._id || p.user?.id || p.user)?.toString();
+                        if (pId === targetId) {
+                            return typeof p.user === "object" && p.user !== null
+                                ? { ...p, user: { ...p.user, status } }
+                                : p;
+                        }
+                        return p;
+                    }),
+                };
+            }
+
+            return {
+                conversations: updatedConversations,
+                activeConversation: updatedActive,
+            };
+        });
+    },
 }));
 
+socket.on("connect", () => {
+    const { activeConversation } = useChatStore.getState();
+    if (activeConversation?._id) {
+        socket.emit("conversation:join", activeConversation._id);
+    }
+});
 socket.on("message:new", (message) => useChatStore.getState().receiveMessage(message));
 socket.on("message:statusUpdated", (payload) => {
     useChatStore.getState().updateMessageStatus(payload);
@@ -438,11 +650,25 @@ socket.on("group:memberJoined", ({ conversation }) => {
         useChatStore.getState().addOrUpdateConversation(conversation);
     }
 });
-socket.on("typing", ({ userId, isTyping }) => {
-    const { activeConversation } = useChatStore.getState();
-    if (activeConversation) {
-        useChatStore.getState().setTyping(activeConversation._id, userId, isTyping);
+socket.on("notification:new", (newNotif) => {
+    if (newNotif?.type === "message" || newNotif?.conversation) {
+        useChatStore.getState().fetchConversations();
     }
+});
+socket.on("conversation:read", ({ conversationId }) => {
+    if (!conversationId) return;
+    const convId = conversationId.toString();
+    useChatStore.setState((state) => ({
+        conversations: state.conversations.map((c) =>
+            (c._id?.toString() === convId) ? { ...c, unreadCount: 0 } : c
+        ),
+    }));
+});
+socket.on("typing", (payload) => {
+    useChatStore.getState().handleTypingEvent(payload);
+});
+socket.on("user:status", (payload) => {
+    useChatStore.getState().handleUserStatusEvent(payload);
 });
 
 export default useChatStore;

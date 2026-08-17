@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import generateOtp from "../helper/generateOtp.js";
@@ -11,30 +12,43 @@ import {
 } from "../services/auth.service.js";
 import { sendError, sendSuccess } from "../utils/response.js";
 import { clearAuthCookie } from "../utils/authCookie.js";
+import { getIO } from "../socket/socket.js";
+import cacheService from "../services/cache.service.js";
 
 export const signup = async (req, res, next) => {
     try {
-        const { username, email, phone , password, avatar } = req.body;
+        const { username, email, phone, password, avatar } = req.body;
+        const normalizedEmail = email ? email.toLowerCase().trim() : "";
 
-        if (await checkExistingUser(email)) {
-            return sendError(res, 400, "User already exists");
+        if (await checkExistingUser(normalizedEmail)) {
+            return sendError(res, 400, "An account with this email is already registered and verified. Please sign in.");
         }
 
-        const user = await createUserWithOtp({ username, email, password, phone, avatar });
-        await sendVerificationEmail(email, user.emailVerificationOtp);
-        const token = attachAuthResponse(res, user);
+        const user = await createUserWithOtp({
+            username: username?.trim(),
+            email: normalizedEmail,
+            password,
+            phone: phone?.trim(),
+            avatar,
+        });
 
-        return sendSuccess(res, 201, {
-            token,
-            user: {
-                id: user._id,
-                email: user.email,
-                username: user.username,
-                phone: user.phone,
-                avatar: user.avatar,
-                isVerified: user.isVerified,
+        await sendVerificationEmail(normalizedEmail, user.generatedOtp);
+
+        return sendSuccess(
+            res,
+            201,
+            {
+                user: {
+                    id: user._id,
+                    email: user.email,
+                    username: user.username,
+                    phone: user.phone,
+                    avatar: user.avatar,
+                    isVerified: false,
+                },
             },
-        }, "Signup successful. Verification email sent.");
+            "Signup successful. A 6-digit verification code has been sent to your email."
+        );
     } catch (error) {
         next(error);
     }
@@ -48,7 +62,8 @@ export const login = async (req, res, next) => {
             return sendError(res, 400, "Please fill all the fields");
         }
 
-        const user = await User.findOne({ email }).select("+password +isVerified");
+        const normalizedEmail = email.toLowerCase().trim();
+        const user = await User.findOne({ email: normalizedEmail }).select("+password +isVerified +tokenVersion");
         if (!user) {
             return sendError(res, 404, "User does not exist");
         }
@@ -73,6 +88,39 @@ export const login = async (req, res, next) => {
 
 export const logout = async (req, res, next) => {
     try {
+        let userId = req.user?.id;
+
+        if (!userId) {
+            let token = req.cookies?.token;
+            if (!token && req.headers.authorization) {
+                if (req.headers.authorization.startsWith("Bearer ")) {
+                    token = req.headers.authorization.split(" ")[1];
+                } else {
+                    token = req.headers.authorization;
+                }
+            }
+            if (token) {
+                try {
+                    const decoded = jwt.decode(token);
+                    userId = decoded?.id;
+                } catch (e) {
+                    // Ignore decode error
+                }
+            }
+        }
+
+        if (userId) {
+            await User.findByIdAndUpdate(userId, { $inc: { tokenVersion: 1 } });
+            try {
+                const io = getIO();
+                if (io) {
+                    io.in(`user_${userId}`).disconnectSockets(true);
+                }
+            } catch (e) {
+                // Ignore socket disconnect error
+            }
+        }
+
         clearAuthCookie(res);
         return sendSuccess(res, 200, {}, "Logged out");
     } catch (error) {
@@ -83,27 +131,26 @@ export const logout = async (req, res, next) => {
 export const verifyUserEmailOtp = async (req, res, next) => {
     try {
         const { email, otp } = req.body;
-        if (!email || !otp) return sendError(res, 400, "Email and otp required");
+        if (!email || !otp) return sendError(res, 400, "Email and OTP are required");
 
-        const user = await User.findOne({ email }).select("+emailVerificationOtp +emailVerificationOtpExpires");
-        if (!user) return sendError(res, 400, "Invalid request");
+        const normalizedEmail = email.toLowerCase().trim();
+        const user = await User.findOne({ email: normalizedEmail });
+        if (!user) return sendError(res, 400, "Invalid request. User not found.");
 
-        if (!user.emailVerificationOtp || !user.emailVerificationOtpExpires) {
-            return sendError(res, 400, "No OTP requested for this account");
+        const cachedOtp = await cacheService.get(`otp:${normalizedEmail}`);
+        if (!cachedOtp) {
+            return sendError(res, 400, "OTP expired or invalid. Please request a new one.");
         }
 
-        if (user.emailVerificationOtp !== otp) {
-            return sendError(res, 400, "Invalid OTP");
-        }
-
-        if (Date.now() > user.emailVerificationOtpExpires) {
-            return sendError(res, 400, "OTP expired");
+        if (String(cachedOtp) !== String(otp).trim()) {
+            return sendError(res, 400, "Invalid OTP code");
         }
 
         user.isVerified = true;
-        user.emailVerificationOtp = undefined;
-        user.emailVerificationOtpExpires = undefined;
         await user.save();
+
+        await cacheService.del(`otp:${normalizedEmail}`);
+        await cacheService.del(`user:profile:${user._id}`);
 
         const token = attachAuthResponse(res, user);
         const safeUser = await createSafeUserResponse(user._id);
@@ -116,20 +163,19 @@ export const verifyUserEmailOtp = async (req, res, next) => {
 export const resendEmailOtp = async (req, res, next) => {
     try {
         const { email } = req.body;
-        if (!email) return sendError(res, 400, "Email required");
+        if (!email) return sendError(res, 400, "Email is required");
 
-        const user = await User.findOne({ email });
+        const normalizedEmail = email.toLowerCase().trim();
+        const user = await User.findOne({ email: normalizedEmail });
         if (!user) return sendError(res, 400, "User does not exist");
         if (user.isVerified) return sendError(res, 400, "User already verified");
 
         const otp = generateOtp(6);
-        user.emailVerificationOtp = otp;
-        user.emailVerificationOtpExpires = Date.now() + 10 * 60 * 1000;
-        await user.save();
+        await cacheService.set(`otp:${normalizedEmail}`, otp, 300);
 
-        await sendVerificationEmail(email, otp);
+        await sendVerificationEmail(normalizedEmail, otp);
 
-        return sendSuccess(res, 200, {}, "OTP resent");
+        return sendSuccess(res, 200, {}, "A new 6-digit OTP has been sent to your email");
     } catch (error) {
         next(error);
     }
@@ -140,10 +186,19 @@ export const me = async (req, res, next) => {
         const userId = req.user?.id;
         if (!userId) return sendError(res, 401, "Unauthorized");
 
+        const cacheKey = `user:profile:${userId}`;
+        const cachedUser = await cacheService.get(cacheKey);
+        if (cachedUser) {
+            return sendSuccess(res, 200, { user: cachedUser });
+        }
+
         const exists = await checkExistingUserByID(userId);
         if (!exists) return sendError(res, 404, "User not found");
 
         const user = await User.findById(userId).select("-emailVerificationOtp -emailVerificationOtpExpires -password");
+        if (user) {
+            await cacheService.set(cacheKey, user, 3600);
+        }
         return sendSuccess(res, 200, { user });
     } catch (err) {
         next(err);

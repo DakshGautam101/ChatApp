@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import { getSockets } from "../socket/socket.js";
 
 export const fetchUserList = async (currentUserId) => {
     const users = await User.find({ _id: { $ne: currentUserId } })
@@ -8,8 +9,12 @@ export const fetchUserList = async (currentUserId) => {
     const currentUser = await User.findById(currentUserId).select("friends").lean();
     const friendIdsSet = new Set((currentUser?.friends || []).map((fId) => fId.toString()));
 
-    return users.map((user) => ({
-        ...user,
-        isFriend: friendIdsSet.has(user._id.toString()),
-    }));
+    return users.map((user) => {
+        const isOnline = getSockets(user._id.toString()).length > 0;
+        return {
+            ...user,
+            status: isOnline ? "online" : "offline",
+            isFriend: friendIdsSet.has(user._id.toString()),
+        };
+    });
 };

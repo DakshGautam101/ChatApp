@@ -1,6 +1,7 @@
 import Conversation from "../models/conversation.model.js";
 import User from "../models/user.model.js";
 import GroupInvitation from "../models/groupInvitation.model.js";
+import cacheService from "./cache.service.js";
 
 export const createGroupService = async ({ name, members, creatorId }) => {
     if (!name || typeof name !== "string" || !name.trim()) {
@@ -65,6 +66,10 @@ export const createGroupService = async ({ name, members, creatorId }) => {
     return populatedConversation;
 };
 
+const escapeRegex = (string) => {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+};
+
 export const sendGroupInvitationService = async ({ groupId, senderId, receiverId, query }) => {
     const group = await Conversation.findById(groupId);
     if (!group || group.type !== "group") {
@@ -77,7 +82,8 @@ export const sendGroupInvitationService = async ({ groupId, senderId, receiverId
     if (receiverId) {
         targetUser = await User.findById(receiverId);
     } else if (query && query.trim()) {
-        const searchRegex = new RegExp(query.trim(), "i");
+        const sanitized = escapeRegex(query.trim());
+        const searchRegex = new RegExp(sanitized, "i");
         targetUser = await User.findOne({
             _id: { $ne: senderId },
             $or: [{ email: searchRegex }, { username: searchRegex }, { phone: searchRegex }],
@@ -89,6 +95,7 @@ export const sendGroupInvitationService = async ({ groupId, senderId, receiverId
         error.statusCode = 404;
         throw error;
     }
+
 
     const isAlreadyMember = group.participants.some(
         (p) => p.user.toString() === targetUser._id.toString()
@@ -133,9 +140,10 @@ export const getPendingGroupInvitationsService = async (userId) => {
     })
         .populate("group", "name avatarUrl type")
         .populate("sender", "username email avatar phone")
-        .sort({ createdAt: -1 });
+        .sort({ createdAt: -1 })
+        .lean();
 
-    return invitations;
+    return invitations.filter((inv) => inv.group && inv.sender);
 };
 
 export const respondToGroupInvitationService = async ({ invitationId, userId, action }) => {
@@ -221,7 +229,8 @@ export const searchUsersForGroupService = async ({ groupId, query, currentUserId
     };
 
     if (trimmedQuery) {
-        const searchRegex = new RegExp(trimmedQuery, "i");
+        const sanitized = escapeRegex(trimmedQuery);
+        const searchRegex = new RegExp(sanitized, "i");
         filter.$or = [{ username: searchRegex }, { email: searchRegex }, { phone: searchRegex }];
     }
 
@@ -300,7 +309,9 @@ export const leaveGroupService = async ({ groupId, userId }) => {
         throw error;
     }
 
-    const participantIndex = group.participants.findIndex((p) => p.user.toString() === userId.toString());
+    const participantIndex = group.participants.findIndex(
+        (p) => (p.user?._id || p.user)?.toString() === userId.toString()
+    );
     if (participantIndex === -1) {
         const error = new Error("You are not a member of this group");
         error.statusCode = 400;
@@ -310,21 +321,94 @@ export const leaveGroupService = async ({ groupId, userId }) => {
     const wasOwner = group.participants[participantIndex].isOwner;
     group.participants.splice(participantIndex, 1);
 
-    if (group.participants.length > 0) {
-        if (wasOwner) {
-            const nextAdmin = group.participants.find((p) => p.role === "admin") || group.participants[0];
-            nextAdmin.role = "admin";
-            nextAdmin.isOwner = true;
-        }
-        await group.save();
-    } else {
+    group.participants = group.participants.filter(
+        (p) => p.user && (p.user?._id || p.user?.id || p.user)
+    );
+
+    
+    if (group.participants.length <= 1) {
+        const remainingMemberIds = group.participants.map((p) =>
+            (p.user?._id || p.user?.id || p.user).toString()
+        );
         await Conversation.findByIdAndDelete(groupId);
-        return null;
+
+        try {
+            for (const mId of remainingMemberIds) {
+                await cacheService.del(`user:conversations:${mId}`);
+            }
+            await cacheService.del(`user:conversations:${userId}`);
+        } catch (e) {}
+
+        return {
+            status: "disbanded",
+            disbanded: true,
+            conversation: null,
+            remainingMemberIds,
+        };
     }
 
-    return await Conversation.findById(groupId)
+    if (group.participants.length === 2) {
+        const formerName = group.name || "Group";
+        group.type = "private";
+        group.isConvertedFromGroup = true;
+        group.formerGroupName = formerName;
+        group.name = undefined;
+        group.avatarUrl = undefined;
+        group.participants = group.participants.map((p) => ({
+            user: p.user?._id || p.user?.id || p.user,
+            lastReadMessageId: p.lastReadMessageId,
+        }));
+        await group.save();
+
+        const remainingMemberIds = group.participants.map((p) =>
+            (p.user?._id || p.user?.id || p.user).toString()
+        );
+        try {
+            for (const mId of remainingMemberIds) {
+                await cacheService.del(`user:conversations:${mId}`);
+            }
+            await cacheService.del(`user:conversations:${userId}`);
+        } catch (e) {}
+
+        const populated = await Conversation.findById(groupId)
+            .populate("participants.user", "username email avatar status phone")
+            .populate("createdBy", "username email avatar");
+
+        return {
+            status: "converted_to_private",
+            convertedToPrivate: true,
+            conversation: populated,
+            remainingMemberIds,
+        };
+    }
+
+    // 3 or more members remain
+    if (wasOwner) {
+        const nextAdmin = group.participants.find((p) => p.role === "admin") || group.participants[0];
+        nextAdmin.role = "admin";
+        nextAdmin.isOwner = true;
+    }
+    await group.save();
+
+    const remainingMemberIds = group.participants.map((p) =>
+        (p.user?._id || p.user?.id || p.user).toString()
+    );
+    try {
+        for (const mId of remainingMemberIds) {
+            await cacheService.del(`user:conversations:${mId}`);
+        }
+        await cacheService.del(`user:conversations:${userId}`);
+    } catch (e) {}
+
+    const populated = await Conversation.findById(groupId)
         .populate("participants.user", "username email avatar status phone")
         .populate("createdBy", "username email avatar");
+
+    return {
+        status: "updated",
+        conversation: populated,
+        remainingMemberIds,
+    };
 };
 
 export const kickMemberService = async ({ groupId, targetUserId, requesterId }) => {
@@ -335,14 +419,18 @@ export const kickMemberService = async ({ groupId, targetUserId, requesterId }) 
         throw error;
     }
 
-    const requester = group.participants.find((p) => p.user.toString() === requesterId.toString());
+    const requester = group.participants.find(
+        (p) => (p.user?._id || p.user)?.toString() === requesterId.toString()
+    );
     if (!requester || requester.role !== "admin") {
         const error = new Error("Only group admins can kick members");
         error.statusCode = 403;
         throw error;
     }
 
-    const targetIndex = group.participants.findIndex((p) => p.user.toString() === targetUserId.toString());
+    const targetIndex = group.participants.findIndex(
+        (p) => (p.user?._id || p.user)?.toString() === targetUserId.toString()
+    );
     if (targetIndex === -1) {
         const error = new Error("User is not a member of this group");
         error.statusCode = 404;
@@ -356,10 +444,90 @@ export const kickMemberService = async ({ groupId, targetUserId, requesterId }) 
     }
 
     group.participants.splice(targetIndex, 1);
+
+    
+    group.participants = group.participants.filter(
+        (p) => p.user && (p.user?._id || p.user?.id || p.user)
+    );
+
+    if (group.participants.length <= 1) {
+        const remainingMemberIds = group.participants.map((p) =>
+            (p.user?._id || p.user?.id || p.user).toString()
+        );
+        await Conversation.findByIdAndDelete(groupId);
+
+        try {
+            for (const mId of remainingMemberIds) {
+                await cacheService.del(`user:conversations:${mId}`);
+            }
+            await cacheService.del(`user:conversations:${targetUserId}`);
+        } catch (e) {}
+
+        return {
+            status: "disbanded",
+            disbanded: true,
+            conversation: null,
+            remainingMemberIds,
+        };
+    }
+
+
+    if (group.participants.length === 2) {
+        const formerName = group.name || "Group";
+        group.type = "private";
+        group.isConvertedFromGroup = true;
+        group.formerGroupName = formerName;
+        group.name = undefined;
+        group.avatarUrl = undefined;
+        group.participants = group.participants.map((p) => ({
+            user: p.user?._id || p.user?.id || p.user,
+            lastReadMessageId: p.lastReadMessageId,
+        }));
+        await group.save();
+
+        const remainingMemberIds = group.participants.map((p) =>
+            (p.user?._id || p.user?.id || p.user).toString()
+        );
+        try {
+            for (const mId of remainingMemberIds) {
+                await cacheService.del(`user:conversations:${mId}`);
+            }
+            await cacheService.del(`user:conversations:${targetUserId}`);
+        } catch (e) {}
+
+        const populated = await Conversation.findById(groupId)
+            .populate("participants.user", "username email avatar status phone")
+            .populate("createdBy", "username email avatar");
+
+        return {
+            status: "converted_to_private",
+            convertedToPrivate: true,
+            conversation: populated,
+            remainingMemberIds,
+        };
+    }
+
+    // 3 or more members remain
     await group.save();
 
-    return await Conversation.findById(groupId)
+    const remainingMemberIds = group.participants.map((p) =>
+        (p.user?._id || p.user?.id || p.user).toString()
+    );
+    try {
+        for (const mId of remainingMemberIds) {
+            await cacheService.del(`user:conversations:${mId}`);
+        }
+        await cacheService.del(`user:conversations:${targetUserId}`);
+    } catch (e) {}
+
+    const populated = await Conversation.findById(groupId)
         .populate("participants.user", "username email avatar status phone")
         .populate("createdBy", "username email avatar");
+
+    return {
+        status: "updated",
+        conversation: populated,
+        remainingMemberIds,
+    };
 };
 

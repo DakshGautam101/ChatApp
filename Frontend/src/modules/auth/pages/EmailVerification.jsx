@@ -162,17 +162,21 @@ export function EmailVerification() {
 
                         <div className="animate-fade-in">
                             <Button
-                                className="h-11 w-full gap-2 text-base relative overflow-hidden btn btn-primary border-none text-primary-content"
+                                className={cn(
+                                    "h-12 w-full gap-2 text-sm font-bold rounded-xl transition-all duration-300 border-none",
+                                    otp.length === 6 && !isLoading
+                                        ? "bg-gradient-to-r from-blue-600 via-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 hover:shadow-lg hover:shadow-blue-500/35 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                                        : "bg-slate-100 text-slate-400 cursor-not-allowed shadow-none"
+                                )}
                                 onClick={handleVerify}
                                 disabled={isLoading || otp.length !== 6}
                             >
                                 {isLoading ? (
-                                    <span className="loading loading-spinner loading-xs"></span>
-                                ) : null}
-                                {isLoading ? "Verifying…" : "Verify email"}
-                                {!isLoading && otp.length === 6 && (
-                                    <div className="absolute inset-0 bg-white/20 translate-y-full hover:translate-y-0 transition-transform duration-300" />
+                                    <span className="loading loading-spinner loading-xs text-white"></span>
+                                ) : (
+                                    <ShieldCheck className="h-4 w-4" />
                                 )}
+                                {isLoading ? "Verifying..." : "Verify Email"}
                             </Button>
                         </div>
                     </CardContent>

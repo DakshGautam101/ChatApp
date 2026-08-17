@@ -11,6 +11,8 @@ export function ReactionPicker({ isMine, onSelectReaction }) {
             className={cn(
                 "absolute top-1/2 -translate-y-1/2 z-20",
                 "opacity-0 scale-90 pointer-events-none",
+                "group-hover/item:opacity-100 group-hover/item:scale-100 group-hover/item:pointer-events-auto",
+                "group-hover/bubble:opacity-100 group-hover/bubble:scale-100 group-hover/bubble:pointer-events-auto",
                 "group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto",
                 "transition-all duration-200 ease-out",
                 isMine ? "right-full mr-2" : "left-full ml-2"

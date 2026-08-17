@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/modules/auth/stores/useAuthStore";
+import useChatStore from "@/modules/chat/stores/useChatStore";
 import { axiosInstance } from "@/core/api/axiosInstance";
+import { socket } from "@/core/socket/socket.js";
 import { Button } from "@/core/components/ui/button";
 import { Input } from "@/core/components/ui/input";
 import { AlertCircle, Loader2, MessageCircle, Search, Send, Users } from "lucide-react";
@@ -23,8 +26,83 @@ function UserRowSkeleton() {
     );
 }
 
-export default function UserList() {
-    const { user } = useAuthStore();
+const UserRow = React.memo(function UserRow({
+    u,
+    conv,
+    unreadCount,
+    isSending,
+    isSent,
+    onOpenMessage,
+    onSendInvite,
+    index,
+}) {
+    return (
+        <li
+            className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200/70 bg-white p-3.5 transition-all duration-200 hover:border-blue-200 hover:shadow-md hover:shadow-blue-500/5"
+        >
+            <div className="flex min-w-0 items-center gap-3.5 flex-1">
+                <Avatar src={u.avatar} name={u.username || u.email} size="md" showStatus={true} status={u.status} />
+                <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <p className="truncate text-sm font-bold text-slate-900">{u.username || u.email}</p>
+                        {u.status === "online" ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-2xs">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                Online
+                            </span>
+                        ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500 border border-slate-200/60">
+                                Offline
+                            </span>
+                        )}
+                        {unreadCount > 0 && (
+                            <span className="inline-flex items-center justify-center shrink-0 rounded-full bg-blue-600 text-white font-extrabold text-[10px] px-2 py-0.5 min-w-[20px] shadow-xs" title={`${unreadCount} unread messages`}>
+                                {unreadCount > 99 ? "99+" : unreadCount}
+                            </span>
+                        )}
+                    </div>
+                    <p className="truncate text-xs font-medium text-slate-500">{u.email}</p>
+                </div>
+            </div>
+            {u.isFriend ? (
+                <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => onOpenMessage(conv)}
+                    className="shrink-0 gap-1.5 rounded-lg h-9 font-semibold text-xs border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-all cursor-pointer"
+                >
+                    Message <MessageCircle className="h-3.5 w-3.5" />
+                </Button>
+            ) : (
+                <Button
+                    size="sm"
+                    disabled={isSending || isSent}
+                    onClick={() => onSendInvite(u._id)}
+                    className={cn(
+                        "shrink-0 gap-1.5 rounded-lg h-9 font-semibold text-xs transition-all border-none shadow-xs",
+                        !isSent && !isSending
+                            ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20 hover:scale-105 active:scale-95 cursor-pointer"
+                            : "bg-slate-100 text-slate-600 border border-slate-200"
+                    )}
+                >
+                    {isSending ? (
+                        <span className="loading loading-spinner loading-xs text-blue-600"></span>
+                    ) : (
+                        <Send className="h-3.5 w-3.5" />
+                    )}
+                    {isSent ? "Sent" : isSending ? "Sending" : "Invite"}
+                </Button>
+            )}
+        </li>
+    );
+});
+
+function UserList() {
+    const user = useAuthStore((state) => state.user);
+    const conversations = useChatStore((state) => state.conversations);
+    const openConversation = useChatStore((state) => state.openConversation);
+    const navigate = useNavigate();
+
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -55,7 +133,24 @@ export default function UserList() {
         return () => { mounted = false; };
     }, [fetchUsers]);
 
-    const sendInvitation = async (targetId) => {
+    useEffect(() => {
+        if (!socket) return;
+        const handleStatusChange = ({ userId, status }) => {
+            if (!userId) return;
+            const targetId = userId.toString();
+            setUsers((prevUsers) =>
+                prevUsers.map((u) =>
+                    String(u._id || u.id) === targetId ? { ...u, status } : u
+                )
+            );
+        };
+        socket.on("user:status", handleStatusChange);
+        return () => {
+            socket.off("user:status", handleStatusChange);
+        };
+    }, []);
+
+    const sendInvitation = useCallback(async (targetId) => {
         if (!targetId) return;
         setSending((s) => ({ ...s, [targetId]: true }));
         try {
@@ -68,10 +163,27 @@ export default function UserList() {
         } finally {
             setSending((s) => ({ ...s, [targetId]: false }));
         }
-    };
+    }, []);
+
+    const currentUserId = String(user?._id || user?.id || "");
+
+    const conversationMap = useMemo(() => {
+        const map = new Map();
+        for (const c of conversations) {
+            if (c.type === "private" && c.participants) {
+                for (const p of c.participants) {
+                    const pId = String(p.user?._id || p.user?.id || p.user || "");
+                    if (pId && pId !== currentUserId) {
+                        map.set(pId, c);
+                    }
+                }
+            }
+        }
+        return map;
+    }, [conversations, currentUserId]);
 
     const visibleUsers = useMemo(() => {
-        const filtered = users.filter((u) => u._id !== user?._id);
+        const filtered = users.filter((u) => String(u._id) !== currentUserId);
         const normalizedSearch = searchTerm.trim().toLowerCase();
 
         if (!normalizedSearch) {
@@ -82,7 +194,16 @@ export default function UserList() {
             const haystack = `${u.username || ""} ${u.email || ""}`.toLowerCase();
             return haystack.includes(normalizedSearch);
         });
-    }, [searchTerm, user?._id, users]);
+    }, [searchTerm, currentUserId, users]);
+
+    const handleOpenMessage = useCallback((conv) => {
+        if (conv?._id) {
+            openConversation(conv);
+            navigate(`/chats/${conv._id}`);
+        } else {
+            navigate('/chats');
+        }
+    }, [openConversation, navigate]);
 
     return (
         <div className="flex h-full flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xl shadow-blue-900/5">
@@ -136,7 +257,7 @@ export default function UserList() {
             )}
 
             {!loading && !error && visibleUsers.length === 0 && (
-                <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 py-12 text-center animate-fade-in">
+                <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 py-12 text-center">
                     <div className="p-3 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
                         <Users className="h-6 w-6" />
                     </div>
@@ -147,55 +268,30 @@ export default function UserList() {
             )}
 
             {!loading && !error && visibleUsers.length > 0 && (
-                <ul className="space-y-2 overflow-y-auto pr-1 pb-4 flex-1 animate-fade-in">
-                    {visibleUsers.map((u, i) => (
-                        <li
-                            key={u._id}
-                            className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200/70 bg-white p-3.5 transition-all duration-200 hover:border-blue-200 hover:shadow-md hover:shadow-blue-500/5 stagger-item"
-                            style={{ "--stagger-index": i }}
-                        >
-                            <div className="flex min-w-0 items-center gap-3.5">
-                                <Avatar src={u.avatar} name={u.username || u.email} size="md" showStatus={true} status={u.status} />
-                                <div className="min-w-0">
-                                    <p className="truncate text-sm font-bold text-slate-900">{u.username || u.email}</p>
-                                    <p className="truncate text-xs font-medium text-slate-500">{u.email}</p>
-                                </div>
-                            </div>
-                            {
-                                u.isFriend ? (
-                                    <Button
-                                        size="sm"
-                                        variant="secondary"
-                                        disabled
-                                        className="shrink-0 rounded-lg h-9 font-semibold text-xs border border-slate-200 bg-slate-100 text-slate-500"
-                                    >
-                                        Friends <MessageCircle className="h-3.5 w-3.5 ml-1.5 text-blue-600"/>
-                                    </Button>
-                                ):(
-                                    <Button
-                                        size="sm"
-                                        disabled={!!sending[u._id] || !!sentTo[u._id]}
-                                        onClick={() => sendInvitation(u._id)}
-                                        className={cn(
-                                            "shrink-0 gap-1.5 rounded-lg h-9 font-semibold text-xs transition-all border-none shadow-xs",
-                                            !sentTo[u._id] && !sending[u._id] 
-                                                ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20 hover:scale-105 active:scale-95" 
-                                                : "bg-slate-100 text-slate-600 border border-slate-200"
-                                        )}
-                                    >
-                                        {sending[u._id] ? (
-                                            <span className="loading loading-spinner loading-xs text-blue-600"></span>
-                                        ) : (
-                                            <Send className="h-3.5 w-3.5" />
-                                        )}
-                                        {sentTo[u._id] ? "Sent" : sending[u._id] ? "Sending" : "Invite"}
-                                    </Button>
-                                )
-                            }
-                        </li>
-                    ))}
+                <ul className="space-y-2 overflow-y-auto pr-1 pb-4 flex-1">
+                    {visibleUsers.map((u, i) => {
+                        const targetId = String(u._id || u.id);
+                        const conv = conversationMap.get(targetId);
+                        const unreadCount = conv?.unreadCount || 0;
+
+                        return (
+                            <UserRow
+                                key={u._id}
+                                u={u}
+                                conv={conv}
+                                unreadCount={unreadCount}
+                                isSending={!!sending[u._id]}
+                                isSent={!!sentTo[u._id]}
+                                onOpenMessage={handleOpenMessage}
+                                onSendInvite={sendInvitation}
+                                index={i}
+                            />
+                        );
+                    })}
                 </ul>
             )}
         </div>
     );
 }
+
+export default React.memo(UserList);
