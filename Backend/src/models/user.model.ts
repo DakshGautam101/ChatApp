@@ -1,7 +1,7 @@
-import mongoose, { Document, Types } from "mongoose";
+import mongoose, {  Types } from "mongoose";
 
 
-export interface UserInterface extends Document{
+export interface UserInterface {
     username: string;
     email: string;
     password?: string;

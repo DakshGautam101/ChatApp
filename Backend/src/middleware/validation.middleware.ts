@@ -1,7 +1,14 @@
+import type { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
+import type { ValidationChain } from "express-validator";
 
-const validate = (validations) => {
-  return async (req, res, next) => {
+interface ValidationError extends Error{
+  path ?: string,
+  param ?: string
+}
+
+const validate = (validations : ValidationChain | ValidationChain[]) => {
+  return async (req : Request, res :Response, next : NextFunction) => {
     const validationList = Array.isArray(validations) ? validations : [validations];
 
     for (const validation of validationList) {
@@ -14,7 +21,7 @@ const validate = (validations) => {
     }
 
     const errorArray = errors.array().map((err) => ({
-      field: err.path || err.param || "unknown",
+      field: err.type === "field" ? err.path : "unknown",
       message: err.msg,
     }));
 

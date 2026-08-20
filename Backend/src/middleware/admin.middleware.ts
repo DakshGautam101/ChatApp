@@ -1,7 +1,14 @@
+import type { NextFunction, Request, Response } from "express";
 import Conversation from "../models/conversation.model.js";
 import { sendError } from "../utils/response.js";
 
-export const isAdmin = async (req, res, next) => {
+interface isAdminRequest extends Request{
+    user : {
+        id : string
+    }
+}
+
+export const isAdmin = async (req:isAdminRequest, res:Response, next:NextFunction) => {
     try {
         const conversationId = req.params.groupId || req.body.groupId || req.body.conversationId;
         if (!conversationId) {

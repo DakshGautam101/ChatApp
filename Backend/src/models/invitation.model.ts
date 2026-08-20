@@ -1,6 +1,6 @@
 import mongoose, { Document, Types, type Date } from "mongoose";
 
-export interface Invitation extends Document{
+export interface Invitation {
     sender : Types.ObjectId;
     receiver : Types.ObjectId;
     status : "pending" | "accepted" | "rejected";

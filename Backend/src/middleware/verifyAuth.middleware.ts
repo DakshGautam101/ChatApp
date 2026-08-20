@@ -1,8 +1,28 @@
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import logger from "../utils/logger.js";
 import User from "../models/user.model.js";
+import type { NextFunction, Request, Response } from "express";
 
-export const verifyAuth = async (req, res, next) => {
+type DecodedType = {
+    id: string,
+    tokenVersion: number
+}
+export interface AuthTokenPayload extends JwtPayload {
+    id: string;
+    tokenVersion: number;
+}
+
+const isAuthTokenPayload = (
+    decoded: string | JwtPayload
+): decoded is AuthTokenPayload => {
+    return (
+        typeof decoded !== "string" &&
+        typeof decoded.id === "string" &&
+        typeof decoded.tokenVersion === "number"
+    );
+};
+
+export const verifyAuth = async (req: Request, res: Response, next: NextFunction) => {
     try {
         let token = req.cookies?.token;
 
@@ -21,7 +41,15 @@ export const verifyAuth = async (req, res, next) => {
             });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+
+        if (!isAuthTokenPayload(decoded)) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid token payload",
+            });
+        }
+
 
         const dbUser = await User.findById(decoded.id).select("tokenVersion isVerified");
         if (!dbUser || (dbUser.tokenVersion ?? 0) !== (decoded.tokenVersion ?? 0)) {
@@ -41,7 +69,9 @@ export const verifyAuth = async (req, res, next) => {
         req.user = decoded;
         next();
     } catch (error) {
-        logger.warn("Auth Verification Error:", { error: error.message });
+        if (error instanceof Error) {
+            logger.warn("Auth Verification Error:", { error: error.message });
+        }
         return res.status(401).json({
             success: false,
             message: "Invalid or expired token",
@@ -49,7 +79,8 @@ export const verifyAuth = async (req, res, next) => {
     }
 };
 
-export const optionalAuth = async (req, res, next) => {
+
+export const optionalAuth = async (req: Request, res: Response, next: NextFunction) => {
     try {
         let token = req.cookies?.token;
         if (!token && req.headers.authorization) {
@@ -60,7 +91,13 @@ export const optionalAuth = async (req, res, next) => {
             }
         }
         if (token) {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+            if (!isAuthTokenPayload(decoded)) {
+                return res.status(401).json({
+                    success: false,
+                    message: "Invalid token payload",
+                });
+            }
             const dbUser = await User.findById(decoded.id).select("tokenVersion isVerified");
             if (dbUser && (dbUser.tokenVersion ?? 0) === (decoded.tokenVersion ?? 0) && dbUser.isVerified) {
                 req.user = decoded;

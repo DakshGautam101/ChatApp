@@ -1,6 +1,6 @@
-import mongoose, { Document, Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 
-export interface GroupInvitationInterface extends Document{
+export interface GroupInvitationInterface {
     group : Types.ObjectId,
     sender : Types.ObjectId,
     receiver : Types.ObjectId,

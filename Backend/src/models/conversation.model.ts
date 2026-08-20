@@ -1,11 +1,11 @@
-import mongoose, { Document, Types, type HydratedDocument } from "mongoose";
+import mongoose, { Types, type HydratedDocument } from "mongoose";
 
 type LastMessage = {
     text: string,
     sender: Types.ObjectId,
     receiver: Types.ObjectId
 }
-export interface ConversationInterface extends Document {
+export interface ConversationInterface {
     type: 'private' | 'group',
     name?: string,
     avatarUrl?: string,
@@ -18,7 +18,7 @@ export interface ConversationInterface extends Document {
 }
 
 
-export interface ParticipantInterface extends Document {
+export interface ParticipantInterface{
     user: Types.ObjectId,
     role: 'admin' | 'member',
     isOwner?: boolean,
@@ -136,9 +136,7 @@ const conversationSchema = new mongoose.Schema<ConversationInterface>({
     }
 
 },
-
     { timestamps: true }
-
 )
 
 conversationSchema.index({ 'participants.user': 1 });
