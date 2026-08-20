@@ -59,7 +59,7 @@ const attachAuthResponse = (res, user) => {
 };
 
 const createSafeUserResponse = async (userId) => {
-    return User.findById(userId).select("-emailVerificationOtp -emailVerificationOtpExpires -password");
+    return User.findById(userId).select("-password");
 };
 
 const sendVerificationEmail = async (email, otp) => {

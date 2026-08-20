@@ -23,7 +23,6 @@ function AnimatedPage({ children }) {
 
 const App = () => {
     const { isAuthenticated, checkAuth, isLoading } = useAuthStore();
-    const location = useLocation();
 
     useEffect(() => {
         let isMounted = true;

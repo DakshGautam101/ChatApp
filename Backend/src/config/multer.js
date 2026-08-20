@@ -1,5 +1,8 @@
 import multer from "multer";
 import path from "path";
+import multerS3 from "multer-s3";
+import s3Client from "./aws-s3.config.js";
+
 
 const allowedChatMimeTypes = [
     "image/jpeg",
@@ -59,16 +62,33 @@ const storage = multer.diskStorage({
     },
 });
 
+const s3Storage = multerS3({
+    s3 : s3Client,
+    bucket : process.env.AWS_BUCKET_NAME,
+    contentType : multerS3.AUTO_CONTENT_TYPE,
+    metadata : (req,file,cb)=>{
+        cb(null , {fieldName : file.fieldname});
+    },
+    key : (req , file , cb)=>{
+        const ext = path.extname(file.originalname).toLowerCase();
+        const safeBaseName = path.basename(file.originalname,ext).replace(/[^a-zA-Z0-9-_]/g, "_");
+        const folder = file.fieldname === "avatar" ? "avatars" : "attachments";
+        cb(null , `${folder}/${safeBaseName}-${Date.now()}${ext}`);
+    },
+});
+
+
+
 export const avatarUpload = multer({
-    storage,
+    storage : s3Storage,
     limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
     fileFilter: checkAvatarFileType,
 });
 
 export const chatUpload = multer({
-    storage,
+    storage : s3Storage,
     limits: { fileSize: 25 * 1024 * 1024 }, // 25 MB
     fileFilter: checkChatFileType,
 });
 
-export default chatUpload;
+export default chatUpload;

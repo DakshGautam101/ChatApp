@@ -4,7 +4,7 @@ import User from "../models/user.model.js";
 import Notification from "../models/notification.model.js";
 import logger from "../utils/logger.js";
 import { getIO, getSockets } from "../socket/socket.js";
-import { sendOfflineMessageEmail } from "./email.service.js";
+// import { sendOfflineMessageEmail } from "./email.service.js";
 import cacheService from "./cache.service.js";
 
 export const sendMessageService = async ({ userId, conversationId, content, attachments = [] }) => {
@@ -94,22 +94,22 @@ export const sendMessageService = async ({ userId, conversationId, content, atta
                 logger.error("Failed to create notification:", e);
             }
 
-            if (!isOnline && process.env.ENABLE_OFFLINE_EMAIL === "true") {
-                User.findById(recipientId)
-                    .select("username email")
-                    .then((recipientUser) => {
-                        if (recipientUser && recipientUser.email) {
-                            sendOfflineMessageEmail({
-                                to: recipientUser.email,
-                                recipientName: recipientUser.username || recipientUser.email,
-                                senderName: populated.sender?.username || "A contact",
-                                messagePreview: previewText,
-                                conversationId,
-                            }).catch((e) => logger.error("Offline email error:", e));
-                        }
-                    })
-                    .catch((e) => logger.error("Recipient lookup error for offline email:", e));
-            }
+            // if (!isOnline && process.env.ENABLE_OFFLINE_EMAIL === "true") {
+            //     User.findById(recipientId)
+            //         .select("username email")
+            //         .then((recipientUser) => {
+            //             if (recipientUser && recipientUser.email) {
+            //                 sendOfflineMessageEmail({
+            //                     to: recipientUser.email,
+            //                     recipientName: recipientUser.username || recipientUser.email,
+            //                     senderName: populated.sender?.username || "A contact",
+            //                     messagePreview: previewText,
+            //                     conversationId,
+            //                 }).catch((e) => logger.error("Offline email error:", e));
+            //             }
+            //         })
+            //         .catch((e) => logger.error("Recipient lookup error for offline email:", e));
+            // }
         }
     }
     try {

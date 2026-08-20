@@ -140,18 +140,15 @@ const useFileStore = create((set, get) => ({
 
         const currentItems = [...items];
 
-        // Store active uploads map for this messageId
         get().activeMessageUploads.set(messageId, {
             content,
             items: currentItems,
         });
 
-        // Link messageId to each item
         currentItems.forEach((item) => {
             get().updateItem(item.id, { messageId, caption: item.caption || content });
         });
 
-        // Map items to optimistic attachment objects for the chat view
         const attachments = currentItems.map((item) => ({
             id: item.id,
             messageId,
@@ -170,10 +167,8 @@ const useFileStore = create((set, get) => ({
             caption: item.caption || content,
         }));
 
-        // Clear items from store so FileAttachmentBar closes, but keep background uploads running
         set({ items: [] });
 
-        // Check if all items are already completed
         setTimeout(() => {
             get().checkAndEmitMessage(messageId);
         }, 50);
@@ -222,7 +217,6 @@ const useFileStore = create((set, get) => ({
         const messageId = target.messageId || item.messageId;
         const itemId = target.id || item.id || item._id;
 
-        // Immediately switch status to uploading and 0 progress in ChatStore!
         useChatStore.getState().updateOptimisticAttachment(messageId, itemId, {
             status: "uploading",
             progress: 0,

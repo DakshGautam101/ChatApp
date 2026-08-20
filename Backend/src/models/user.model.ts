@@ -1,6 +1,22 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Types } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+
+export interface UserInterface extends Document{
+    username: string;
+    email: string;
+    password?: string;
+    phone: string;
+    avatar?: string | null;
+    status: "online" | "offline";
+    blockedUsers?: Types.ObjectId[];
+    friends?: Types.ObjectId[];
+    invitations?: Types.ObjectId[];
+    isVerified?: boolean;
+    isDeleted?: boolean;
+    tokenVersion?: number;
+} 
+
+const userSchema = new mongoose.Schema<UserInterface>({
 
     username: {
         type: String,
@@ -55,15 +71,6 @@ const userSchema = new mongoose.Schema({
             ref : 'Invitation',
         }
     ],
-
-    emailVerificationOtp: {
-        type: String,
-        select: false,
-    },
-    emailVerificationOtpExpires: {
-        type: Date,
-        select: false,
-    },
     isVerified: {
         type: Boolean,
         default: false
@@ -80,9 +87,10 @@ const userSchema = new mongoose.Schema({
     { timestamps: true },
 );
 
-userSchema.index({ username: 1, email: 1 });
+userSchema.index({ username: 1});
+userSchema.index({ phone: 1});
 //TTL indexing for otp ;
 // userSchema.session.createIndex
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model<UserInterface>("User", userSchema);
 export default User;

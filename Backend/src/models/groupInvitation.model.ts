@@ -1,7 +1,14 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Types } from "mongoose";
+
+export interface GroupInvitationInterface extends Document{
+    group : Types.ObjectId,
+    sender : Types.ObjectId,
+    receiver : Types.ObjectId,
+    status : "pending" | "accepted" | "rejected"
+}
 
 
-const groupInvitationSchema = new mongoose.Schema(
+const groupInvitationSchema = new mongoose.Schema<GroupInvitationInterface>(
     {
         group : {
             type : mongoose.Schema.Types.ObjectId,
@@ -39,5 +46,5 @@ groupInvitationSchema.index({
     status: 1
 });
 
-const GroupInvitation = mongoose.model('GroupInvitation' , groupInvitationSchema);
+const GroupInvitation = mongoose.model<GroupInvitationInterface>('GroupInvitation' , groupInvitationSchema);
 export default GroupInvitation;

@@ -5744,3 +5744,630 @@
 {"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-17 12:32:43"}
 {"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-17 12:32:43"}
 {"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-17 12:32:44"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-17 15:28:13"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-17 15:28:13"}
+{"durationMs":8,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 8ms","method":"OPTIONS","status":204,"timestamp":"2026-08-17 15:28:16","url":"/api/auth/login"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-17 15:28:16"}
+{"durationMs":1548,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 1548ms","method":"POST","status":200,"timestamp":"2026-08-17 15:28:17","url":"/api/auth/login"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:17","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":339,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 339ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:18","url":"/api/invitation/invitation"}
+{"durationMs":108,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 108ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:18","url":"/api/invitation/invitation"}
+{"durationMs":1373,"ip":"::1","level":"info","message":"GET /api/notification 304 - 1373ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:19","url":"/api/notification"}
+{"durationMs":2039,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 2039ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:19","url":"/api/group/invitations"}
+{"durationMs":2104,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 2104ms","method":"GET","status":200,"timestamp":"2026-08-17 15:28:19","url":"/api/message/conversations"}
+{"durationMs":102,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 102ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:19","url":"/api/group/invitations"}
+{"durationMs":48,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 48ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:19","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:19","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:19","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:19","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":832,"ip":"::1","level":"info","message":"GET /api/notification 304 - 832ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:20","url":"/api/notification"}
+{"durationMs":387,"ip":"::1","level":"info","message":"GET /api/message/6a7aed54744310b19fbaaceb 304 - 387ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:33","url":"/api/message/6a7aed54744310b19fbaaceb"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-17 15:28:36","url":"/api/message/send"}
+{"durationMs":263,"ip":"::1","level":"info","message":"POST /api/message/send 201 - 263ms","method":"POST","status":201,"timestamp":"2026-08-17 15:28:37","url":"/api/message/send"}
+{"durationMs":222,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 222ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:39","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":329,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 329ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":9,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 9ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:41","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":70,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 70ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:42","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":105,"ip":"::1","level":"info","message":"GET /api/message/6a7d646a746a1475202419c8 304 - 105ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:44","url":"/api/message/6a7d646a746a1475202419c8"}
+{"durationMs":71,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 71ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:45","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":73,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 73ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:48","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":72,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 72ms","method":"GET","status":304,"timestamp":"2026-08-17 15:28:50","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":278,"ip":"::1","level":"info","message":"GET /api/message/6a7aed54744310b19fbaaceb 200 - 278ms","method":"GET","status":200,"timestamp":"2026-08-17 15:31:50","url":"/api/message/6a7aed54744310b19fbaaceb"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/upload/session/start 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-17 15:31:55","url":"/api/upload/session/start"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/upload/single 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-17 15:31:55","url":"/api/upload/single"}
+{"durationMs":86,"ip":"::1","level":"info","message":"POST /api/upload/session/start 200 - 86ms","method":"POST","status":200,"timestamp":"2026-08-17 15:31:55","url":"/api/upload/session/start"}
+{"durationMs":103,"ip":"::1","level":"info","message":"POST /api/upload/single 200 - 103ms","method":"POST","status":200,"timestamp":"2026-08-17 15:31:55","url":"/api/upload/single"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-17 15:32:03","url":"/api/message/send"}
+{"durationMs":8,"ip":"::1","level":"info","message":"GET /uploads/Knight-1786960915731-110015960.gif 200 - 8ms","method":"GET","status":200,"timestamp":"2026-08-17 15:32:04","url":"/uploads/Knight-1786960915731-110015960.gif"}
+{"durationMs":276,"ip":"::1","level":"info","message":"POST /api/message/send 201 - 276ms","method":"POST","status":201,"timestamp":"2026-08-17 15:32:04","url":"/api/message/send"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/Knight-1786960915731-110015960.gif 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:16","url":"/uploads/Knight-1786960915731-110015960.gif"}
+{"durationMs":3,"ip":"::1","level":"warn","message":"GET /favicon.ico 404 - 3ms","method":"GET","status":404,"timestamp":"2026-08-17 15:32:17","url":"/favicon.ico"}
+{"durationMs":74,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 74ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":10,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 10ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:22","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":74,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 74ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:23","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":247,"ip":"::1","level":"info","message":"GET /api/message/6a7aed54744310b19fbaaceb 200 - 247ms","method":"GET","status":200,"timestamp":"2026-08-17 15:32:25","url":"/api/message/6a7aed54744310b19fbaaceb"}
+{"durationMs":71,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 71ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":7,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 7ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:35","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":74,"ip":"::1","level":"info","message":"GET /api/message/6a7aed54744310b19fbaaceb 304 - 74ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:37","url":"/api/message/6a7aed54744310b19fbaaceb"}
+{"durationMs":74,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 74ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:43","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":72,"ip":"::1","level":"info","message":"GET /api/message/6a7d646a746a1475202419c8 304 - 72ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:51","url":"/api/message/6a7d646a746a1475202419c8"}
+{"durationMs":72,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 72ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:52","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":74,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 74ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:53","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":76,"ip":"::1","level":"info","message":"GET /api/message/6a7aed54744310b19fbaaceb 304 - 76ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:55","url":"/api/message/6a7aed54744310b19fbaaceb"}
+{"durationMs":76,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 76ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":7,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 7ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":12,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 12ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:57","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 79ms","method":"GET","status":304,"timestamp":"2026-08-17 15:32:58","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 304 - 83ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":5,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 304 - 5ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:00","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/message/6a7aed54744310b19fbaaceb 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-17 15:33:01","url":"/api/message/6a7aed54744310b19fbaaceb"}
+{"durationMs":66,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 66ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:08","url":"/api/auth/me"}
+{"durationMs":683,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 683ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:09","url":"/api/auth/me"}
+{"durationMs":88,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 88ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:09","url":"/api/group/invitations"}
+{"durationMs":135,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 135ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:09","url":"/api/invitation/invitation"}
+{"durationMs":170,"ip":"::1","level":"info","message":"GET /api/notification 304 - 170ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:09","url":"/api/notification"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 80ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:09","url":"/api/group/invitations"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:09","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":113,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 113ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:09","url":"/api/invitation/invitation"}
+{"durationMs":284,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 284ms","method":"GET","status":200,"timestamp":"2026-08-17 15:38:09","url":"/api/message/conversations"}
+{"durationMs":149,"ip":"::1","level":"info","message":"GET /api/notification 304 - 149ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:10","url":"/api/notification"}
+{"durationMs":38,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 38ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:10","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:10","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:10","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:38:10","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":546,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 546ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:39","url":"/api/auth/me"}
+{"durationMs":58,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 58ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:39","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:40","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":115,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 115ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:40","url":"/api/group/invitations"}
+{"durationMs":206,"ip":"::1","level":"info","message":"GET /api/notification 304 - 206ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:40","url":"/api/notification"}
+{"durationMs":84,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 84ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:40","url":"/api/group/invitations"}
+{"durationMs":361,"ip":"::1","level":"info","message":"GET /api/notification 304 - 361ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:40","url":"/api/notification"}
+{"durationMs":571,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 571ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:40","url":"/api/invitation/invitation"}
+{"durationMs":196,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 196ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:40","url":"/api/invitation/invitation"}
+{"durationMs":941,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 941ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:41","url":"/api/message/conversations"}
+{"durationMs":36,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 36ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:41","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:41","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:41","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:41","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":39,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 39ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/auth/me"}
+{"durationMs":39,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 39ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/message/conversations"}
+{"durationMs":36,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 36ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/message/conversations"}
+{"durationMs":162,"ip":"::1","level":"info","message":"GET /api/notification 304 - 162ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/notification"}
+{"durationMs":240,"ip":"::1","level":"info","message":"GET /api/message/6a7aed54744310b19fbaaceb 304 - 240ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/message/6a7aed54744310b19fbaaceb"}
+{"durationMs":150,"ip":"::1","level":"info","message":"GET /api/notification 304 - 150ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/notification"}
+{"durationMs":300,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 300ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/group/invitations"}
+{"durationMs":351,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 351ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/invitation/invitation"}
+{"durationMs":74,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 74ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/group/invitations"}
+{"durationMs":134,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 134ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/api/invitation/invitation"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/Knight-1786960915731-110015960.gif 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-17 15:44:55","url":"/uploads/Knight-1786960915731-110015960.gif"}
+{"durationMs":294,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 294ms","method":"GET","status":200,"timestamp":"2026-08-17 15:49:22","url":"/api/message/conversations"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-17 16:00:20"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-17 16:00:20"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-17 16:00:20"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-17 16:01:43"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-17 16:01:43"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-17 16:01:46"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-17 16:01:46"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-17 16:01:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-17 16:02:30"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-17 16:02:30"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-17 16:02:30"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-17 16:02:39"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-17 16:02:39"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-17 16:02:39"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:45:53"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:45:53"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:45:53"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:46:05"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:46:05"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:46:05"}
+{"durationMs":612,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 612ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:22","url":"/api/auth/me"}
+{"durationMs":36,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 36ms","method":"GET","status":304,"timestamp":"2026-08-20 12:46:22","url":"/api/auth/me"}
+{"durationMs":19,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 200 - 19ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:23","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":99,"ip":"::1","level":"info","message":"GET /api/group/invitations 200 - 99ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:23","url":"/api/group/invitations"}
+{"durationMs":220,"ip":"::1","level":"info","message":"GET /api/notification 200 - 220ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:24","url":"/api/notification"}
+{"durationMs":102,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 102ms","method":"GET","status":304,"timestamp":"2026-08-20 12:46:24","url":"/api/group/invitations"}
+{"durationMs":396,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 396ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:24","url":"/api/message/conversations"}
+{"durationMs":236,"ip":"::1","level":"info","message":"GET /api/notification 304 - 236ms","method":"GET","status":304,"timestamp":"2026-08-20 12:46:24","url":"/api/notification"}
+{"durationMs":460,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 200 - 460ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:24","url":"/api/invitation/invitation"}
+{"durationMs":90,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 90ms","method":"GET","status":304,"timestamp":"2026-08-20 12:46:24","url":"/api/message/conversations"}
+{"durationMs":10,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 200 - 10ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:24","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":28,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 200 - 28ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:24","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":48,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 200 - 48ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:24","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":219,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 219ms","method":"GET","status":304,"timestamp":"2026-08-20 12:46:24","url":"/api/invitation/invitation"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/notification/6a84085ea6f7ba7acf3075b5/read 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 12:46:28","url":"/api/notification/6a84085ea6f7ba7acf3075b5/read"}
+{"durationMs":119,"ip":"::1","level":"info","message":"PATCH /api/notification/6a84085ea6f7ba7acf3075b5/read 200 - 119ms","method":"PATCH","status":200,"timestamp":"2026-08-20 12:46:28","url":"/api/notification/6a84085ea6f7ba7acf3075b5/read"}
+{"durationMs":270,"ip":"::1","level":"info","message":"GET /api/message/6a7aed54744310b19fbaaceb 200 - 270ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:29","url":"/api/message/6a7aed54744310b19fbaaceb"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/notification/read-all 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 12:46:34","url":"/api/notification/read-all"}
+{"durationMs":119,"ip":"::1","level":"info","message":"PATCH /api/notification/read-all 200 - 119ms","method":"PATCH","status":200,"timestamp":"2026-08-20 12:46:35","url":"/api/notification/read-all"}
+{"durationMs":294,"ip":"::1","level":"info","message":"GET /api/message/6a78917685774e5fee54cf66 200 - 294ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:38","url":"/api/message/6a78917685774e5fee54cf66"}
+{"durationMs":15,"ip":"::1","level":"info","message":"GET /uploads/1786348498041-402458168.png 200 - 15ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:38","url":"/uploads/1786348498041-402458168.png"}
+{"durationMs":25,"ip":"::1","level":"info","message":"GET /uploads/1786350238022-691824408.png 200 - 25ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:38","url":"/uploads/1786350238022-691824408.png"}
+{"durationMs":92,"ip":"::1","level":"info","message":"GET /uploads/1786350243853-868660028.png 200 - 92ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:39","url":"/uploads/1786350243853-868660028.png"}
+{"durationMs":128,"ip":"::1","level":"info","message":"GET /uploads/1786350465736-256747148.png 200 - 128ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:39","url":"/uploads/1786350465736-256747148.png"}
+{"durationMs":90,"ip":"::1","level":"info","message":"GET /uploads/1786350821204-570017640.png 200 - 90ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:39","url":"/uploads/1786350821204-570017640.png"}
+{"durationMs":125,"ip":"::1","level":"info","message":"GET /uploads/1786350780069-40743981.png 200 - 125ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:39","url":"/uploads/1786350780069-40743981.png"}
+{"durationMs":151,"ip":"::1","level":"info","message":"GET /uploads/1786350014564-815038294.png 200 - 151ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:39","url":"/uploads/1786350014564-815038294.png"}
+{"durationMs":273,"ip":"::1","level":"info","message":"GET /uploads/1786348566652-301936806.png 200 - 273ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:39","url":"/uploads/1786348566652-301936806.png"}
+{"durationMs":281,"ip":"::1","level":"info","message":"GET /uploads/1786430199415-896258942.jpg 200 - 281ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:39","url":"/uploads/1786430199415-896258942.jpg"}
+{"durationMs":331,"ip":"::1","level":"info","message":"GET /uploads/1786350859083-41275450.png 200 - 331ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:39","url":"/uploads/1786350859083-41275450.png"}
+{"durationMs":219,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 200 - 219ms","method":"GET","status":200,"timestamp":"2026-08-20 12:46:39","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/upload/session/start 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 12:46:45","url":"/api/upload/session/start"}
+{"durationMs":2,"ip":"::1","level":"info","message":"OPTIONS /api/upload/single 204 - 2ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 12:46:46","url":"/api/upload/single"}
+{"durationMs":661,"ip":"::1","level":"info","message":"POST /api/upload/session/start 200 - 661ms","method":"POST","status":200,"timestamp":"2026-08-20 12:46:46","url":"/api/upload/session/start"}
+{"durationMs":113,"ip":"::1","level":"info","message":"POST /api/upload/single 200 - 113ms","method":"POST","status":200,"timestamp":"2026-08-20 12:46:46","url":"/api/upload/single"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 12:47:03","url":"/api/message/send"}
+{"durationMs":9,"ip":"::1","level":"info","message":"GET /uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png 200 - 9ms","method":"GET","status":200,"timestamp":"2026-08-20 12:47:03","url":"/uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png"}
+{"durationMs":282,"ip":"::1","level":"info","message":"POST /api/message/send 201 - 282ms","method":"POST","status":201,"timestamp":"2026-08-20 12:47:03","url":"/api/message/send"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:47:51"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:47:51"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:47:52"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:47:56"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:47:56"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:47:59"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:47:59"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:00"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:03"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:03"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:04"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:04"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:07"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:07"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:07"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:13"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:13"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:13"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:17"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:17"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:19"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:23"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:23"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:23"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:25"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:25"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:26"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:32"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:32"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:33"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:35"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:39"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:39"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:40"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:42"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:42"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:45"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:45"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:45"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:49"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:49"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:50"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:52"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:52"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:48:55"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:48:55"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:48:55"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:00"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:00"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:03"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:03"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:05"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:05"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:07"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:07"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:09"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:09"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:11"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:14"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:14"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:16"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:16"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:17"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:21"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:21"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:22"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:24"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:24"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:26"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:26"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:26"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:30"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:30"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:32"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:32"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:33"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:36"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:36"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:37"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:43"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:44"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:45"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:48"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:48"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:49"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:51"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:51"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:51"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:55"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:55"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:49:55"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:49:59"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:49:59"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:50:01"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:50:01"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:50:03"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:50:10"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:50:10"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:50:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:50:14"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:50:14"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:50:16"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:50:16"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:50:19"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:50:19"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:50:20"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:51:08"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:51:08"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:51:09"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:51:25"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:51:25"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:51:33"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:51:33"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:51:35"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:52:38"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:52:39"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:52:39"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:52:52"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:52:52"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:52:53"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:53:55"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:53:55"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:53:56"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:53:59"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:53:59"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:54:01"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:54:15"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:54:15"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:54:15"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:54:18"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:54:18"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:54:18"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:54:27"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:54:27"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:54:27"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:54:35"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:54:35"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:54:38"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:54:38"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:55:10"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:55:11"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:55:11"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:55:18"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:55:18"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:55:19"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:55:26"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:55:26"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:55:26"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:55:36"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:55:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:55:40"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:55:40"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:55:43"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:55:43"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:55:45"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:55:55"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:55:55"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:55:56"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:55:59"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:55:59"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:56:25"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:56:25"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:56:26"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:56:33"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:56:33"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:56:35"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:56:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:56:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:56:39"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:56:39"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:56:41"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:56:51"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:56:51"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:56:52"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 12:56:58"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 12:56:58"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 12:56:58"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 13:09:04"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 13:09:04"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 13:09:05"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 13:09:45"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 13:09:45"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 13:09:47"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 13:09:56"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 13:09:56"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 13:09:57"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/upload/session/start 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 13:11:43","url":"/api/upload/session/start"}
+{"durationMs":0,"ip":"::1","level":"info","message":"OPTIONS /api/upload/single 204 - 0ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 13:11:43","url":"/api/upload/single"}
+{"durationMs":196,"ip":"::1","level":"info","message":"POST /api/upload/single 200 - 196ms","method":"POST","status":200,"timestamp":"2026-08-20 13:11:43","url":"/api/upload/single"}
+{"durationMs":241,"ip":"::1","level":"info","message":"POST /api/upload/session/start 200 - 241ms","method":"POST","status":200,"timestamp":"2026-08-20 13:11:43","url":"/api/upload/session/start"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 13:11:49","url":"/api/message/send"}
+{"error":"Message validation failed: attachments.0.url: Path `url` is required.","level":"error","message":"Unhandled Error:","stack":"ValidationError: Message validation failed: attachments.0.url: Path `url` is required.\n    at Document.invalidate (E:\\ChatApp\\Backend\\node_modules\\mongoose\\lib\\document.js:3455:32)\n    at Subdocument.invalidate (E:\\ChatApp\\Backend\\node_modules\\mongoose\\lib\\types\\subdocument.js:231:12)\n    at EmbeddedDocument.validate (E:\\ChatApp\\Backend\\node_modules\\mongoose\\lib\\document.js:2866:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async Promise.all (index 0)\n    at async SchemaDocumentArray.doValidate (E:\\ChatApp\\Backend\\node_modules\\mongoose\\lib\\schema\\documentArray.js:268:3)\n    at async Promise.all (index 3)\n    at async model.validate (E:\\ChatApp\\Backend\\node_modules\\mongoose\\lib\\document.js:2857:30)\n    at async model.$__save (E:\\ChatApp\\Backend\\node_modules\\mongoose\\lib\\model.js:399:7)\n    at async maybeTracedSave (E:\\ChatApp\\Backend\\node_modules\\mongoose\\lib\\model.js:675:7)","timestamp":"2026-08-20 13:11:49"}
+{"durationMs":151,"ip":"::1","level":"error","message":"POST /api/message/send 500 - 151ms","method":"POST","status":500,"timestamp":"2026-08-20 13:11:49","url":"/api/message/send"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 13:14:17"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 13:14:17"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 13:14:18"}
+{"durationMs":52,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/auth/me 304 - 52ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/api/auth/me"}
+{"durationMs":37,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/auth/me 304 - 37ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/api/auth/me"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":116,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 116ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/api/group/invitations"}
+{"durationMs":157,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 157ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/api/invitation/invitation"}
+{"durationMs":205,"ip":"::1","level":"info","message":"GET /api/notification 200 - 205ms","method":"GET","status":200,"timestamp":"2026-08-20 13:14:31","url":"/api/notification"}
+{"durationMs":83,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 83ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/api/group/invitations"}
+{"durationMs":154,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 154ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/api/invitation/invitation"}
+{"durationMs":355,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/message/conversations 200 - 355ms","method":"GET","status":200,"timestamp":"2026-08-20 13:14:31","url":"/api/message/conversations"}
+{"durationMs":43,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 43ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/api/message/conversations"}
+{"durationMs":210,"ip":"::1","level":"info","message":"GET /api/notification 304 - 210ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/api/notification"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":8,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 8ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":14,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 14ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:31","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":194,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 200 - 194ms","method":"GET","status":200,"timestamp":"2026-08-20 13:14:33","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":1,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-20 13:14:33","url":"/uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/upload/session/start 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 13:14:37","url":"/api/upload/session/start"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/upload/single 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 13:14:38","url":"/api/upload/single"}
+{"durationMs":199,"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/upload/session/start 200 - 199ms","method":"POST","status":200,"timestamp":"2026-08-20 13:14:38","url":"/api/upload/session/start"}
+{"durationMs":582,"ip":"::1","level":"info","message":"POST /api/upload/single 200 - 582ms","method":"POST","status":200,"timestamp":"2026-08-20 13:14:38","url":"/api/upload/single"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 13:14:45","url":"/api/message/send"}
+{"durationMs":382,"ip":"::1","level":"info","message":"POST /api/message/send 201 - 382ms","method":"POST","status":201,"timestamp":"2026-08-20 13:14:46","url":"/api/message/send"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 13:15:57"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 13:15:57"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 13:15:58"}
+{"durationMs":2,"ip":"::1","level":"info","message":"OPTIONS /api/upload/session/start 204 - 2ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 13:16:27","url":"/api/upload/session/start"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/upload/single 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 13:16:27","url":"/api/upload/single"}
+{"durationMs":216,"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/upload/session/start 200 - 216ms","method":"POST","status":200,"timestamp":"2026-08-20 13:16:27","url":"/api/upload/session/start"}
+{"durationMs":740,"ip":"::1","level":"info","message":"POST /api/upload/single 200 - 740ms","method":"POST","status":200,"timestamp":"2026-08-20 13:16:28","url":"/api/upload/single"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 13:16:29","url":"/api/message/send"}
+{"durationMs":365,"ip":"::1","level":"info","message":"POST /api/message/send 201 - 365ms","method":"POST","status":201,"timestamp":"2026-08-20 13:16:29","url":"/api/message/send"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 13:16:58"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 13:16:58"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 13:16:59"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 13:17:29"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 13:17:29"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 13:17:30"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 13:18:21"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 13:18:22"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 13:18:22"}
+{"durationMs":289,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 289ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:45","url":"/api/auth/me"}
+{"durationMs":176,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 176ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:46","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:46","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":160,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 160ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:46","url":"/api/group/invitations"}
+{"durationMs":290,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 290ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:46","url":"/api/invitation/invitation"}
+{"durationMs":352,"ip":"::1","level":"info","message":"GET /api/notification 304 - 352ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:46","url":"/api/notification"}
+{"durationMs":272,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 272ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:46","url":"/api/group/invitations"}
+{"durationMs":247,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 247ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:46","url":"/api/invitation/invitation"}
+{"durationMs":318,"ip":"::1","level":"info","message":"GET /api/notification 304 - 318ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:46","url":"/api/notification"}
+{"durationMs":682,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 682ms","method":"GET","status":200,"timestamp":"2026-08-20 13:20:46","url":"/api/message/conversations"}
+{"durationMs":54,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 54ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:47","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:47","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:47","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-20 13:20:47","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":1540,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 1540ms","method":"GET","status":200,"timestamp":"2026-08-20 13:55:23","url":"/api/auth/me"}
+{"durationMs":41,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 41ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:23","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:24","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":198,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 198ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:24","url":"/api/group/invitations"}
+{"durationMs":102,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 102ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:24","url":"/api/group/invitations"}
+{"durationMs":513,"ip":"::1","level":"info","message":"GET /api/notification 304 - 513ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:24","url":"/api/notification"}
+{"durationMs":559,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 559ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:24","url":"/api/message/conversations"}
+{"durationMs":619,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 619ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:25","url":"/api/invitation/invitation"}
+{"durationMs":64,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 64ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:25","url":"/api/message/conversations"}
+{"durationMs":169,"ip":"::1","level":"info","message":"GET /api/notification 304 - 169ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:25","url":"/api/notification"}
+{"durationMs":115,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 115ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:25","url":"/api/invitation/invitation"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:25","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:25","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-20 13:55:25","url":"/uploads/1786602318260-907382707.jpg"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:00:26"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:00:26"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:00:27"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:00:36"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:00:36"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:00:36"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:00:47"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:00:47"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:00:49"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:00:52"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:00:52"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:00:52"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:00:55"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:00:55"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:00:57"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:00"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:00"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:04"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:04"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:10"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:20"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:20"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:01:21"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:28"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:28"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:01:29"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:35"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:35"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:01:37"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:42"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:42"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:46"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:46"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:01:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:49"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:49"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:01:50"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:01:53"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:01:53"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:01"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:01"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:02:03"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:06"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:06"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:08"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:08"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:02:09"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:12"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:12"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:02:14"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:16"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:16"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:18"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:18"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:02:19"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:24"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:24"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:27"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:27"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:02:28"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:32"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:32"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:02:34"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:38"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:39"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:02:39"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:44"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:44"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:46"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:02:49"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:02:49"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:02:50"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:03:01"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:03:01"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:03:02"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:03:10"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:03:10"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:03:13"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:03:13"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:03:14"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:03:18"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:03:18"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:03:21"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:03:21"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:03:24"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:03:24"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:03:24"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:03:29"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:03:29"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:03:30"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:03:34"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:03:34"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:03:34"}
+{"durationMs":40,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/auth/me 304 - 40ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:42","url":"/api/auth/me"}
+{"durationMs":41,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/auth/me 304 - 41ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:42","url":"/api/auth/me"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:42","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":101,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 101ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/api/group/invitations"}
+{"durationMs":136,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 136ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/api/invitation/invitation"}
+{"durationMs":195,"ip":"::1","level":"info","message":"GET /api/notification 304 - 195ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/api/notification"}
+{"durationMs":98,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 98ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/api/group/invitations"}
+{"durationMs":135,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 135ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/api/invitation/invitation"}
+{"durationMs":164,"ip":"::1","level":"info","message":"GET /api/notification 304 - 164ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/api/notification"}
+{"durationMs":521,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/message/conversations 304 - 521ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/api/message/conversations"}
+{"durationMs":32,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/message/conversations 304 - 32ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/api/message/conversations"}
+{"durationMs":3,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":10,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 10ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":12,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 12ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:43","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":216,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 200 - 216ms","method":"GET","status":200,"timestamp":"2026-08-20 14:03:44","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-20 14:03:45","url":"/uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:04:48"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:04:48"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:04:49"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:05:06"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:05:06"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:05:06"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 14:05:08"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 14:05:08"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 14:05:09"}
+{"durationMs":71,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/auth/me 304 - 71ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:17","url":"/api/auth/me"}
+{"durationMs":48,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/auth/me 304 - 48ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:17","url":"/api/auth/me"}
+{"durationMs":7,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 7ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":107,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 107ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/api/group/invitations"}
+{"durationMs":230,"ip":"::1","level":"info","message":"GET /api/notification 304 - 230ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/api/notification"}
+{"durationMs":103,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 103ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/api/group/invitations"}
+{"durationMs":397,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/message/conversations 200 - 397ms","method":"GET","status":200,"timestamp":"2026-08-20 14:05:18","url":"/api/message/conversations"}
+{"durationMs":230,"ip":"::1","level":"info","message":"GET /api/notification 304 - 230ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/api/notification"}
+{"durationMs":68,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 68ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/api/message/conversations"}
+{"durationMs":481,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 481ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/api/invitation/invitation"}
+{"durationMs":7,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 7ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":10,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 10ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":10,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 10ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":118,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 118ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:18","url":"/api/invitation/invitation"}
+{"durationMs":96,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 96ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:20","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-20 14:05:20","url":"/uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png"}
+{"durationMs":37,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 37ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:19","url":"/api/auth/me"}
+{"durationMs":33,"ip":"::1","level":"info","message":"GET /api/auth/me 304 - 33ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/api/auth/me"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":80,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 80ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/api/group/invitations"}
+{"durationMs":124,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 124ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/api/invitation/invitation"}
+{"durationMs":180,"ip":"::1","level":"info","message":"GET /api/notification 304 - 180ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/api/notification"}
+{"durationMs":90,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 90ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/api/group/invitations"}
+{"durationMs":191,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 191ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/api/invitation/invitation"}
+{"durationMs":346,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 346ms","method":"GET","status":200,"timestamp":"2026-08-20 14:08:20","url":"/api/message/conversations"}
+{"durationMs":65,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 65ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/api/message/conversations"}
+{"durationMs":249,"ip":"::1","level":"info","message":"GET /api/notification 304 - 249ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/api/notification"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":13,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 13ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:21","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:21","url":"/uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png"}

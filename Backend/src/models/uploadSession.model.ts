@@ -1,6 +1,19 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
-const uploadSessionSchema = new mongoose.Schema(
+export interface UploadSessionInterface{
+    uploadId : string,
+    uploader : Types.ObjectId,
+    conversation : Types.ObjectId,
+    filename : string
+    mimetype ?: string | null
+    size ?: number
+    status : 'uploading'| 'interrupted' | 'completed' | 'failed'
+    attempts ?: number
+    url ?: string | null
+}
+
+
+const uploadSessionSchema = new mongoose.Schema<UploadSessionInterface>(
     {
         uploadId: {
             type: String,
@@ -49,5 +62,5 @@ const uploadSessionSchema = new mongoose.Schema(
 
 uploadSessionSchema.index({ uploader: 1, status: 1 });
 
-const UploadSession = mongoose.model("UploadSession", uploadSessionSchema);
+const UploadSession = mongoose.model<UploadSessionInterface>("UploadSession", uploadSessionSchema);
 export default UploadSession;

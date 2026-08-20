@@ -17,13 +17,13 @@ import { requestLogger } from "./middleware/requestLogger.middleware.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename:string = fileURLToPath(import.meta.url);
+const __dirname:string = path.dirname(__filename);
 
 const app = express();
 
 const server = createServer(app);
-const allowedOrigins = [process.env.CLIENT_URL || "http://localhost:5173"];
+const allowedOrigins: string[] = [process.env.CLIENT_URL || "http://localhost:5173"];
 
 app.use(requestLogger);
 app.use(express.json());
@@ -39,7 +39,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/invitation", invitationRoutes);
 app.use("/api/message", messageRoutes);
-app.use("/api/messages", messageRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/group", groupRoutes);
 app.use("/api/notification", notificationRoutes);

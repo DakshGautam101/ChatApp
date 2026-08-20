@@ -1,6 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Types, type Date } from "mongoose";
 
-const invitationSchema = new mongoose.Schema({
+export interface Invitation extends Document{
+    sender : Types.ObjectId;
+    receiver : Types.ObjectId;
+    status : "pending" | "accepted" | "rejected";
+    rejectedUntil : Date
+}
+
+const invitationSchema = new mongoose.Schema<Invitation>({
     sender : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User' , 
@@ -22,5 +29,5 @@ const invitationSchema = new mongoose.Schema({
 } ,{timestamps : true});
 
 
-const Invitation = mongoose.model('Invitation' , invitationSchema);
+const Invitation = mongoose.model<Invitation>('Invitation' , invitationSchema);
 export default Invitation; 

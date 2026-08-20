@@ -1,6 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
-const notificationSchema = new mongoose.Schema(
+
+export interface NotificationInterface{
+    recipient : Types.ObjectId,
+    sender : Types.ObjectId,
+    type : 'message' | 'invitation' | 'group_invitation' | 'system' | 'notification',
+    title : string | null,
+    message : string,
+    conversation ?: Types.ObjectId,
+    invitation ?: Types.ObjectId,
+    isRead : boolean
+}
+
+const notificationSchema = new mongoose.Schema<NotificationInterface>(
     {
         recipient: {
             type: mongoose.Schema.Types.ObjectId,
@@ -45,6 +57,6 @@ const notificationSchema = new mongoose.Schema(
     }
 );
 
-const Notification = mongoose.model("Notification", notificationSchema);
+const Notification = mongoose.model<NotificationInterface>("Notification", notificationSchema);
 
 export default Notification;

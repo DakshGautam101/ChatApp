@@ -113,7 +113,6 @@ export const cacheService = {
     },
 
     async set(key, value, ttlSeconds = 300) {
-        // Update memory fallback cache
         memoryFallback.set(key, value, ttlSeconds);
 
         if (isRedisConnected && redisClient) {

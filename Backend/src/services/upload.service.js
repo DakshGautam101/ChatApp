@@ -1,14 +1,32 @@
+import { GetObjectAclCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import UploadSession from "../models/uploadSession.model.js";
 import User from "../models/user.model.js";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import s3Client from "../config/aws-s3.config.js";
 
 const PUBLIC_UPLOAD_PREFIX = "/uploads";
 
 export const toAttachment = (file) => ({
-    url: `${PUBLIC_UPLOAD_PREFIX}/${file.filename}`,
+    url: file.location,
+    key : file.key,
     fileType: file.mimetype,
     size: file.size,
     name: file.originalname,
 });
+
+export const downloadUrlService = async(key , originalFileName)=>{
+    try {
+        const command = new GetObjectCommand({
+            Bucket : process.env.AWS_BUCKET_NAME,
+            Key : key,
+            ResponseContentDisposition : `attachment; filename="${encodeURIComponent(originalFileName || "download")}"`,
+        });
+        return await getSignedUrl(s3Client , command , {expiresIn : 900});
+    } catch (error) {
+        logger?.error("Error generating download URL:", error);
+        throw error;
+    }
+};
 
 export const processAvatarUpload = async (file, userId) => {
     const attachment = toAttachment(file);

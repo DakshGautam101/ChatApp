@@ -86,8 +86,6 @@ const useChatStore = create((set, get) => ({
         const convId = conversation._id.toString();
         const currentActive = get().activeConversation;
         const isAlreadyActive = currentActive?._id?.toString() === convId;
-
-        // If conversation is already active and has messages loaded, avoid wiping messages or flashing loader
         if (isAlreadyActive && get().messages.length > 0) {
             set((state) => ({
                 conversations: state.conversations.map((c) =>

@@ -22,7 +22,7 @@ const updateProfile = async function (req, res, next) {
         if (avatar !== undefined) updates.avatar = avatar;
 
         const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true })
-            .select("-password -emailVerificationOtp -emailVerificationOtpExpires");
+            .select("-password");
 
         if (!updatedUser) {
             return sendError(res, 404, "User not found");

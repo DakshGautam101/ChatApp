@@ -1,6 +1,40 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
-const attachmentSchema = new mongoose.Schema({
+export interface AttachmentInterface{
+    url : string,
+    fileType : string,
+    size : number,
+    name : string
+}
+
+type DeliveredToType = {
+    user : Types.ObjectId,
+    deliveredAt : Date
+}
+
+type ReadByType = {
+    user : Types.ObjectId,
+    readAt : Date
+}
+
+type ReactionType={
+    user : Types.ObjectId,
+    tpye : string
+}
+
+
+export interface MessagInterface{
+    conversation : Types.ObjectId,
+    sender : Types.ObjectId,
+    content : string,
+    status : 'sent'|'delivered'|'read',
+    deliveredTo ?: DeliveredToType,
+    readBy ?: ReadByType,
+    attachments ?: AttachmentInterface,
+    reactions ?: ReactionType
+}
+
+const attachmentSchema = new mongoose.Schema<AttachmentInterface>({
     url: {
         type: String,
         required: true
@@ -78,5 +112,5 @@ const messageSchema = new mongoose.Schema({
 
 messageSchema.index({ conversation: 1, createdAt: -1 });
 
-const Message = mongoose.model("Message", messageSchema);
+const Message = mongoose.model<MessagInterface>("Message", messageSchema);
 export default Message;

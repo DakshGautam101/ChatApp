@@ -195,7 +195,7 @@ export const me = async (req, res, next) => {
         const exists = await checkExistingUserByID(userId);
         if (!exists) return sendError(res, 404, "User not found");
 
-        const user = await User.findById(userId).select("-emailVerificationOtp -emailVerificationOtpExpires -password");
+        const user = await User.findById(userId).select("-password");
         if (user) {
             await cacheService.set(cacheKey, user, 3600);
         }
