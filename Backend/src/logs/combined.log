@@ -6371,3 +6371,143 @@
 {"durationMs":13,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 13ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:20","url":"/uploads/1786602318260-907382707.jpg"}
 {"durationMs":86,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:21","url":"/api/message/6a7c512491400e97bd675603"}
 {"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-20 14:08:21","url":"/uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 18:38:14"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 18:38:14"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 18:38:14"}
+{"durationMs":6,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 6ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 18:38:17","url":"/api/auth/login"}
+{"durationMs":375,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 375ms","method":"POST","status":200,"timestamp":"2026-08-20 18:38:18","url":"/api/auth/login"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-20 18:39:41"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-20 18:39:41"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-20 18:39:42"}
+{"durationMs":106,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/auth/me 200 - 106ms","method":"GET","status":200,"timestamp":"2026-08-20 18:39:52","url":"/api/auth/me"}
+{"durationMs":41,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/auth/me 304 - 41ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:52","url":"/api/auth/me"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:52","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/api/group/invitations"}
+{"durationMs":123,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 123ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/api/invitation/invitation"}
+{"durationMs":163,"ip":"::1","level":"info","message":"GET /api/notification 304 - 163ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/api/notification"}
+{"durationMs":70,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 70ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/api/group/invitations"}
+{"durationMs":115,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 115ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/api/invitation/invitation"}
+{"durationMs":282,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/message/conversations 200 - 282ms","method":"GET","status":200,"timestamp":"2026-08-20 18:39:53","url":"/api/message/conversations"}
+{"durationMs":146,"ip":"::1","level":"info","message":"GET /api/notification 304 - 146ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/api/notification"}
+{"durationMs":42,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 42ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/api/message/conversations"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":4,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:53","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":186,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 304 - 186ms","method":"GET","status":304,"timestamp":"2026-08-20 18:39:55","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":14,"ip":"::ffff:127.0.0.1","level":"info","message":"GET /uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png 200 - 14ms","method":"GET","status":200,"timestamp":"2026-08-20 18:39:55","url":"/uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-20 18:39:58","url":"/api/message/send"}
+{"durationMs":321,"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/message/send 201 - 321ms","method":"POST","status":201,"timestamp":"2026-08-20 18:39:58","url":"/api/message/send"}
+{"durationMs":266,"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/message/send 201 - 266ms","method":"POST","status":201,"timestamp":"2026-08-20 18:40:00","url":"/api/message/send"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-21 09:56:18"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-21 09:56:18"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-21 09:56:20"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-21 09:58:45"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-21 09:58:45"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-21 09:58:46"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-21 15:19:38"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-21 15:19:38"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-21 15:19:38"}
+{"level":"info","message":"Server is running on port 5000","timestamp":"2026-08-21 15:19:52"}
+{"level":"info","message":"[CacheService] Connected to Redis primary cache.","timestamp":"2026-08-21 15:19:52"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-08-21 15:19:53"}
+{"durationMs":8,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 8ms","method":"GET","status":401,"timestamp":"2026-08-21 15:20:16","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-21 15:20:16","url":"/api/auth/me"}
+{"durationMs":198,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 198ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:16","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-21 15:20:17","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 1ms","method":"GET","status":401,"timestamp":"2026-08-21 15:20:17","url":"/api/auth/me"}
+{"durationMs":470,"ip":"::1","level":"info","message":"GET /api/auth/me 200 - 470ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:17","url":"/api/auth/me"}
+{"durationMs":139,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 139ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:17","url":"/api/group/invitations"}
+{"durationMs":105,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 105ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:17","url":"/api/group/invitations"}
+{"durationMs":261,"ip":"::1","level":"info","message":"GET /api/notification 304 - 261ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:18","url":"/api/notification"}
+{"durationMs":375,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 375ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:18","url":"/api/message/conversations"}
+{"durationMs":438,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 438ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:18","url":"/api/invitation/invitation"}
+{"durationMs":63,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 63ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:18","url":"/api/message/conversations"}
+{"durationMs":181,"ip":"::1","level":"info","message":"GET /api/notification 304 - 181ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:18","url":"/api/notification"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:18","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:18","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":118,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 118ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:18","url":"/api/invitation/invitation"}
+{"durationMs":4,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 4ms","method":"OPTIONS","status":204,"timestamp":"2026-08-21 15:20:34","url":"/api/auth/login"}
+{"durationMs":1219,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 1219ms","method":"POST","status":200,"timestamp":"2026-08-21 15:20:36","url":"/api/auth/login"}
+{"durationMs":17,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 200 - 17ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:36","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":35,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 35ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:36","url":"/api/message/conversations"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/group/invitations 200 - 86ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:36","url":"/api/group/invitations"}
+{"durationMs":66,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 66ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:36","url":"/api/message/conversations"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 200 - 6ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:36","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":175,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 200 - 175ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:36","url":"/api/invitation/invitation"}
+{"durationMs":206,"ip":"::1","level":"info","message":"GET /api/notification 200 - 206ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:36","url":"/api/notification"}
+{"durationMs":118,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 118ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:36","url":"/api/group/invitations"}
+{"durationMs":95,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 200 - 95ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:36","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":183,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 200 - 183ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:36","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":192,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 192ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:36","url":"/api/invitation/invitation"}
+{"durationMs":276,"ip":"::1","level":"info","message":"GET /api/notification 304 - 276ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:36","url":"/api/notification"}
+{"durationMs":44,"ip":"::1","level":"info","message":"POST /api/auth/logout 200 - 44ms","method":"POST","status":200,"timestamp":"2026-08-21 15:20:41","url":"/api/auth/logout"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-21 15:20:43","url":"/api/auth/login"}
+{"durationMs":601,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 601ms","method":"POST","status":200,"timestamp":"2026-08-21 15:20:44","url":"/api/auth/login"}
+{"durationMs":6,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 6ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:44","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:44","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 4ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:44","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":85,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 85ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:44","url":"/api/group/invitations"}
+{"durationMs":513,"ip":"::1","level":"info","message":"GET /api/notification 200 - 513ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:45","url":"/api/notification"}
+{"durationMs":415,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 415ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:45","url":"/api/group/invitations"}
+{"durationMs":655,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 655ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:45","url":"/api/message/conversations"}
+{"durationMs":71,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 71ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:45","url":"/api/message/conversations"}
+{"durationMs":244,"ip":"::1","level":"info","message":"GET /api/notification 304 - 244ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:45","url":"/api/notification"}
+{"durationMs":760,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 200 - 760ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:45","url":"/api/invitation/invitation"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:45","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":116,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 116ms","method":"GET","status":304,"timestamp":"2026-08-21 15:20:45","url":"/api/invitation/invitation"}
+{"durationMs":324,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 200 - 324ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:48","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":31,"ip":"::1","level":"info","message":"GET /uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png 200 - 31ms","method":"GET","status":200,"timestamp":"2026-08-21 15:20:48","url":"/uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/notification/read-all 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-21 15:20:59","url":"/api/notification/read-all"}
+{"durationMs":147,"ip":"::1","level":"info","message":"PATCH /api/notification/read-all 200 - 147ms","method":"PATCH","status":200,"timestamp":"2026-08-21 15:20:59","url":"/api/notification/read-all"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-21 15:21:06","url":"/api/message/send"}
+{"durationMs":305,"ip":"::1","level":"info","message":"POST /api/message/send 201 - 305ms","method":"POST","status":201,"timestamp":"2026-08-21 15:21:06","url":"/api/message/send"}
+{"durationMs":36,"ip":"::1","level":"warn","message":"GET /api/message/6a7c512491400e97bd675603 401 - 36ms","method":"GET","status":401,"timestamp":"2026-08-21 15:21:17","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":38,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 38ms","method":"GET","status":401,"timestamp":"2026-08-21 15:21:18","url":"/api/auth/me"}
+{"durationMs":47,"ip":"::1","level":"warn","message":"GET /api/auth/me 401 - 47ms","method":"GET","status":401,"timestamp":"2026-08-21 15:21:18","url":"/api/auth/me"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/auth/login 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-21 15:21:21","url":"/api/auth/login"}
+{"durationMs":605,"ip":"::1","level":"info","message":"POST /api/auth/login 200 - 605ms","method":"POST","status":200,"timestamp":"2026-08-21 15:21:21","url":"/api/auth/login"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786344359897-530328506.png 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-21 15:21:21","url":"/uploads/1786344359897-530328506.png"}
+{"durationMs":79,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 79ms","method":"GET","status":304,"timestamp":"2026-08-21 15:21:21","url":"/api/group/invitations"}
+{"durationMs":126,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 200 - 126ms","method":"GET","status":200,"timestamp":"2026-08-21 15:21:21","url":"/api/invitation/invitation"}
+{"durationMs":162,"ip":"::1","level":"info","message":"GET /api/notification 200 - 162ms","method":"GET","status":200,"timestamp":"2026-08-21 15:21:22","url":"/api/notification"}
+{"durationMs":101,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 101ms","method":"GET","status":304,"timestamp":"2026-08-21 15:21:22","url":"/api/group/invitations"}
+{"durationMs":174,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 174ms","method":"GET","status":304,"timestamp":"2026-08-21 15:21:22","url":"/api/invitation/invitation"}
+{"durationMs":310,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 310ms","method":"GET","status":200,"timestamp":"2026-08-21 15:21:22","url":"/api/message/conversations"}
+{"durationMs":185,"ip":"::1","level":"info","message":"GET /api/notification 304 - 185ms","method":"GET","status":304,"timestamp":"2026-08-21 15:21:22","url":"/api/notification"}
+{"durationMs":43,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 43ms","method":"GET","status":304,"timestamp":"2026-08-21 15:21:22","url":"/api/message/conversations"}
+{"durationMs":3,"ip":"::1","level":"info","message":"GET /uploads/1786439023953-430539613.png 304 - 3ms","method":"GET","status":304,"timestamp":"2026-08-21 15:21:22","url":"/uploads/1786439023953-430539613.png"}
+{"durationMs":2,"ip":"::1","level":"info","message":"GET /uploads/1786434706468-252939740.png 304 - 2ms","method":"GET","status":304,"timestamp":"2026-08-21 15:21:22","url":"/uploads/1786434706468-252939740.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"GET /uploads/1786602318260-907382707.jpg 304 - 1ms","method":"GET","status":304,"timestamp":"2026-08-21 15:21:22","url":"/uploads/1786602318260-907382707.jpg"}
+{"durationMs":320,"ip":"::1","level":"info","message":"GET /api/message/6a7c512491400e97bd675603 200 - 320ms","method":"GET","status":200,"timestamp":"2026-08-21 15:21:24","url":"/api/message/6a7c512491400e97bd675603"}
+{"durationMs":4,"ip":"::1","level":"info","message":"GET /uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png 200 - 4ms","method":"GET","status":200,"timestamp":"2026-08-21 15:21:24","url":"/uploads/Screenshot_2024-12-09_182911-1787210206165-717757355.png"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-21 15:21:40","url":"/api/message/send"}
+{"durationMs":279,"ip":"::1","level":"info","message":"POST /api/message/send 201 - 279ms","method":"POST","status":201,"timestamp":"2026-08-21 15:21:40","url":"/api/message/send"}
+{"durationMs":301,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 301ms","method":"GET","status":200,"timestamp":"2026-08-21 15:21:41","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/message/send 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-21 15:21:44","url":"/api/message/send"}
+{"durationMs":257,"ip":"::1","level":"info","message":"POST /api/message/send 201 - 257ms","method":"POST","status":201,"timestamp":"2026-08-21 15:21:44","url":"/api/message/send"}
+{"durationMs":328,"ip":"::1","level":"info","message":"GET /api/message/conversations 200 - 328ms","method":"GET","status":200,"timestamp":"2026-08-21 15:21:44","url":"/api/message/conversations"}
+{"durationMs":68,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 68ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:03","url":"/api/group/invitations"}
+{"durationMs":141,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 141ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:03","url":"/api/invitation/invitation"}
+{"durationMs":74,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 74ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:03","url":"/api/group/invitations"}
+{"durationMs":134,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 134ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:04","url":"/api/invitation/invitation"}
+{"durationMs":114,"ip":"::1","level":"info","message":"GET /api/user/userlist 200 - 114ms","method":"GET","status":200,"timestamp":"2026-08-21 15:22:04","url":"/api/user/userlist"}
+{"durationMs":122,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 122ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:05","url":"/api/user/userlist"}
+{"durationMs":74,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 74ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:06","url":"/api/group/invitations"}
+{"durationMs":117,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 117ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:06","url":"/api/invitation/invitation"}
+{"durationMs":62,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 62ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:06","url":"/api/group/invitations"}
+{"durationMs":116,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 116ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:06","url":"/api/invitation/invitation"}
+{"durationMs":37,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 37ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:07","url":"/api/message/conversations"}
+{"durationMs":40,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 40ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:07","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/notification/read-all 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-21 15:22:10","url":"/api/notification/read-all"}
+{"durationMs":102,"ip":"::1","level":"info","message":"PATCH /api/notification/read-all 200 - 102ms","method":"PATCH","status":200,"timestamp":"2026-08-21 15:22:10","url":"/api/notification/read-all"}
+{"durationMs":136,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 136ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:11","url":"/api/user/userlist"}
+{"durationMs":130,"ip":"::1","level":"info","message":"GET /api/user/userlist 304 - 130ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:12","url":"/api/user/userlist"}
+{"durationMs":86,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 86ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:18","url":"/api/group/invitations"}
+{"durationMs":134,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 134ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:18","url":"/api/invitation/invitation"}
+{"durationMs":65,"ip":"::1","level":"info","message":"GET /api/group/invitations 304 - 65ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:18","url":"/api/group/invitations"}
+{"durationMs":124,"ip":"::1","level":"info","message":"GET /api/invitation/invitation 304 - 124ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:18","url":"/api/invitation/invitation"}
+{"durationMs":113,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 113ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:21","url":"/api/message/conversations"}
+{"durationMs":93,"ip":"::1","level":"info","message":"GET /api/message/conversations 304 - 93ms","method":"GET","status":304,"timestamp":"2026-08-21 15:22:21","url":"/api/message/conversations"}
+{"durationMs":1,"ip":"::1","level":"info","message":"OPTIONS /api/notification/read-all 204 - 1ms","method":"OPTIONS","status":204,"timestamp":"2026-08-21 15:22:29","url":"/api/notification/read-all"}
+{"durationMs":98,"ip":"::1","level":"info","message":"PATCH /api/notification/read-all 200 - 98ms","method":"PATCH","status":200,"timestamp":"2026-08-21 15:22:29","url":"/api/notification/read-all"}
+{"durationMs":100,"ip":"::1","level":"info","message":"GET /api/message/6a7d6492746a1475202419d6 200 - 100ms","method":"GET","status":200,"timestamp":"2026-08-21 15:22:30","url":"/api/message/6a7d6492746a1475202419d6"}

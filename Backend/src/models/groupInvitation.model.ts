@@ -1,11 +1,5 @@
 import mongoose, { Types } from "mongoose";
-
-export interface GroupInvitationInterface {
-    group : Types.ObjectId,
-    sender : Types.ObjectId,
-    receiver : Types.ObjectId,
-    status : "pending" | "accepted" | "rejected"
-}
+import type { GroupInvitationInterface } from "../Interfaces/BacknedInterfaces.js";
 
 
 const groupInvitationSchema = new mongoose.Schema<GroupInvitationInterface>(

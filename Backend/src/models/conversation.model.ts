@@ -1,31 +1,6 @@
 import mongoose, { Types, type HydratedDocument } from "mongoose";
+import type { ConversationInterface, ParticipantInterface } from "../Interfaces/BacknedInterfaces.js";
 
-type LastMessage = {
-    text: string,
-    sender: Types.ObjectId,
-    receiver: Types.ObjectId
-}
-export interface ConversationInterface {
-    type: 'private' | 'group',
-    name?: string,
-    avatarUrl?: string,
-    isConvertedFromGroup?: boolean,
-    formerGroupName?: string,
-    createdBy?: Types.ObjectId,
-    participants: ParticipantInterface[],
-    lastMessage: LastMessage | null,
-    uploadStatus?: 'pending' | 'completed' | 'failed'
-}
-
-
-export interface ParticipantInterface{
-    user: Types.ObjectId,
-    role: 'admin' | 'member',
-    isOwner?: boolean,
-    lastReadMessageId?: Types.ObjectId | null,
-    muted?: boolean,
-    joinedAt?: Date,
-}
 
 
 const participantSchema = new mongoose.Schema<ParticipantInterface>({
@@ -96,7 +71,7 @@ const conversationSchema = new mongoose.Schema<ConversationInterface>({
     participants: {
         type: [participantSchema],
         validate: {
-            validator: function ( this : HydratedDocument<ConversationInterface>,arr: ParticipantInterface[] ) {
+            validator: function ( this: any, arr: ParticipantInterface[] ) {
                 const uniqueUsers = new Set(
                     arr.map(p => p.user.toString())
                 );

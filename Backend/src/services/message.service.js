@@ -4,7 +4,6 @@ import User from "../models/user.model.js";
 import Notification from "../models/notification.model.js";
 import logger from "../utils/logger.js";
 import { getIO, getSockets } from "../socket/socket.js";
-// import { sendOfflineMessageEmail } from "./email.service.js";
 import cacheService from "./cache.service.js";
 
 export const sendMessageService = async ({ userId, conversationId, content, attachments = [] }) => {

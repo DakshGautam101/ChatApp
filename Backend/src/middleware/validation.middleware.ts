@@ -2,11 +2,6 @@ import type { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import type { ValidationChain } from "express-validator";
 
-interface ValidationError extends Error{
-  path ?: string,
-  param ?: string
-}
-
 const validate = (validations : ValidationChain | ValidationChain[]) => {
   return async (req : Request, res :Response, next : NextFunction) => {
     const validationList = Array.isArray(validations) ? validations : [validations];

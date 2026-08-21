@@ -1,38 +1,7 @@
 import mongoose, { Types } from "mongoose";
-
-export interface AttachmentInterface{
-    url : string,
-    fileType : string,
-    size : number,
-    name : string
-}
-
-type DeliveredToType = {
-    user : Types.ObjectId,
-    deliveredAt : Date
-}
-
-type ReadByType = {
-    user : Types.ObjectId,
-    readAt : Date
-}
-
-type ReactionType={
-    user : Types.ObjectId,
-    tpye : string
-}
+import type { AttachmentInterface, MessagInterface } from "../Interfaces/BacknedInterfaces.js";
 
 
-export interface MessagInterface{
-    conversation : Types.ObjectId,
-    sender : Types.ObjectId,
-    content : string,
-    status : 'sent'|'delivered'|'read',
-    deliveredTo ?: DeliveredToType,
-    readBy ?: ReadByType,
-    attachments ?: AttachmentInterface,
-    reactions ?: ReactionType
-}
 
 const attachmentSchema = new mongoose.Schema<AttachmentInterface>({
     url: {

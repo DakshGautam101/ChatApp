@@ -1,20 +1,7 @@
 import mongoose, {  Types } from "mongoose";
+import type { UserInterface } from "../Interfaces/BacknedInterfaces.js";
 
 
-export interface UserInterface {
-    username: string;
-    email: string;
-    password?: string;
-    phone: string;
-    avatar?: string | null;
-    status: "online" | "offline";
-    blockedUsers?: Types.ObjectId[];
-    friends?: Types.ObjectId[];
-    invitations?: Types.ObjectId[];
-    isVerified?: boolean;
-    isDeleted?: boolean;
-    tokenVersion?: number;
-} 
 
 const userSchema = new mongoose.Schema<UserInterface>({
 

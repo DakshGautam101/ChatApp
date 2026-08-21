@@ -2,15 +2,8 @@ import jwt, { type JwtPayload } from "jsonwebtoken";
 import logger from "../utils/logger.js";
 import User from "../models/user.model.js";
 import type { NextFunction, Request, Response } from "express";
+import type { AuthTokenPayload } from "../Interfaces/BacknedInterfaces.js";
 
-type DecodedType = {
-    id: string,
-    tokenVersion: number
-}
-export interface AuthTokenPayload extends JwtPayload {
-    id: string;
-    tokenVersion: number;
-}
 
 const isAuthTokenPayload = (
     decoded: string | JwtPayload
