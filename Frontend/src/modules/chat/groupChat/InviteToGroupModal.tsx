@@ -1,3 +1,4 @@
+import type React from "react";
 import { useState, useEffect } from "react";
 import {
     Dialog,
@@ -13,13 +14,20 @@ import { axiosInstance } from "@/core/api/axiosInstance";
 import useChatStore from "../stores/useChatStore";
 import toast from "react-hot-toast";
 import { UserPlus, Search, Send, Loader2, CheckCircle2 } from "lucide-react";
+import type { UserInterface } from "@/core/types/UserInterface";
 
-export default function InviteToGroupModal({ open, onOpenChange, group }) {
+interface InviteToGroupModalProps {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    group: any;
+}
+
+export default function InviteToGroupModal({ open, onOpenChange, group }: InviteToGroupModalProps) {
     const [query, setQuery] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState<UserInterface[]>([]);
     const [searching, setSearching] = useState(false);
-    const [invitingState, setInvitingState] = useState({});
-    const [invitedState, setInvitedState] = useState({});
+    const [invitingState, setInvitingState] = useState<Record<string, boolean>>({});
+    const [invitedState, setInvitedState] = useState<Record<string, boolean>>({});
     const { sendGroupInvitation } = useChatStore();
 
     const fetchUsers = async (searchQuery = "") => {
@@ -31,7 +39,7 @@ export default function InviteToGroupModal({ open, onOpenChange, group }) {
             });
             const users = res.data?.users || res.data?.data || (Array.isArray(res.data) ? res.data : []);
             setSearchResults(Array.isArray(users) ? users : []);
-        } catch (err) {
+        } catch (err: any) {
             toast.error(err?.response?.data?.message || "Failed to search users");
         } finally {
             setSearching(false);
@@ -50,7 +58,7 @@ export default function InviteToGroupModal({ open, onOpenChange, group }) {
         }
     }, [open, group?._id]);
 
-    const handleSearch = (e) => {
+    const handleSearch = (e?: React.FormEvent) => {
         e?.preventDefault();
         fetchUsers(query);
     };
@@ -63,7 +71,7 @@ export default function InviteToGroupModal({ open, onOpenChange, group }) {
             await sendGroupInvitation(group._id, { receiverId: userId });
             setInvitedState((prev) => ({ ...prev, [userId]: true }));
             toast.success("Group invitation sent successfully");
-        } catch (err) {
+        } catch (err: any) {
             toast.error(err?.response?.data?.message || "Failed to send invitation");
         } finally {
             setInvitingState((prev) => ({ ...prev, [userId]: false }));
@@ -119,12 +127,15 @@ export default function InviteToGroupModal({ open, onOpenChange, group }) {
                             </div>
                         ) : (
                             searchResults.map((user) => {
-                                const isInvited = invitedState[user._id];
-                                const isInviting = invitingState[user._id];
+                                const userId = (user._id || user.id || "") as string;
+                                if (!userId) return null;
+
+                                const isInvited = invitedState[userId];
+                                const isInviting = invitingState[userId];
 
                                 return (
                                     <div
-                                        key={user._id}
+                                        key={userId}
                                         className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 shadow-xs"
                                     >
                                         <div className="flex items-center gap-3 min-w-0">
@@ -159,7 +170,7 @@ export default function InviteToGroupModal({ open, onOpenChange, group }) {
                                             <Button
                                                 size="sm"
                                                 disabled={isInviting}
-                                                onClick={() => handleInviteUser(user._id)}
+                                                onClick={() => handleInviteUser(userId)}
                                                 className="gap-1.5 rounded-lg h-8 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-xs"
                                             >
                                                 {isInviting ? (

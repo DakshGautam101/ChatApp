@@ -19,7 +19,7 @@ import toast from "react-hot-toast";
 import type { MessageInterface } from "@/core/types/MessageInterface";
 import type { AttachmentInterface } from "@/core/types/AttachmentInterface";
 
-let typingTimeout = null;
+let typingTimeout: ReturnType<typeof setTimeout> | any = null;
 
 export default function ChatWindow() {
     const { user } = useAuthStore();
@@ -40,20 +40,20 @@ export default function ChatWindow() {
 
     const [draft, setDraft] = useState("");
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const [firstUnreadId, setFirstUnreadId] = useState(undefined);
-    const bottomRef = useRef(null);
-    const firstUnreadRef = useRef(null);
-    const scrollContainerRef = useRef(null);
-    const previousMessageCount = useRef(0);
-    const initialScrollDoneRef = useRef(false);
-    const isAutoScrollingRef = useRef(false);
-    const olderLoadPrevHeightRef = useRef(null);
-    const olderLoadPrevScrollRef = useRef(null);
-    const fileInputRef = useRef(null);
-    const groupAvatarInputRef = useRef(null);
+    const [firstUnreadId, setFirstUnreadId] = useState<string | null | undefined>(undefined);
+    const bottomRef = useRef<HTMLDivElement | null>(null);
+    const firstUnreadRef = useRef<HTMLDivElement | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+    const previousMessageCount = useRef<number>(0);
+    const initialScrollDoneRef = useRef<boolean>(false);
+    const isAutoScrollingRef = useRef<boolean>(false);
+    const olderLoadPrevHeightRef = useRef<number | null>(null);
+    const olderLoadPrevScrollRef = useRef<number | null>(null);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const groupAvatarInputRef = useRef<HTMLInputElement | null>(null);
 
     const [chatViewerOpen, setChatViewerOpen] = useState(false);
-    const [chatViewerImages, setChatViewerImages] = useState([]);
+    const [chatViewerImages, setChatViewerImages] = useState<{ src: string; name: string }[]>([]);
     const [chatViewerIndex, setChatViewerIndex] = useState(0);
 
     const [showInviteModal, setShowInviteModal] = useState(false);
@@ -62,14 +62,14 @@ export default function ChatWindow() {
 
     const canSend = draft.trim().length > 0 || (items && items.length > 0);
 
-    const isUnreadForMe = (m) => {
+    const isUnreadForMe = (m: MessageInterface) => {
         if (!m || !user) return false;
         const senderId = (m.sender?._id || m.sender)?.toString();
         const myId = (user._id || user.id)?.toString();
         if (!senderId || !myId || senderId === myId) return false;
 
         if (Array.isArray(m.readBy) && m.readBy.length > 0) {
-            const hasRead = m.readBy.some((r) => {
+            const hasRead = m.readBy.some((r: any) => {
                 const rUserId = (r.user?._id || r.user)?.toString();
                 return rUserId === myId;
             });
@@ -79,7 +79,7 @@ export default function ChatWindow() {
         return m.status !== "read";
     };
 
-    const handleGroupAvatarChange = async (e) => {
+    const handleGroupAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file || !activeConversation?._id) return;
         setUploadingAvatar(true);
@@ -94,7 +94,7 @@ export default function ChatWindow() {
                 await updateGroupAvatar(activeConversation._id, fileUrl);
                 toast.success("Group avatar updated successfully");
             }
-        } catch (err) {
+        } catch (err: any) {
             toast.error(err?.response?.data?.message || "Failed to upload group avatar");
         } finally {
             setUploadingAvatar(false);

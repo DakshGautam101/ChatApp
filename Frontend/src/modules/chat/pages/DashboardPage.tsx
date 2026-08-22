@@ -33,7 +33,7 @@ const DashboardPage = () => {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [pendingInvitationsCount, setPendingInvitationsCount] = useState(0);
-    const fileInputRef = useRef(null);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -70,8 +70,8 @@ const DashboardPage = () => {
                 : Array.isArray(groupRes.data?.data)
                     ? groupRes.data.data
                     : [];
-            const pendingDirect = received.filter((i) => i?.status === "pending").length;
-            const pendingGroup = groupInvites.filter((i) => i?.status === "pending").length;
+            const pendingDirect = received.filter((i: any) => i?.status === "pending").length;
+            const pendingGroup = groupInvites.filter((i: any) => i?.status === "pending").length;
             setPendingInvitationsCount(pendingDirect + pendingGroup);
         } catch (e) {
             // Ignore fetch error
@@ -99,12 +99,12 @@ const DashboardPage = () => {
         try {
             await logout();
             navigate("/login", { replace: true });
-        } catch (error) {
+        } catch (error: any) {
             toast.error(error?.response?.data?.message || "Couldn't log out. Please try again.");
         }
     };
 
-    const handleAvatarChange = async (e) => {
+    const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
@@ -130,7 +130,7 @@ const DashboardPage = () => {
                 await updateProfile({ avatar: avatarUrl });
                 toast.success("Profile avatar updated successfully!");
             }
-        } catch (err) {
+        } catch (err: any) {
             toast.error(err?.response?.data?.message || "Failed to update profile picture");
         } finally {
             setIsUploading(false);
@@ -227,7 +227,7 @@ const DashboardPage = () => {
                             <div className="relative flex items-center gap-1.5">
                                 <Icon className="h-4 w-4" />
                                 <span>{label}</span>
-                                {badge > 0 && (
+                                {Boolean(badge && badge > 0) && (
                                     <span className={`px-1.5 py-0.5 text-[10px] font-extrabold rounded-full text-white ${key === "invitations" ? "bg-amber-500" : "bg-primary"}`}>
                                         {badge}
                                     </span>
@@ -253,7 +253,7 @@ const DashboardPage = () => {
                             >
                                 <Icon className="h-4 w-4" />
                                 <span>{label}</span>
-                                {badge > 0 && (
+                                {Boolean(badge && badge > 0) && (
                                     <span className={`px-1.5 py-0.5 text-[10px] font-extrabold rounded-full text-white ${key === "invitations" ? "bg-amber-500" : "bg-primary"}`}>
                                         {badge}
                                     </span>

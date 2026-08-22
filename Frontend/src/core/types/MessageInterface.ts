@@ -27,6 +27,8 @@ export interface MessageInterface {
     updatedAt?: string | Date;
     status?: "delivered" | "seen" | "sent" | string;
     isOptimistic?: boolean;
+    readBy?: (UserInterface | string | any)[];
     seenBy?: (UserInterface | string | any)[];
     deliveredTo?: (UserInterface | string | any)[];
+    [key: string]: any;
 }

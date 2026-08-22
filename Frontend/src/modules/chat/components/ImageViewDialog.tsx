@@ -3,7 +3,21 @@ import { Dialog, DialogContent, DialogTitle, DialogHeader } from "@/core/compone
 import { Button } from "@/core/components/ui/button";
 import { ChevronLeft, ChevronRight, Download, X } from "lucide-react";
 
-export function ImageViewDialog({ open, onOpenChange, images = [], initialIndex = 0 }) {
+export interface ImageViewerItem {
+    src?: string;
+    name?: string;
+    url?: string;
+    alt?: string;
+}
+
+interface ImageViewDialogProps {
+    open: boolean;
+    onOpenChange?: (open: boolean) => void;
+    images?: (ImageViewerItem | string)[];
+    initialIndex?: number;
+}
+
+export function ImageViewDialog({ open, onOpenChange, images = [], initialIndex = 0 }: ImageViewDialogProps) {
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
     useEffect(() => {
@@ -12,15 +26,15 @@ export function ImageViewDialog({ open, onOpenChange, images = [], initialIndex 
         }
     }, [open, initialIndex]);
 
-    const activeImage = images[currentIndex] || (typeof images[0] === "string" ? { src: images[0] } : null);
+    const activeImage = images[currentIndex] || (typeof images[0] === "string" ? { src: images[0] } : (images[0] as ImageViewerItem | undefined) || null);
 
-    const getImageSrc = (img) => {
+    const getImageSrc = (img: ImageViewerItem | string | null | undefined) => {
         if (!img) return "";
         if (typeof img === "string") return img;
         return img.src || img.url || "";
     };
 
-    const getImageName = (img) => {
+    const getImageName = (img: ImageViewerItem | string | null | undefined) => {
         if (!img) return "Image";
         if (typeof img === "string") return "Image";
         return img.name || img.alt || "Image";
@@ -36,7 +50,7 @@ export function ImageViewDialog({ open, onOpenChange, images = [], initialIndex 
 
     useEffect(() => {
         if (!open) return;
-        const handleKeyDown = (e) => {
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "ArrowLeft") {
                 setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
             }

@@ -206,10 +206,10 @@ export default function NotificationDropdown({ onNavigateTab, pendingInvitations
                                                     {notif.sender?.username || notif.title || "Notification"}
                                                 </p>
                                                 <span className="text-[10px] text-base-content/50 shrink-0">
-                                                    {new Date(notif.createdAt).toLocaleTimeString([], {
+                                                    {notif.createdAt ? new Date(notif.createdAt).toLocaleTimeString([], {
                                                         hour: "2-digit",
                                                         minute: "2-digit",
-                                                    })}
+                                                    }) : ""}
                                                 </span>
                                             </div>
                                             <p className="text-xs font-medium text-base-content/70 line-clamp-2 leading-relaxed">

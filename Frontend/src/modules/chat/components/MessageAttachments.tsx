@@ -36,7 +36,7 @@ export function MessageAttachments({ attachments, message, isMine, onImageClick,
                         >
                             <button
                                 type="button"
-                                onClick={() => onImageClick?.(message, imgIndex >= 0 ? imgIndex : 0)}
+                                onClick={() => message && onImageClick?.(message, imgIndex >= 0 ? imgIndex : 0)}
                                 className="relative block cursor-pointer overflow-hidden w-full hover:opacity-95 transition-opacity"
                             >
                                 {fileUrl ? (

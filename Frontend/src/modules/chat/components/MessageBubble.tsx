@@ -43,8 +43,10 @@ export interface MessageBubbleProps {
 export const MessageBubble = memo(
     forwardRef<HTMLDivElement, MessageBubbleProps>((props: MessageBubbleProps, ref) => {
         const { message, isMine, isFirstUnread, isGroup, reactToMessage, onImageClick, onRetry } = props;
-        const hasAttachments = message.attachments?.length > 0;
-        const showSeparateTextBubble = message.content?.trim() && !hasAttachments;
+        if (!message) return null;
+
+        const hasAttachments = Boolean(message.attachments && message.attachments.length > 0);
+        const showSeparateTextBubble = Boolean(message.content?.trim() && !hasAttachments);
 
         const senderObj = typeof message.sender === "object" ? message.sender : null;
         const senderName = isMine
@@ -110,7 +112,7 @@ export const MessageBubble = memo(
                                     )}
                                 >
                                     <MessageAttachments
-                                        attachments={message.attachments}
+                                        attachments={message.attachments || []}
                                         message={message}
                                         isMine={isMine}
                                         onImageClick={onImageClick}

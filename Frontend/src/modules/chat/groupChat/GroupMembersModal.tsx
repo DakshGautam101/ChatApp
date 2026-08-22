@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     Dialog,
     DialogContent,
@@ -13,21 +13,25 @@ import useChatStore from "../stores/useChatStore";
 import toast from "react-hot-toast";
 import { ShieldCheck, UserMinus, LogOut, Users, Loader2 } from "lucide-react";
 import { cn } from "@/core/utils/utils";
-import type { StringKeyframeTrack } from "three";
 import type { ConversationInterface, ParticipantInterface } from "@/core/types/ConversationInterface";
-import type { UserInterface } from "@/core/types/UserInterface";
 
-export default function GroupMembersModal({ open, onOpenChange, group }) {
+interface GroupMembersModalProps {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    group: ConversationInterface | any;
+}
+
+export default function GroupMembersModal({ open, onOpenChange, group }: GroupMembersModalProps) {
     const { user: currentUser } = useAuthStore();
     const { updateMemberRole, kickMember, leaveGroup } = useChatStore();
-    const [actionLoading, setActionLoading] = useState({});
+    const [actionLoading, setActionLoading] = useState<Record<string, boolean>>({});
     const [leaving, setLeaving] = useState(false);
 
     const participants = (group?.participants || []).filter(
-        (p) => p.user && (p.user._id || p.user.id || p.user)
+        (p: ParticipantInterface) => p.user && (p.user._id || p.user.id || p.user)
     );
     const currentParticipant = participants.find(
-        (p) => (p.user?._id || p.user?.id || p.user)?.toString() === currentUser?._id
+        (p: ParticipantInterface) => (p.user?._id || p.user?.id || p.user)?.toString() === currentUser?._id
     );
     const isCurrentAdmin = currentParticipant?.role === "admin";
 
@@ -37,7 +41,7 @@ export default function GroupMembersModal({ open, onOpenChange, group }) {
         try {
             await updateMemberRole(group._id, memberId, newRole);
             toast.success(newRole === "admin" ? "Promoted to Admin" : "Demoted to Member");
-        } catch (err) {
+        } catch (err: any) {
             toast.error(err?.response?.data?.message || "Failed to update role");
         } finally {
             setActionLoading((prev) => ({ ...prev, [`role_${memberId}`]: false }));
@@ -52,7 +56,7 @@ export default function GroupMembersModal({ open, onOpenChange, group }) {
         try {
             await kickMember(group._id, memberId);
             toast.success("Member removed from group");
-        } catch (err) {
+        } catch (err: any) {
             toast.error(err?.response?.data?.message || "Failed to remove member");
         } finally {
             setActionLoading((prev) => ({ ...prev, [`kick_${memberId}`]: false }));
@@ -68,7 +72,7 @@ export default function GroupMembersModal({ open, onOpenChange, group }) {
             await leaveGroup(group._id);
             toast.success("You left the group");
             onOpenChange(false);
-        } catch (err) {
+        } catch (err: any) {
             toast.error(err?.response?.data?.message || "Failed to leave group");
         } finally {
             setLeaving(false);
@@ -91,7 +95,7 @@ export default function GroupMembersModal({ open, onOpenChange, group }) {
                 </DialogHeader>
 
                 <div className="max-h-72 overflow-y-auto rounded-xl border border-slate-200/80 bg-slate-50/50 p-2 space-y-2 py-2">
-                    {participants.map((p) => {
+                    {participants.map((p : any) => {
                         const memberUser = p.user || {};
                         const memberId = (memberUser._id || memberUser)?.toString();
                         const isAdmin = p.role === "admin";

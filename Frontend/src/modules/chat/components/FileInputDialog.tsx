@@ -38,7 +38,7 @@ export function FileInputDialog({ openFileDialog, setOpenFileDialog }: FileInput
     }, [openFileDialog, reset]);
 
     const handleFileChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-        const files = Array.from(e.target.files);
+        const files = Array.from(e.target.files || []);
         if (files.length > 0) {
             addFiles(files);
         }   

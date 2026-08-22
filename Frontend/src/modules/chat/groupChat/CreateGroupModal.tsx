@@ -16,10 +16,15 @@ import { Users, Check, Search, Loader2 } from "lucide-react";
 import { cn } from "@/core/utils/utils";
 import type { UserInterface } from "@/core/types/UserInterface";
 
-export default function CreateGroupModal({ open, onOpenChange }) {
+interface CreateGroupModalProps {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+}
+
+export default function CreateGroupModal({ open, onOpenChange }: CreateGroupModalProps) {
     const [name, setName] = useState("");
-    const [selectedMemberIds, setSelectedMemberIds] = useState([]);
-    const [friends, setFriends] = useState([]);
+    const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>([]);
+    const [friends, setFriends] = useState<UserInterface[]>([]);
     const [loadingFriends, setLoadingFriends] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -38,7 +43,7 @@ export default function CreateGroupModal({ open, onOpenChange }) {
             try {
                 const res = await axiosInstance.get("/user/userlist");
                 const allUsers = res.data?.data || [];
-                const friendUsers = allUsers.filter((u) => u.isFriend);
+                const friendUsers = allUsers.filter((u: any) => u.isFriend);
                 setFriends(friendUsers);
             } catch (err) {
                 toast.error("Failed to load connections");
@@ -74,7 +79,7 @@ export default function CreateGroupModal({ open, onOpenChange }) {
             await createGroup({ name: name.trim(), members: selectedMemberIds });
             toast.success(`Group "${name.trim()}" created successfully!`);
             onOpenChange(false);
-        } catch (err) {
+        } catch (err: any) {
             toast.error(err?.response?.data?.message || "Failed to create group");
         } finally {
             setIsSubmitting(false);
@@ -154,11 +159,13 @@ export default function CreateGroupModal({ open, onOpenChange }) {
                                 </div>
                             ) : (
                                 filteredFriends.map((friend) => {
-                                    const isSelected = selectedMemberIds.includes(friend._id);
+                                    const friendId = (friend._id || friend.id || "") as string;
+                                    if (!friendId) return null;
+                                    const isSelected = selectedMemberIds.includes(friendId);
                                     return (
                                         <div
-                                            key={friend._id}
-                                            onClick={() => toggleSelectMember(friend._id)}
+                                            key={friendId}
+                                            onClick={() => toggleSelectMember(friendId)}
                                             className={cn(
                                                 "flex items-center justify-between p-2.5 rounded-lg cursor-pointer transition-all border",
                                                 isSelected

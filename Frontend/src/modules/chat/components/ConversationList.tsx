@@ -179,7 +179,7 @@ const ConversationList = () => {
         });
     }, [conversations, currentUserId]);
 
-    const handleSelectConversation = React.useCallback((conversation) => {
+    const handleSelectConversation = React.useCallback((conversation: ConversationInterface) => {
         openConversation(conversation);
         navigate(`/chats/${conversation._id}`);
     }, [openConversation, navigate]);
