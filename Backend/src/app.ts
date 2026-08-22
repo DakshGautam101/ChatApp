@@ -23,7 +23,7 @@ const __dirname:string = path.dirname(__filename);
 const app = express();
 
 const server = createServer(app);
-const allowedOrigins: string[] = [process.env.CLIENT_URL || "http://localhost:5173"];
+const allowedOrigins: string[] = [process.env.CLIENT_URL|| "https://chat-app-lemon-nu-vuk0r89tf6.vercel.app"|| "http://localhost:5173"];
 
 app.use(requestLogger);
 app.use(express.json());
