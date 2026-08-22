@@ -23,15 +23,56 @@ const __dirname:string = path.dirname(__filename);
 const app = express();
 
 const server = createServer(app);
-const allowedOrigins: string[] = [process.env.CLIENT_URL|| "https://chat-app-lemon-nu-vuk0r89tf6.vercel.app"|| "http://localhost:5173"];
+const configuredOrigins = (process.env.CLIENT_URL || "")
+    .split(",")
+    .map((url) => url.trim().replace(/\/$/, ""))
+    .filter(Boolean);
+
+const defaultAllowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+    "https://chat-jx6fkkzc5-dakshgautam101s-projects.vercel.app",
+    "https://chat-app-lemon-nu-vuk0r89tf6.vercel.app",
+    ...configuredOrigins,
+];
+
+const isAllowedOrigin = (origin: string | undefined): boolean => {
+    // Allow non-browser requests or same-origin requests without Origin header
+    if (!origin) return true;
+
+    const cleanOrigin = origin.trim().replace(/\/$/, "");
+
+    if (defaultAllowedOrigins.includes(cleanOrigin)) return true;
+
+    // Allow all Vercel deployment URLs (preview, branch, and production)
+    if (
+        /\.vercel\.app$/i.test(cleanOrigin) ||
+        /-dakshgautam101s-projects\.vercel\.app$/i.test(cleanOrigin)
+    ) {
+        return true;
+    }
+
+    return false;
+};
+
+const corsOptions: cors.CorsOptions = {
+    origin: (origin, callback) => {
+        if (isAllowedOrigin(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error(`Not allowed by CORS: ${origin}`));
+        }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+};
 
 app.use(requestLogger);
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: allowedOrigins,
-    credentials: true,
-}));
+app.use(cors(corsOptions));
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
@@ -47,7 +88,13 @@ app.use(errorHandler);
 
 const io = new Server(server, {
     cors: {
-        origin: allowedOrigins,
+        origin: (origin, callback) => {
+            if (isAllowedOrigin(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error(`Socket CORS blocked for origin: ${origin}`));
+            }
+        },
         credentials: true,
     },
     maxHttpBufferSize: 25 * 1024 * 1024,
