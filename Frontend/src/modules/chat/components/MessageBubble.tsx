@@ -32,7 +32,7 @@ export interface MessageBubbleProps {
     message?: MessageInterface
     isMine?: boolean
     isFirstUnread?: boolean
-    reactToMessage?: (message: MessageInterface , reaction : string) => void;
+    reactToMessage?: (messageId: string, reaction: string) => void;
     onImageClick?: (message: MessageInterface, index: number) => void;
     onRetry?: (message: MessageInterface) => void;
     isGroup?: boolean
@@ -71,7 +71,7 @@ export const MessageBubble = memo(
                 {isFirstUnread && (
                     <div className="flex items-center gap-3 w-full my-4 animate-scale-in">
                         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
-                        <span className="text-[11px] font-extrabold text-blue-600 bg-blue-50/90 border border-blue-200/80 px-3 py-1 rounded-full shadow-2xs tracking-wide">
+                        <span className="text-[11px] font-extrabold text-blue-600 bg-primary border border-blue-200/80 px-3 py-1 rounded-full shadow-2xs tracking-wide">
                             NEW MESSAGES BELOW
                         </span>
                         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
@@ -104,8 +104,8 @@ export const MessageBubble = memo(
                                     className={cn(
                                         "rounded-2xl p-2 transition-all duration-200 border shadow-xs min-w-[220px]",
                                         isMine
-                                            ? "bg-blue-600 text-white border-blue-500 shadow-blue-500/10 rounded-tr-xs"
-                                            : "bg-white text-slate-900 border-slate-200/80 shadow-slate-200/50 rounded-tl-xs"
+                                            ? "bg-primary border-primary shadow-primary/10 rounded-tr-xs"
+                                            : "bg-secondary border-secondary shadow-secondary rounded-tl-xs"
                                     )}
                                 >
                                     <MessageAttachments
@@ -122,7 +122,7 @@ export const MessageBubble = memo(
                                     <div
                                         className={cn(
                                             "flex items-center justify-end gap-1.5 px-1 pt-1 text-[10px]",
-                                            isMine ? "text-blue-100/90 font-medium" : "text-slate-500 font-medium"
+                                            isMine ? "text-primary font-medium" : "text-secondary font-medium"
                                         )}
                                     >
                                         <span>{timeStr}</span>
@@ -154,8 +154,8 @@ export const MessageBubble = memo(
                                         className={cn(
                                             "rounded-2xl px-4 py-2.5 transition-all duration-200 border shadow-xs max-w-full",
                                             isMine
-                                                ? "bg-blue-600 text-white border-blue-500 shadow-blue-500/10 rounded-tr-xs"
-                                                : "bg-white text-slate-900 border-slate-200/80 shadow-slate-200/50 rounded-tl-xs"
+                                                ? "bg-primary text-secondary border-primary shadow-primary/10 rounded-tr-xs"
+                                                : "bg-secondary text-primary border-secondary shadow-secondary rounded-tl-xs"
                                         )}
                                     >
                                         <p className="text-sm leading-relaxed whitespace-pre-wrap break-words font-medium">
@@ -194,7 +194,14 @@ export const MessageBubble = memo(
                             )}
 
                             {/* Reaction Picker Trigger */}
-                            <ReactionPicker isMine={isMine} onSelectReaction={(reaction : string) => reactToMessage?.(message, reaction)} />
+                            <ReactionPicker
+                                isMine={isMine}
+                                onSelectReaction={(reaction: string) => {
+                                    if (message?._id) {
+                                        reactToMessage?.(message._id, reaction);
+                                    }
+                                }}
+                            />
                         </div>
 
                         {/* Reactions Container */}

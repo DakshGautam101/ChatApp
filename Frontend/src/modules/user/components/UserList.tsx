@@ -50,30 +50,30 @@ const UserRow = React.memo<UserRowProps>(function UserRow({
 }) {
     return (
         <li
-            className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200/70 bg-white p-3.5 transition-all duration-200 hover:border-blue-200 hover:shadow-md hover:shadow-blue-500/5"
+            className="group flex items-center justify-between gap-3 rounded-xl border border-base-300 bg-base-100 p-3.5 transition-all duration-200 hover:border-primary/40 hover:shadow-md"
         >
             <div className="flex min-w-0 items-center gap-3.5 flex-1">
                 <Avatar src={u.avatar} name={u.username || u.email} size="md" showStatus={true} status={u.status} />
                 <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                        <p className="truncate text-sm font-bold text-slate-900">{u.username || u.email}</p>
+                        <p className="truncate text-sm font-bold text-base-content">{u.username || u.email}</p>
                         {u.status === "online" ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-2xs">
-                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-success/15 text-success border border-success/30 shadow-2xs">
+                                <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
                                 Online
                             </span>
                         ) : (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500 border border-slate-200/60">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-base-200 text-base-content/60 border border-base-300">
                                 Offline
                             </span>
                         )}
                         {unreadCount > 0 && (
-                            <span className="inline-flex items-center justify-center shrink-0 rounded-full bg-blue-600 text-white font-extrabold text-[10px] px-2 py-0.5 min-w-[20px] shadow-xs" title={`${unreadCount} unread messages`}>
+                            <span className="inline-flex items-center justify-center shrink-0 rounded-full bg-primary text-primary-content font-extrabold text-[10px] px-2 py-0.5 min-w-[20px] shadow-xs" title={`${unreadCount} unread messages`}>
                                 {unreadCount > 99 ? "99+" : unreadCount}
                             </span>
                         )}
                     </div>
-                    <p className="truncate text-xs font-medium text-slate-500">{u.email}</p>
+                    <p className="truncate text-xs font-medium text-base-content/60">{u.email}</p>
                 </div>
             </div>
             {u.isFriend ? (
@@ -81,7 +81,7 @@ const UserRow = React.memo<UserRowProps>(function UserRow({
                     size="sm"
                     variant="outline"
                     onClick={() => onOpenMessage(conv)}
-                    className="shrink-0 gap-1.5 rounded-lg h-9 font-semibold text-xs border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white transition-all cursor-pointer"
+                    className="shrink-0 gap-1.5 rounded-lg h-9 font-semibold text-xs border border-primary/30 bg-primary/10 text-primary hover:bg-primary hover:text-primary-content transition-all cursor-pointer"
                 >
                     Message <MessageCircle className="h-3.5 w-3.5" />
                 </Button>
@@ -93,12 +93,12 @@ const UserRow = React.memo<UserRowProps>(function UserRow({
                     className={cn(
                         "shrink-0 gap-1.5 rounded-lg h-9 font-semibold text-xs transition-all border-none shadow-xs",
                         !isSent && !isSending
-                            ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20 hover:scale-105 active:scale-95 cursor-pointer"
-                            : "bg-slate-100 text-slate-600 border border-slate-200"
+                            ? "bg-primary hover:opacity-90 text-primary-content shadow-primary/20 hover:scale-105 active:scale-95 cursor-pointer"
+                            : "bg-base-200 text-base-content/60 border border-base-300"
                     )}
                 >
                     {isSending ? (
-                        <span className="loading loading-spinner loading-xs text-blue-600"></span>
+                        <span className="loading loading-spinner loading-xs text-primary"></span>
                     ) : (
                         <Send className="h-3.5 w-3.5" />
                     )}
@@ -218,14 +218,14 @@ function UserList() {
     }, [openConversation, navigate]);
 
     return (
-        <div className="flex h-full flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xl shadow-blue-900/5">
+        <div className="flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-5 shadow-xl text-base-content">
             <div className="mb-5 flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600 border border-blue-100">
+                <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20">
                     <Users className="h-5 w-5" />
                 </div>
-                <h2 className="text-lg font-bold tracking-tight text-slate-900">People</h2>
+                <h2 className="text-lg font-bold tracking-tight text-base-content">People</h2>
                 {!loading && !error && (
-                    <span className="badge badge-sm font-bold bg-blue-100 text-blue-700 border-none ml-auto">
+                    <span className="badge badge-sm font-bold bg-primary/15 text-primary border-none ml-auto">
                         {visibleUsers.length}
                     </span>
                 )}
@@ -241,10 +241,10 @@ function UserList() {
             )}
 
             {!loading && error && (
-                <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-red-200 bg-red-50/50 py-12 text-center animate-scale-in">
-                    <AlertCircle className="h-8 w-8 text-red-500" />
-                    <p className="max-w-55 text-sm font-medium text-red-600">{error}</p>
-                    <Button size="sm" variant="outline" onClick={fetchUsers} className="mt-2 border-red-200 hover:bg-red-500 hover:text-white">
+                <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-error/30 bg-error/10 py-12 text-center animate-scale-in">
+                    <AlertCircle className="h-8 w-8 text-error" />
+                    <p className="max-w-55 text-sm font-medium text-error">{error}</p>
+                    <Button size="sm" variant="outline" onClick={fetchUsers} className="mt-2 border-error/40 hover:bg-error hover:text-white">
                         Try again
                     </Button>
                 </div>
@@ -256,13 +256,14 @@ function UserList() {
                         Search people
                     </label>
                     <div className="relative group">
-                        <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                        <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-base-content/40" />
                         <Input
                             id="user-search"
+                            type="text"
+                            placeholder="Search by name or email..."
                             value={searchTerm}
-                            onChange={(event) => setSearchTerm(event.target.value)}
-                            placeholder="Search by name or email"
-                            className="pl-10 rounded-xl bg-slate-50 border-slate-200 focus:bg-white focus:ring-2 focus:ring-blue-500/20 text-slate-900 placeholder:text-slate-400 h-11"
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="h-11 rounded-xl bg-base-200/70 border-base-300 pl-10 pr-4 text-sm text-base-content placeholder:text-base-content/40 focus:bg-base-100 focus:ring-2 focus:ring-primary/20"
                         />
                     </div>
                 </div>

@@ -68,8 +68,8 @@ const ConversationListItem : React.FC<ConversationListItemProps> = React.memo(fu
             className={cn(
                 "group flex items-center gap-3 px-3.5 py-3 rounded-xl text-left transition-all duration-150 border stagger-item active:scale-[0.98] w-full",
                 isActive
-                    ? "bg-blue-50/80 border-blue-200 shadow-xs"
-                    : "bg-transparent border-transparent hover:bg-slate-100/80"
+                    ? "bg-primary/10 border-primary/30 shadow-xs"
+                    : "bg-transparent border-transparent hover:bg-base-200/80"
             )}
             style={{ "--stagger-index": idx }as React.CSSProperties}
         >
@@ -82,11 +82,11 @@ const ConversationListItem : React.FC<ConversationListItemProps> = React.memo(fu
                             size="lg"
                         />
                     ) : (
-                        <div className="h-11 w-11 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+                        <div className="h-11 w-11 rounded-full bg-primary text-primary-content flex items-center justify-center font-bold text-sm shadow-sm">
                             <Users className="h-5 w-5" />
                         </div>
                     )}
-                    <span className="absolute -bottom-0.5 -right-0.5 bg-blue-600 text-white text-[9px] font-extrabold px-1 rounded-full border border-white">
+                    <span className="absolute -bottom-0.5 -right-0.5 bg-primary text-primary-content text-[9px] font-extrabold px-1 rounded-full border border-base-100">
                         GRP
                     </span>
                 </div>
@@ -103,7 +103,7 @@ const ConversationListItem : React.FC<ConversationListItemProps> = React.memo(fu
                 <div className="flex justify-between items-baseline gap-2 mb-0.5">
                     <div className={cn(
                         "truncate text-sm font-semibold flex items-center gap-1.5 min-w-0 flex-1",
-                        isActive ? "text-blue-900" : "text-slate-900"
+                        isActive ? "text-primary font-bold" : "text-base-content"
                     )}>
                         <span className="truncate">{title}</span>
                         {conversation.isConvertedFromGroup && (
@@ -118,7 +118,7 @@ const ConversationListItem : React.FC<ConversationListItemProps> = React.memo(fu
                     {timeStr && (
                         <span className={cn(
                             "text-[11px] shrink-0 font-medium",
-                            unreadCount > 0 ? "text-blue-600 font-bold" : "text-slate-400"
+                            unreadCount > 0 ? "text-primary font-bold" : "text-base-content/50"
                         )}>
                             {timeStr}
                         </span>
@@ -128,16 +128,16 @@ const ConversationListItem : React.FC<ConversationListItemProps> = React.memo(fu
                     <div className={cn(
                         "truncate text-xs min-w-0 flex-1",
                         unreadCount > 0
-                            ? "text-slate-900 font-semibold"
+                            ? "text-base-content font-bold"
                             : isActive
-                                ? "text-blue-700 font-medium"
-                                : "text-slate-500"
+                                ? "text-primary/90 font-medium"
+                                : "text-base-content/70"
                     )}>
                         {conversation.lastMessage?.text ||
                             (isGroup ? `${conversation.participants?.length || 0} members` : "No messages yet")}
                     </div>
                     {unreadCount > 0 && (
-                        <span className="inline-flex items-center justify-center shrink-0 rounded-full bg-blue-600 text-white font-extrabold text-[10px] px-1.5 py-0.5 min-w-[18px] shadow-xs animate-scale-in">
+                        <span className="inline-flex items-center justify-center shrink-0 rounded-full bg-primary text-primary-content font-extrabold text-[10px] px-1.5 py-0.5 min-w-[18px] shadow-xs animate-scale-in">
                             {unreadCount > 99 ? "99+" : unreadCount}
                         </span>
                     )}
@@ -185,12 +185,12 @@ const ConversationList = () => {
     }, [openConversation, navigate]);
 
     return (
-        <div className="flex flex-col h-full animate-fade-in">
-            <div className="p-3 border-b border-slate-200/80 flex items-center justify-between bg-white/50">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Conversations</span>
+        <div className="flex flex-col h-full animate-fade-in text-base-content">
+            <div className="p-3 border-b border-base-300 flex items-center justify-between bg-base-100/60">
+                <span className="text-xs font-bold uppercase tracking-wider text-base-content/70">Conversations</span>
                 <button
                     onClick={() => setShowCreateGroup(true)}
-                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all text-xs font-bold border border-blue-200/60 cursor-pointer"
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all text-xs font-bold border border-primary/20 cursor-pointer"
                     title="Create a new group chat"
                 >
                     <Plus className="h-3.5 w-3.5" />

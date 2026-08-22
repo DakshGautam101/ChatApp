@@ -148,21 +148,21 @@ export default function Invitation() {
         : 0;
 
     return (
-        <div className="flex h-full flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xl shadow-blue-900/5">
-            <div className="mb-5 flex p-1 rounded-xl bg-slate-100 border border-slate-200/60 gap-1">
+        <div className="flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-5 shadow-xl text-base-content">
+            <div className="mb-5 flex p-1 rounded-xl bg-base-200/80 border border-base-300 gap-1">
                 <button
                     onClick={() => setTab("received")}
                     className={cn(
                         "flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-all",
                         tab === "received"
-                            ? "bg-white text-blue-600 font-bold shadow-xs border border-slate-200/60"
-                            : "text-slate-600 hover:text-slate-900"
+                            ? "bg-base-100 text-primary font-bold shadow-xs border border-base-300"
+                            : "text-base-content/70 hover:text-base-content"
                     )}
                 >
                     <Inbox className="h-3.5 w-3.5" />
                     <span>Direct</span>
                     {pendingDirectCount > 0 && (
-                        <span className="badge badge-sm font-bold bg-blue-600 text-white border-none ml-1">
+                        <span className="badge badge-sm font-bold bg-primary text-primary-content border-none ml-1">
                             {pendingDirectCount}
                         </span>
                     )}
@@ -173,8 +173,8 @@ export default function Invitation() {
                     className={cn(
                         "flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-all",
                         tab === "group"
-                            ? "bg-white text-blue-600 font-bold shadow-xs border border-slate-200/60"
-                            : "text-slate-600 hover:text-slate-900"
+                            ? "bg-base-100 text-primary font-bold shadow-xs border border-base-300"
+                            : "text-base-content/70 hover:text-base-content"
                     )}
                 >
                     <Users className="h-3.5 w-3.5" />
@@ -191,8 +191,8 @@ export default function Invitation() {
                     className={cn(
                         "flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-all",
                         tab === "sent"
-                            ? "bg-white text-blue-600 font-bold shadow-xs border border-slate-200/60"
-                            : "text-slate-600 hover:text-slate-900"
+                            ? "bg-base-100 text-primary font-bold shadow-xs border border-base-300"
+                            : "text-base-content/70 hover:text-base-content"
                     )}
                 >
                     <Send className="h-3.5 w-3.5" />
@@ -237,63 +237,63 @@ export default function Invitation() {
                             ) : (
                                 <ul className="space-y-3">
                                     {received.map((invite, idx) => (
-                                        <li
-                                            key={invite._id}
-                                            className="flex flex-col gap-4 rounded-xl border border-slate-200/70 bg-white p-4 shadow-xs transition-all hover:border-blue-200 hover:shadow-md hover:shadow-blue-500/5 sm:flex-row sm:items-center sm:justify-between stagger-item"
-                                            style={{ "--stagger-index": idx } as React.CSSProperties}
-                                        >
-                                            <div className="flex min-w-0 items-center gap-4">
-                                                <Avatar
-                                                    src={invite.sender?.avatar}
-                                                    name={invite.sender?.username || invite.sender?.email}
-                                                    size="md"
-                                                    showStatus={true}
-                                                    status={invite.sender?.status || "offline"}
-                                                />
-                                                <div className="min-w-0">
-                                                    <p className="truncate text-sm font-bold text-slate-900">
-                                                        {invite.sender?.username || invite.sender?.email || "User"}
-                                                    </p>
-                                                    <p className="truncate text-xs font-medium text-slate-500">
-                                                        {invite.sender?.email}
-                                                    </p>
-                                                </div>
-                                            </div>
+                                         <li
+                                             key={invite._id}
+                                             className="flex flex-col gap-4 rounded-xl border border-base-300 bg-base-100 p-4 shadow-xs transition-all hover:border-primary/40 hover:shadow-md sm:flex-row sm:items-center sm:justify-between stagger-item"
+                                             style={{ "--stagger-index": idx } as React.CSSProperties}
+                                         >
+                                             <div className="flex min-w-0 items-center gap-4">
+                                                 <Avatar
+                                                     src={invite.sender?.avatar}
+                                                     name={invite.sender?.username || invite.sender?.email}
+                                                     size="md"
+                                                     showStatus={true}
+                                                     status={invite.sender?.status || "offline"}
+                                                 />
+                                                 <div className="min-w-0">
+                                                     <p className="truncate text-sm font-bold text-base-content">
+                                                         {invite.sender?.username || invite.sender?.email || "User"}
+                                                     </p>
+                                                     <p className="truncate text-xs font-medium text-base-content/60">
+                                                         {invite.sender?.email}
+                                                     </p>
+                                                 </div>
+                                             </div>
 
-                                            {invite.status === "pending" ? (
-                                                <div className="flex gap-2 sm:shrink-0">
-                                                    <Button
-                                                        size="sm"
-                                                        className="h-9 gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-xs hover:scale-105 active:scale-95 transition-all border-none"
-                                                        disabled={!!updating[invite._id]}
-                                                        onClick={() => updateStatus(invite._id, "accepted")}
-                                                    >
-                                                        {updating[invite._id] === "accepted" ? (
-                                                            <span className="loading loading-spinner loading-xs text-white"></span>
-                                                        ) : (
-                                                            <Check className="h-3.5 w-3.5" />
-                                                        )}
-                                                        Accept
-                                                    </Button>
-                                                    <Button
-                                                        size="sm"
-                                                        variant="outline"
-                                                        className="h-9 gap-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold border border-slate-200 hover:scale-105 active:scale-95 transition-all"
-                                                        disabled={!!updating[invite._id]}
-                                                        onClick={() => updateStatus(invite._id, "rejected")}
-                                                    >
-                                                        {updating[invite._id] === "rejected" ? (
-                                                            <span className="loading loading-spinner loading-xs text-slate-600"></span>
-                                                        ) : (
-                                                            <X className="h-3.5 w-3.5" />
-                                                        )}
-                                                        Reject
-                                                    </Button>
-                                                </div>
-                                            ) : (
-                                                <StatusBadge status={invite.status} />
-                                            )}
-                                        </li>
+                                             {invite.status === "pending" ? (
+                                                 <div className="flex gap-2 sm:shrink-0">
+                                                     <Button
+                                                         size="sm"
+                                                         className="h-9 gap-1.5 rounded-lg bg-primary hover:opacity-90 text-primary-content font-semibold shadow-xs hover:scale-105 active:scale-95 transition-all border-none"
+                                                         disabled={!!updating[invite._id]}
+                                                         onClick={() => updateStatus(invite._id, "accepted")}
+                                                     >
+                                                         {updating[invite._id] === "accepted" ? (
+                                                             <span className="loading loading-spinner loading-xs text-primary-content"></span>
+                                                         ) : (
+                                                             <Check className="h-3.5 w-3.5" />
+                                                         )}
+                                                         Accept
+                                                     </Button>
+                                                     <Button
+                                                         size="sm"
+                                                         variant="outline"
+                                                         className="h-9 gap-1.5 rounded-lg bg-base-200 hover:bg-base-300 text-base-content font-semibold border border-base-300 hover:scale-105 active:scale-95 transition-all"
+                                                         disabled={!!updating[invite._id]}
+                                                         onClick={() => updateStatus(invite._id, "rejected")}
+                                                     >
+                                                         {updating[invite._id] === "rejected" ? (
+                                                             <span className="loading loading-spinner loading-xs text-base-content"></span>
+                                                         ) : (
+                                                             <X className="h-3.5 w-3.5" />
+                                                         )}
+                                                         Reject
+                                                     </Button>
+                                                 </div>
+                                             ) : (
+                                                 <StatusBadge status={invite.status} />
+                                             )}
+                                         </li>
                                     ))}
                                 </ul>
                             )}
