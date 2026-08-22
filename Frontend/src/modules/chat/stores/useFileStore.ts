@@ -41,7 +41,7 @@ interface FileStoreInterface{
     activeMessageUploads: Map<string, { content: string; items: item[] }>;
     sendItemsAsOptimisticMessage: ({ messageId, content }: { messageId: string; content?: string }) => any[];
     checkAndEmitMessage: (messageId: string) => void;
-    retryUpload: (item: item) => void;
+    retryUpload: (item: item | AttachmentInterface) => void;
     cancelItem: (id: string) => void;
     reset: () => void;
     removeCompletedItems: () => void;
@@ -234,15 +234,15 @@ const useFileStore = create<FileStoreInterface>((set, get) => ({
         }
     },
 
-    retryUpload: (item) => {
+    retryUpload: (item: item | AttachmentInterface) => {
         let storeItem = get().items.find(
-            (i) => i.id === item.id || i.uploadId === item.uploadId || (item.id && i.id === item.id)
+            (i) => (item.id && i.id === item.id) || (item.uploadId && i.uploadId === item.uploadId) || (item._id && i.id === item._id)
         );
 
         if (!storeItem && get().activeMessageUploads) {
             for (const [mId, activeUpload] of get().activeMessageUploads.entries()) {
                 const found = activeUpload.items?.find(
-                    (i) => i.id === item.id || i.uploadId === item.uploadId || i.id === item._id
+                    (i) => (item.id && i.id === item.id) || (item.uploadId && i.uploadId === item.uploadId) || (item._id && i.id === item._id)
                 );
                 if (found) {
                     storeItem = { ...found, messageId: mId };
@@ -303,8 +303,8 @@ const useFileStore = create<FileStoreInterface>((set, get) => ({
                         }
                     }
                 });
-        } else {
-            get().startUpload(item, { existingUploadId: item.uploadId || undefined });
+        } else if (target.file && target.id) {
+            get().startUpload(target as item, { existingUploadId: target.uploadId || undefined });
         }
     },
 

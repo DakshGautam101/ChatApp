@@ -5,6 +5,7 @@ import Avatar from "@/core/components/Avatar";
 import { MessageAttachments } from "./MessageAttachments";
 import { MessageReactions, ReactionPicker } from "./MessageReactions";
 import type { MessageInterface } from "@/core/types/MessageInterface";
+import type { AttachmentInterface } from "@/core/types/AttachmentInterface";
 
 const SENDER_COLORS = [
     "text-blue-600 font-semibold",
@@ -34,7 +35,7 @@ export interface MessageBubbleProps {
     isFirstUnread?: boolean
     reactToMessage?: (messageId: string, reaction: string) => void;
     onImageClick?: (message: MessageInterface, index: number) => void;
-    onRetry?: (message: MessageInterface) => void;
+    onRetry?: (target: AttachmentInterface | MessageInterface | any) => void;
     isGroup?: boolean
     ref?: React.RefObject<HTMLDivElement>
 }
@@ -113,6 +114,7 @@ export const MessageBubble = memo(
                                         message={message}
                                         isMine={isMine}
                                         onImageClick={onImageClick}
+                                        onRetry={onRetry}
                                     />
                                     {message.content?.trim() && (
                                         <p className="text-sm leading-relaxed whitespace-pre-wrap break-words px-1.5 pt-2 pb-1 font-medium">

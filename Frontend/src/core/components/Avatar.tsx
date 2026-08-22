@@ -12,7 +12,7 @@ export function getAvatarUrl(avatar?: string | null) {
         return avatar;
     }
     
-    const apiBase = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+    const apiBase = import.meta.env.VITE_API_URL || "https://chatapp-backend-s1n2.onrender.com"|| "http://localhost:5000/api";
     const serverOrigin = apiBase.replace(/\/api\/?$/, "");
     const cleanPath = avatar.startsWith("/") ? avatar : `/${avatar}`;
     return `${serverOrigin}${cleanPath}`;

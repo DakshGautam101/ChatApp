@@ -1,6 +1,6 @@
 import { io as clientIo } from "socket.io-client";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL || "https://chatapp-backend-s1n2.onrender.com" || "http://localhost:5000";
 
 export const socket = clientIo(API_URL, {
     withCredentials: true,

@@ -342,7 +342,7 @@ export default function ChatWindow() {
         const formattedImages = imageAttachments.map((att) => {
             const fileUrl = att.url?.startsWith("http") || att.url?.startsWith("blob:")
                 ? att.url
-                : new URL(att.url, import.meta.env.VITE_API_URL || "http://localhost:5000").toString();
+                : new URL(att.url, import.meta.env.VITE_API_URL||"https://chatapp-backend-s1n2.onrender.com" || "http://localhost:5000").toString();
             return {
                 src: fileUrl,
                 name: att.name || "Attachment",
@@ -493,7 +493,7 @@ export default function ChatWindow() {
                     </div>
                 ) : messages.length === 0 ? (
                     <div className="flex h-full items-center justify-center">
-                        <div className="bg-white border border-slate-200 shadow-xs px-6 py-4 rounded-2xl text-sm font-medium text-slate-500 animate-fade-in">
+                        <div className="bg-ssecondary border border-slate-200 shadow-xs px-6 py-4 rounded-2xl text-sm text-primary font-medium animate-fade-in">
                             No messages yet. Say hello! 👋
                         </div>
                     </div>

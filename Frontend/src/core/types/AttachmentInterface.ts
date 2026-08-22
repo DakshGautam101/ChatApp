@@ -13,4 +13,6 @@ export interface AttachmentInterface {
     progress?: number;
     status?: "uploading" | "completed" | "failed" | string;
     error?: string;
+    file?: File;
+    messageId?: string;
 }

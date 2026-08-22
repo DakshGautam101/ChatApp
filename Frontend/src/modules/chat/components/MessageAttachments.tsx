@@ -20,7 +20,7 @@ export function MessageAttachments({ attachments, message, isMine, onImageClick,
                 const fileUrl = attachment.url?.startsWith("http") || attachment.url?.startsWith("blob:")
                     ? attachment.url
                     : attachment.url
-                        ? new URL(attachment.url, import.meta.env.VITE_API_URL || "http://localhost:5000").toString()
+                        ? new URL(attachment.url, import.meta.env.VITE_API_URL|| "https://chatapp-backend-s1n2.onrender.com" || "http://localhost:5000").toString()
                         : "";
 
                 const captionText = attachment.caption || (attachments.length === 1 && message?.content ? message.content : "");
