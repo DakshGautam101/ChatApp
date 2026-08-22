@@ -1,6 +1,6 @@
 export declare const cacheService: {
-    get(key: string): Promise<any>;
-    set(key: string, value: string, ttlSeconds?: number): Promise<void>;
+    get<T = any>(key: string): Promise<T | null>;
+    set(key: string, value: any, ttlSeconds?: number): Promise<void>;
     del(key: string): Promise<void>;
     delPattern(pattern: string): Promise<void>;
 };

@@ -30,7 +30,8 @@ function getSockets(userId) {
     if (!userId)
         return [];
     const key = userId.toString();
-    return userSockets.has(key) ? Array.from(userSockets.get(key)) : [];
+    const sockets = userSockets.get(key);
+    return sockets ? Array.from(sockets) : [];
 }
 export { addSocket, removeSocket, getSockets, setIO, getIO };
 //# sourceMappingURL=socket.js.map

@@ -1,12 +1,11 @@
+import { Types } from "mongoose";
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/messages.model.js";
-import User from "../models/user.model.js";
 import Notification from "../models/notification.model.js";
 import logger from "../utils/logger.js";
 import { getIO, getSockets } from "../socket/socket.js";
-// import { sendOfflineMessageEmail } from "./email.service.js";
 import cacheService from "./cache.service.js";
-export const sendMessageService = async ({ userId, conversationId, content, attachments = [] }) => {
+export const sendMessageService = async ({ userId, conversationId, content, attachments = [], }) => {
     const hasText = content && content.trim();
     const hasAttachment = attachments && attachments.length > 0;
     if (!hasText && !hasAttachment) {
@@ -36,7 +35,7 @@ export const sendMessageService = async ({ userId, conversationId, content, atta
     });
     let previewText = content ? content.trim() : "";
     if (!previewText && attachments.length > 0) {
-        const type = attachments[0].fileType || "";
+        const type = attachments[0]?.fileType || "";
         if (type.startsWith("image/"))
             previewText = "📷 Photo";
         else if (type.startsWith("video/"))
@@ -54,9 +53,8 @@ export const sendMessageService = async ({ userId, conversationId, content, atta
     const io = getIO();
     if (io) {
         const participantRooms = conversation.participants.map((p) => `user_${(p.user?._id || p.user).toString()}`);
-        io.to(`conv_${conversationId}`).to(participantRooms).emit("message:new", populated);
+        io.to(`conv_${conversationId.toString()}`).to(participantRooms).emit("message:new", populated);
         for (const recipientId of recipients) {
-            const isOnline = getSockets(recipientId).length > 0;
             io.to(`user_${recipientId}`).emit("conversation:updated", {
                 conversationId,
                 lastMessage: { text: previewText, sender: userId, at: new Date() },
@@ -77,37 +75,26 @@ export const sendMessageService = async ({ userId, conversationId, content, atta
             catch (e) {
                 logger.error("Failed to create notification:", e);
             }
-            // if (!isOnline && process.env.ENABLE_OFFLINE_EMAIL === "true") {
-            //     User.findById(recipientId)
-            //         .select("username email")
-            //         .then((recipientUser) => {
-            //             if (recipientUser && recipientUser.email) {
-            //                 sendOfflineMessageEmail({
-            //                     to: recipientUser.email,
-            //                     recipientName: recipientUser.username || recipientUser.email,
-            //                     senderName: populated.sender?.username || "A contact",
-            //                     messagePreview: previewText,
-            //                     conversationId,
-            //                 }).catch((e) => logger.error("Offline email error:", e));
-            //             }
-            //         })
-            //         .catch((e) => logger.error("Recipient lookup error for offline email:", e));
-            // }
         }
     }
     try {
-        await cacheService.delPattern(`conversation:messages:${conversationId}*`);
+        await cacheService.delPattern(`conversation:messages:${conversationId.toString()}*`);
         for (const p of conversation.participants) {
             const pId = (p.user?._id || p.user).toString();
             await cacheService.del(`user:conversations:${pId}`);
         }
     }
     catch (cacheErr) {
-        logger.warn(`Cache invalidation notice: ${cacheErr.message}`);
+        logger.warn(`Cache invalidation notice: ${cacheErr?.message}`);
     }
     return populated;
 };
 export const getMessagesService = async (conversationId, before, userId) => {
+    if (!conversationId) {
+        const error = new Error("Conversation ID is required");
+        error.statusCode = 400;
+        throw error;
+    }
     const pageSize = 50;
     let conversation = null;
     let minDate = null;
@@ -121,8 +108,8 @@ export const getMessagesService = async (conversationId, before, userId) => {
         }
     }
     const cacheKey = minDate
-        ? `conversation:messages:${conversationId}:${new Date(minDate).getTime()}`
-        : `conversation:messages:${conversationId}`;
+        ? `conversation:messages:${conversationId.toString()}:${new Date(minDate).getTime()}`
+        : `conversation:messages:${conversationId.toString()}`;
     if (!before) {
         const cached = await cacheService.get(cacheKey);
         if (cached) {
@@ -151,13 +138,13 @@ export const getMessagesService = async (conversationId, before, userId) => {
             const unreadMsgs = await Message.find({
                 conversation: conversationId,
                 sender: { $ne: userId },
-                "readBy.user": { $ne: userId }
+                "readBy.user": { $ne: userId },
             });
             if (unreadMsgs.length > 0) {
-                const lastMsgId = unreadMsgs[unreadMsgs.length - 1]._id;
+                const lastMsgId = unreadMsgs[unreadMsgs.length - 1]?._id;
                 await Message.updateMany({ _id: { $in: unreadMsgs.map((m) => m._id) } }, { $addToSet: { readBy: { user: userId, readAt: new Date() } } });
                 await Conversation.updateOne({ _id: conversationId, "participants.user": userId }, { $set: { "participants.$.lastReadMessageId": lastMsgId } });
-                await cacheService.del(`user:conversations:${userId}`);
+                await cacheService.del(`user:conversations:${userId.toString()}`);
             }
         }
         catch (e) {
@@ -174,7 +161,8 @@ export const getMessagesService = async (conversationId, before, userId) => {
     return result;
 };
 export const getConversationsService = async (userId) => {
-    const cacheKey = `user:conversations:${userId}`;
+    const userIdStr = userId.toString();
+    const cacheKey = `user:conversations:${userIdStr}`;
     const cachedConvs = await cacheService.get(cacheKey);
     if (cachedConvs) {
         const validCached = [];
@@ -183,7 +171,7 @@ export const getConversationsService = async (userId) => {
                 conv.participants = conv.participants.filter((p) => p.user && (p.user._id || p.user.id || p.user));
             }
             if (conv.type === "private") {
-                const other = conv.participants?.find((p) => (p.user?._id || p.user?.id || p.user)?.toString() !== userId.toString());
+                const other = conv.participants?.find((p) => (p.user?._id || p.user?.id || p.user)?.toString() !== userIdStr);
                 if (!other || !other.user)
                     continue;
             }
@@ -235,7 +223,7 @@ export const getConversationsService = async (userId) => {
         }
         // Private conversation check: verify other participant still exists
         if (conv.type === "private") {
-            const other = conv.participants?.find((p) => (p.user._id || p.user.id || p.user).toString() !== userId.toString());
+            const other = conv.participants?.find((p) => (p.user._id || p.user.id || p.user).toString() !== userIdStr);
             if (!other || !other.user) {
                 // Other user was deleted from DB; do not show orphaned private conversation
                 continue;
@@ -248,7 +236,7 @@ export const getConversationsService = async (userId) => {
                 p.user.status = isOnline ? "online" : "offline";
             }
         }
-        const participant = conv.participants?.find((p) => (p.user?._id || p.user)?.toString() === userId.toString());
+        const participant = conv.participants?.find((p) => (p.user?._id || p.user)?.toString() === userIdStr);
         if (conv.type === "group") {
             if (participant && participant.joinedAt) {
                 const latestMessage = await Message.findOne({
@@ -260,7 +248,7 @@ export const getConversationsService = async (userId) => {
                 if (latestMessage) {
                     let previewText = latestMessage.content || "";
                     if (!previewText && latestMessage.attachments?.length > 0) {
-                        const type = latestMessage.attachments[0].fileType || "";
+                        const type = latestMessage.attachments[0]?.fileType || "";
                         if (type.startsWith("image/"))
                             previewText = "📷 Photo";
                         else if (type.startsWith("video/"))

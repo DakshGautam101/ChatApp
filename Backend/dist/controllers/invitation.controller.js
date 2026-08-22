@@ -2,6 +2,9 @@ import { sendInvitationService, changeInvitationStatusService, getUserInvitation
 import { sendError, sendSuccess } from "../utils/response.js";
 export const sendInvitation = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const senderId = req.user.id;
         const receiverId = req.params.id;
         const { invitation, statusCode } = await sendInvitationService(senderId, receiverId);
@@ -17,6 +20,9 @@ export const sendInvitation = async (req, res, next) => {
 export const changeStatus = async (req, res, next) => {
     try {
         const invitationId = req.params.id;
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const receiverId = req.user.id;
         const statusInput = req.query.invitationStatus;
         const invitation = await changeInvitationStatusService(invitationId, receiverId, statusInput);
@@ -31,6 +37,9 @@ export const changeStatus = async (req, res, next) => {
 };
 export const getInvitation = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const userId = req.user.id;
         const { received, sent } = await getUserInvitationsService(userId);
         return sendSuccess(res, 200, { received, sent });

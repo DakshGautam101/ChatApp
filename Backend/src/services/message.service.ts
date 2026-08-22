@@ -1,0 +1,358 @@
+import { Types } from "mongoose";
+import Conversation from "../models/conversation.model.js";
+import Message from "../models/messages.model.js";
+import Notification from "../models/notification.model.js";
+import logger from "../utils/logger.js";
+import { getIO, getSockets } from "../socket/socket.js";
+import cacheService from "./cache.service.js";
+import type { CustomError, GetMessagesResult, SendMessageParams } from "../Interfaces/BacknedInterfaces.js";
+
+export const sendMessageService = async ({
+    userId,
+    conversationId,
+    content,
+    attachments = [],
+}: SendMessageParams) => {
+    const hasText = content && content.trim();
+    const hasAttachment = attachments && attachments.length > 0;
+
+    if (!hasText && !hasAttachment) {
+        const error: CustomError = new Error("Message content or attachment is required");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const conversation = await Conversation.findOne({
+        _id: conversationId,
+        "participants.user": userId,
+    });
+    if (!conversation) {
+        const error: CustomError = new Error("Conversation not found or access denied");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    const recipients = conversation.participants
+        .map((p) => p.user.toString())
+        .filter((id) => id !== userId.toString());
+
+    const recipientIsOnline = recipients.some((id) => getSockets(id).length > 0);
+
+    const message = await Message.create({
+        conversation: conversationId,
+        sender: userId,
+        content: content ? content.trim() : "",
+        attachments,
+        status: recipientIsOnline ? "delivered" : "sent",
+    });
+
+    let previewText = content ? content.trim() : "";
+    if (!previewText && attachments.length > 0) {
+        const type = attachments[0]?.fileType || "";
+        if (type.startsWith("image/")) previewText = "📷 Photo";
+        else if (type.startsWith("video/")) previewText = "🎥 Video";
+        else if (type === "application/pdf") previewText = "📄 PDF";
+        else previewText = "📎 Attachment";
+    }
+
+    await Conversation.updateOne(
+        { _id: conversationId },
+        { $set: { lastMessage: { text: previewText, sender: userId, at: new Date() } } }
+    );
+
+    const populated = await message.populate([
+        { path: "sender", select: "username email avatar" },
+        { path: "reactions.user", select: "username email avatar" },
+    ]);
+
+    const io = getIO();
+    if (io) {
+        const participantRooms = conversation.participants.map(
+            (p: any) => `user_${(p.user?._id || p.user).toString()}`
+        );
+
+        io.to(`conv_${conversationId.toString()}`).to(participantRooms).emit("message:new", populated);
+
+        for (const recipientId of recipients) {
+            io.to(`user_${recipientId}`).emit("conversation:updated", {
+                conversationId,
+                lastMessage: { text: previewText, sender: userId, at: new Date() },
+            });
+
+            try {
+                const notifDoc = await Notification.create({
+                    recipient: recipientId,
+                    sender: userId,
+                    type: "message",
+                    title: `New message from ${(populated.sender as any)?.username || "Someone"}`,
+                    message: previewText,
+                    conversation: conversationId,
+                    isRead: false,
+                });
+                const populatedNotif = await notifDoc.populate("sender", "username email avatar status");
+
+                io.to(`user_${recipientId}`).emit("notification:new", populatedNotif);
+            } catch (e) {
+                logger.error("Failed to create notification:", e);
+            }
+        }
+    }
+    try {
+        await cacheService.delPattern(`conversation:messages:${conversationId.toString()}*`);
+        for (const p of conversation.participants) {
+            const pId = ((p.user as any)?._id || p.user).toString();
+            await cacheService.del(`user:conversations:${pId}`);
+        }
+    } catch (cacheErr: any) {
+        logger.warn(`Cache invalidation notice: ${cacheErr?.message}`);
+    }
+
+    return populated;
+};
+
+export const getMessagesService = async (
+    conversationId?: string | Types.ObjectId,
+    before?: string | Date,
+    userId?: string | Types.ObjectId
+): Promise<GetMessagesResult> => {
+    if (!conversationId) {
+        const error: CustomError = new Error("Conversation ID is required");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const pageSize = 50;
+
+    let conversation = null;
+    let minDate: Date | null = null;
+
+    if (userId) {
+        conversation = await Conversation.findById(conversationId).select("type participants");
+        if (conversation && conversation.type === "group") {
+            const participant = conversation.participants.find(
+                (p: any) => (p.user?._id || p.user).toString() === userId.toString()
+            );
+            if (participant && participant.joinedAt) {
+                minDate = participant.joinedAt;
+            }
+        }
+    }
+
+    const cacheKey = minDate
+        ? `conversation:messages:${conversationId.toString()}:${new Date(minDate).getTime()}`
+        : `conversation:messages:${conversationId.toString()}`;
+
+    if (!before) {
+        const cached = await cacheService.get<GetMessagesResult>(cacheKey);
+        if (cached) {
+            return cached;
+        }
+    }
+
+    const query: Record<string, any> = { conversation: conversationId };
+    if (minDate) {
+        query.createdAt = { $gte: minDate };
+    }
+
+    if (before) {
+        query.createdAt = {
+            ...(query.createdAt || {}),
+            $lt: new Date(before),
+        };
+    }
+
+    const messages = await Message.find(query)
+        .populate("sender", "username email avatar")
+        .populate("reactions.user", "username email avatar")
+        .sort({ createdAt: -1 })
+        .limit(pageSize + 1);
+
+    const hasMore = messages.length > pageSize;
+    const pagedMessages = messages.slice(0, pageSize).reverse();
+
+    if (!before && userId && pagedMessages.length > 0) {
+        try {
+            const unreadMsgs = await Message.find({
+                conversation: conversationId,
+                sender: { $ne: userId },
+                "readBy.user": { $ne: userId },
+            });
+            if (unreadMsgs.length > 0) {
+                const lastMsgId = unreadMsgs[unreadMsgs.length - 1]?._id;
+                await Message.updateMany(
+                    { _id: { $in: unreadMsgs.map((m) => m._id) } },
+                    { $addToSet: { readBy: { user: userId, readAt: new Date() } } }
+                );
+                await Conversation.updateOne(
+                    { _id: conversationId, "participants.user": userId },
+                    { $set: { "participants.$.lastReadMessageId": lastMsgId } }
+                );
+                await cacheService.del(`user:conversations:${userId.toString()}`);
+            }
+        } catch (e) {
+            // Ignore background read sync error
+        }
+    }
+
+    const result: GetMessagesResult = {
+        messages: pagedMessages,
+        hasMore,
+    };
+
+    if (!before) {
+        await cacheService.set(cacheKey, result, 300);
+    }
+
+    return result;
+};
+
+export const getConversationsService = async (userId: string | Types.ObjectId) => {
+    const userIdStr = userId.toString();
+    const cacheKey = `user:conversations:${userIdStr}`;
+    const cachedConvs = await cacheService.get<any[]>(cacheKey);
+
+    if (cachedConvs) {
+        const validCached: any[] = [];
+        for (const conv of cachedConvs) {
+            if (conv.participants) {
+                conv.participants = conv.participants.filter(
+                    (p: any) => p.user && (p.user._id || p.user.id || p.user)
+                );
+            }
+            if (conv.type === "private") {
+                const other = conv.participants?.find(
+                    (p: any) => (p.user?._id || p.user?.id || p.user)?.toString() !== userIdStr
+                );
+                if (!other || !other.user) continue;
+            } else if (conv.type === "group") {
+                if (!conv.participants || conv.participants.length <= 1) continue;
+            }
+
+            if (conv.participants) {
+                for (const p of conv.participants) {
+                    if (p.user && (p.user._id || p.user.id)) {
+                        const pUserId = (p.user._id || p.user.id).toString();
+                        const isOnline = getSockets(pUserId).length > 0;
+                        p.user.status = isOnline ? "online" : "offline";
+                    }
+                }
+            }
+            validCached.push(conv);
+        }
+        return validCached;
+    }
+
+    const conversations = await Conversation.find({ "participants.user": userId })
+        .populate("participants.user", "username email avatar status phone")
+        .sort({ updatedAt: -1 })
+        .lean();
+
+    const validConversations: any[] = [];
+
+    for (const conv of (conversations as any[])) {
+        // Filter out participants whose user documents were deleted from MongoDB
+        if (conv.participants) {
+            conv.participants = conv.participants.filter(
+                (p: any) => p.user && (p.user._id || p.user.id || p.user)
+            );
+        }
+
+        // Group auto-downscale & disband checks
+        if (conv.type === "group") {
+            const memberCount = conv.participants?.length || 0;
+            if (memberCount <= 1) {
+                // Disband and delete orphaned group
+                Conversation.findByIdAndDelete(conv._id).catch(() => {});
+                continue;
+            }
+            if (memberCount === 2) {
+                // Convert group with 2 members to 1-to-1 private chat
+                const formerName = conv.name || conv.formerGroupName || "Group";
+                Conversation.updateOne(
+                    { _id: conv._id },
+                    { $set: { type: "private", isConvertedFromGroup: true, formerGroupName: formerName, name: null, avatarUrl: null } }
+                ).catch(() => {});
+                conv.type = "private";
+                conv.isConvertedFromGroup = true;
+                conv.formerGroupName = formerName;
+                conv.name = undefined;
+                conv.avatarUrl = undefined;
+            }
+        }
+
+        // Private conversation check: verify other participant still exists
+        if (conv.type === "private") {
+            const other = conv.participants?.find(
+                (p: any) => (p.user._id || p.user.id || p.user).toString() !== userIdStr
+            );
+            if (!other || !other.user) {
+                // Other user was deleted from DB; do not show orphaned private conversation
+                continue;
+            }
+        }
+
+        for (const p of conv.participants) {
+            if (p.user && (p.user._id || p.user.id)) {
+                const pUserId = (p.user._id || p.user.id).toString();
+                const isOnline = getSockets(pUserId).length > 0;
+                p.user.status = isOnline ? "online" : "offline";
+            }
+        }
+
+        const participant = conv.participants?.find(
+            (p: any) => (p.user?._id || p.user)?.toString() === userIdStr
+        );
+
+        if (conv.type === "group") {
+            if (participant && participant.joinedAt) {
+                const latestMessage: any = await Message.findOne({
+                    conversation: conv._id,
+                    createdAt: { $gte: participant.joinedAt },
+                })
+                    .sort({ createdAt: -1 })
+                    .populate("sender", "username email avatar");
+
+                if (latestMessage) {
+                    let previewText = latestMessage.content || "";
+                    if (!previewText && latestMessage.attachments?.length > 0) {
+                        const type = latestMessage.attachments[0]?.fileType || "";
+                        if (type.startsWith("image/")) previewText = "📷 Photo";
+                        else if (type.startsWith("video/")) previewText = "🎥 Video";
+                        else if (type === "application/pdf") previewText = "📄 PDF";
+                        else previewText = "📎 Attachment";
+                    }
+                    conv.lastMessage = {
+                        text: previewText,
+                        sender: latestMessage.sender?._id || latestMessage.sender,
+                        at: latestMessage.createdAt,
+                    };
+                } else {
+                    conv.lastMessage = {
+                        text: null,
+                        sender: null,
+                        at: null,
+                    };
+                }
+            }
+        } else if (conv.lastMessage && !conv.lastMessage.at) {
+            conv.lastMessage.at = conv.updatedAt || conv.createdAt;
+        }
+
+        const unreadQuery: Record<string, any> = {
+            conversation: conv._id,
+            sender: { $ne: userId },
+            "readBy.user": { $ne: userId },
+        };
+
+        if (conv.type === "group" && participant?.joinedAt) {
+            unreadQuery.createdAt = { $gte: participant.joinedAt };
+        }
+
+        conv.unreadCount = await Message.countDocuments(unreadQuery);
+        validConversations.push(conv);
+    }
+
+    await cacheService.set(cacheKey, validConversations, 300);
+
+    return validConversations;
+};

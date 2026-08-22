@@ -25,8 +25,8 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
 
 export const getMessages = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { conversationId } = req.params;
-        const { before } = req.query;
+        const conversationId = req.params.conversationId as string;
+        const before = req.query.before as string | undefined;
         if (!req.user) {
             return sendError(res, 401, "Unauthorized")
         }

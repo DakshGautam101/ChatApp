@@ -1,4 +1,4 @@
-export declare const fetchUserList: (currentUserId: any) => Promise<{
+export declare const fetchUserList: (currentUserId: string) => Promise<{
     _id: import("mongoose").Types.ObjectId;
     __v: number;
     username: string;

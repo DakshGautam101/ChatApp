@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
-import Conversation, {} from "../models/conversation.model.js";
-import User, {} from "../models/user.model.js";
-import GroupInvitation, {} from "../models/groupInvitation.model.js";
+import Conversation from "../models/conversation.model.js";
+import User from "../models/user.model.js";
+import GroupInvitation from "../models/groupInvitation.model.js";
 import cacheService from "./cache.service.js";
 export const createGroupService = async ({ name, members, creatorId }) => {
     if (!name || typeof name !== "string" || !name.trim()) {

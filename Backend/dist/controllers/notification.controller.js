@@ -2,6 +2,9 @@ import Notification from "../models/notification.model.js";
 import { sendError, sendSuccess } from "../utils/response.js";
 export const getNotifications = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const userId = req.user.id;
         const notifications = await Notification.find({ recipient: userId })
             .sort({ createdAt: -1 })
@@ -19,6 +22,9 @@ export const getNotifications = async (req, res, next) => {
 };
 export const markAsRead = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const userId = req.user.id;
         const { id } = req.params;
         const notification = await Notification.findOneAndUpdate({ _id: id, recipient: userId }, { $set: { isRead: true } }, { new: true });
@@ -37,6 +43,9 @@ export const markAsRead = async (req, res, next) => {
 };
 export const markAllAsRead = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const userId = req.user.id;
         await Notification.updateMany({ recipient: userId, isRead: false }, { $set: { isRead: true } });
         return sendSuccess(res, 200, { unreadCount: 0 }, "All notifications marked as read");
@@ -47,6 +56,9 @@ export const markAllAsRead = async (req, res, next) => {
 };
 export const deleteNotification = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const userId = req.user.id;
         const { id } = req.params;
         await Notification.deleteOne({ _id: id, recipient: userId });

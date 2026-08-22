@@ -6,7 +6,6 @@ import Message from "../models/messages.model.js";
 import Conversation from "../models/conversation.model.js";
 import logger from "../utils/logger.js";
 import User from "../models/user.model.js";
-import Notification from "../models/notification.model.js";
 import { sendMessageService } from "../services/message.service.js";
 import cacheService from "../services/cache.service.js";
 function init(io) {
@@ -19,6 +18,9 @@ function init(io) {
         }
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            if (decoded == null) {
+                return next(new Error("Token not found"));
+            }
             const dbUser = await User.findById(decoded.id).select("tokenVersion isVerified");
             if (!dbUser || (dbUser.tokenVersion ?? 0) !== (decoded.tokenVersion ?? 0)) {
                 return next(new Error("Token has been revoked"));
@@ -124,7 +126,7 @@ function init(io) {
                 }
                 else {
                     message.reactions.push({
-                        user: userId,
+                        user: new mongoose.Types.ObjectId(userId),
                         type: reactionType || "like",
                     });
                 }
@@ -170,7 +172,7 @@ function init(io) {
                 for (const msg of messagesToUpdate) {
                     const alreadyRead = msg.readBy.some((r) => r.user.toString() === userId.toString());
                     if (!alreadyRead) {
-                        msg.readBy.push({ user: userId, readAt: new Date() });
+                        msg.readBy.push({ user: new mongoose.Types.ObjectId(userId), readAt: new Date() });
                     }
                     const senderIdStr = msg.sender.toString();
                     const recipientIds = conversation.participants

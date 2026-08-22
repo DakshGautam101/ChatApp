@@ -6,7 +6,9 @@ import logger from "../utils/logger.js";
 export const createGroup = async (req, res, next) => {
     try {
         const { name, members } = req.body;
-        const creatorId = req.user.id;
+        const creatorId = req.user?.id;
+        if (!creatorId)
+            return sendError(res, 401, "Unauthorized");
         const conversation = await createGroupService({ name, members, creatorId });
         const io = getIO();
         if (io) {
@@ -34,7 +36,9 @@ export const sendGroupInvitation = async (req, res, next) => {
     try {
         const { groupId } = req.params;
         const { receiverId, query } = req.body;
-        const senderId = req.user.id;
+        const senderId = req.user?.id;
+        if (!senderId)
+            return sendError(res, 401, "Unauthorized");
         const stringGroupId = String(groupId);
         const invitation = await sendGroupInvitationService({
             stringGroupId,
@@ -61,7 +65,9 @@ export const sendGroupInvitation = async (req, res, next) => {
 };
 export const getPendingGroupInvitations = async (req, res, next) => {
     try {
-        const userId = req.user.id;
+        const userId = req.user?.id;
+        if (!userId)
+            return sendError(res, 401, "Unauthorized");
         const invitations = await getPendingGroupInvitationsService(userId);
         return sendSuccess(res, 200, { invitations });
     }
@@ -74,7 +80,9 @@ export const respondToGroupInvitation = async (req, res, next) => {
     try {
         const { invitationId } = req.params;
         const { action } = req.body;
-        const userId = req.user.id;
+        const userId = req.user?.id;
+        if (!userId)
+            return sendError(res, 401, "Unauthorized");
         const { invitation, conversation } = await respondToGroupInvitationService({
             invitationId: invitationId,
             userId,
@@ -101,7 +109,7 @@ export const respondToGroupInvitation = async (req, res, next) => {
                 });
             }
             if (invitation == null) {
-                return sendError(404);
+                return sendError(res, 404, "Invitation not found");
             }
             const senderIdStr = invitation.sender._id
                 ? invitation.sender._id.toString()
@@ -119,7 +127,9 @@ export const searchUsersForGroup = async (req, res, next) => {
     try {
         const { groupId } = req.params;
         const { query } = req.query;
-        const currentUserId = req.user.id;
+        const currentUserId = req.user?.id;
+        if (!currentUserId)
+            return sendError(res, 401, "Unauthorized");
         const users = await searchUsersForGroupService({
             groupId: groupId,
             query: query,
@@ -136,7 +146,9 @@ export const updateGroupAvatar = async (req, res, next) => {
     try {
         const { groupId } = req.params;
         const { avatarUrl } = req.body;
-        const requesterId = req.user.id;
+        const requesterId = req.user?.id;
+        if (!requesterId)
+            return sendError(res, 401, "Unauthorized");
         const conversation = await updateGroupAvatarService({ groupId: groupId, avatarUrl, requesterId });
         const io = getIO();
         if (io) {
@@ -153,7 +165,9 @@ export const updateMemberRole = async (req, res, next) => {
     try {
         const { groupId, targetUserId } = req.params;
         const { newRole } = req.body;
-        const requesterId = req.user.id;
+        const requesterId = req.user?.id;
+        if (!requesterId)
+            return sendError(res, 401, "Unauthorized");
         const conversation = await updateMemberRoleService({ groupId: groupId, targetUserId: targetUserId, newRole, requesterId });
         const io = getIO();
         if (io) {
@@ -169,7 +183,9 @@ export const updateMemberRole = async (req, res, next) => {
 export const leaveGroup = async (req, res, next) => {
     try {
         const { groupId } = req.params;
-        const userId = req.user.id;
+        const userId = req.user?.id;
+        if (!userId)
+            return sendError(res, 401, "Unauthorized");
         const result = await leaveGroupService({ groupId: groupId, userId });
         const io = getIO();
         if (io) {
@@ -208,8 +224,10 @@ export const leaveGroup = async (req, res, next) => {
 export const kickMember = async (req, res, next) => {
     try {
         const { groupId, targetUserId } = req.params;
-        const requesterId = req.user.id;
-        const result = await kickMemberService({ groupId: groupId, targetUserId: groupId, requesterId });
+        const requesterId = req.user?.id;
+        if (!requesterId)
+            return sendError(res, 401, "Unauthorized");
+        const result = await kickMemberService({ groupId: groupId, targetUserId: targetUserId, requesterId });
         const io = getIO();
         if (io) {
             io.to(`user_${targetUserId}`).emit("conversation:removed", { conversationId: groupId });

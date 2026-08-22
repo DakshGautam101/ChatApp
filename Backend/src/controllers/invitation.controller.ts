@@ -12,7 +12,7 @@ export const sendInvitation = async (req: Request, res: Response, next: NextFunc
             return sendError(res, 401, "Unauthorized");
         }
         const senderId = req.user.id;
-        const receiverId = req.params.id;
+        const receiverId = req.params.id as string;
 
         const { invitation, statusCode } = await sendInvitationService(senderId, receiverId);
 
@@ -27,7 +27,7 @@ export const sendInvitation = async (req: Request, res: Response, next: NextFunc
 
 export const changeStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const invitationId = req.params.id;
+        const invitationId = req.params.id as string;
         if (!req.user) {
             return sendError(res, 401, "Unauthorized");
         }

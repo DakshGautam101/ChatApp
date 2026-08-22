@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import Invitation from "../models/invitation.model.js";
 import User from "../models/user.model.js";
 import Conversation from "../models/conversation.model.js";
@@ -7,7 +8,7 @@ export const sendInvitationService = async (senderId, receiverId) => {
     if (!receiverId) {
         throw { status: 400, message: "Receiver ID is required" };
     }
-    if (senderId === receiverId) {
+    if (senderId.toString() === receiverId.toString()) {
         throw { status: 400, message: "You cannot send an invitation to yourself" };
     }
     const [sender, receiver] = await Promise.all([
@@ -17,7 +18,8 @@ export const sendInvitationService = async (senderId, receiverId) => {
     if (!sender || !receiver) {
         throw { status: 404, message: "User not found" };
     }
-    if (sender.friends.includes(receiver._id)) {
+    const receiverIdStr = receiver._id.toString();
+    if ((sender.friends || []).some((friendId) => friendId?.toString() === receiverIdStr)) {
         throw { status: 400, message: "Already friends" };
     }
     const existingInvitation = await Invitation.findOne({
@@ -36,16 +38,16 @@ export const sendInvitationService = async (senderId, receiverId) => {
         }
         if (existingInvitation.status === "rejected" &&
             existingInvitation.rejectedUntil &&
-            existingInvitation.rejectedUntil > new Date()) {
+            new Date(existingInvitation.rejectedUntil) > new Date()) {
             throw { status: 400, message: "Invitation was rejected. Try again after 24 hours." };
         }
-        existingInvitation.sender = senderId;
-        existingInvitation.receiver = receiverId;
+        existingInvitation.sender = new Types.ObjectId(senderId);
+        existingInvitation.receiver = new Types.ObjectId(receiverId);
         existingInvitation.status = "pending";
         existingInvitation.rejectedUntil = null;
         await existingInvitation.save();
         if (io) {
-            io.to(`user_${receiverId}`).emit("invitation:created", {
+            io.to(`user_${receiverId.toString()}`).emit("invitation:created", {
                 invitationId: existingInvitation._id,
                 sender: {
                     _id: sender._id,
@@ -59,11 +61,11 @@ export const sendInvitationService = async (senderId, receiverId) => {
         sender: senderId,
         receiver: receiverId,
     });
-    sender.invitations.addToSet(invitation._id);
-    receiver.invitations.addToSet(invitation._id);
+    sender.invitations?.addToSet(invitation._id);
+    receiver.invitations?.addToSet(invitation._id);
     await Promise.all([sender.save(), receiver.save()]);
     if (io) {
-        io.to(`user_${receiverId}`).emit("invitation:created", {
+        io.to(`user_${receiverId.toString()}`).emit("invitation:created", {
             invitationId: invitation._id,
             sender: {
                 _id: sender._id,
@@ -81,13 +83,19 @@ export const sendInvitationService = async (senderId, receiverId) => {
                 isRead: false,
             });
             const populatedNotif = await notif.populate("sender", "username email avatar status");
-            io.to(`user_${receiverId}`).emit("notification:new", populatedNotif);
+            io.to(`user_${receiverId.toString()}`).emit("notification:new", populatedNotif);
         }
         catch (e) { }
     }
     return { invitation, statusCode: 201 };
 };
 export const changeInvitationStatusService = async (invitationId, receiverId, statusInput) => {
+    if (!invitationId) {
+        throw { status: 400, message: "Invitation ID is required" };
+    }
+    if (!receiverId) {
+        throw { status: 401, message: "Unauthorized" };
+    }
     const status = String(statusInput || "").toLowerCase();
     if (!["accepted", "rejected"].includes(status)) {
         throw { status: 400, message: "Invalid invitation status" };
@@ -96,7 +104,7 @@ export const changeInvitationStatusService = async (invitationId, receiverId, st
     if (!invitation) {
         throw { status: 404, message: "Invitation not found" };
     }
-    if (invitation.receiver.toString() !== receiverId) {
+    if (invitation.receiver.toString() !== receiverId.toString()) {
         throw { status: 403, message: "Unauthorized" };
     }
     if (invitation.status !== "pending") {
@@ -110,10 +118,10 @@ export const changeInvitationStatusService = async (invitationId, receiverId, st
     let createdConversation = null;
     if (status === "accepted") {
         invitation.status = "accepted";
-        sender.friends.addToSet(receiver._id);
-        receiver.friends.addToSet(sender._id);
-        sender.invitations.pull(invitation._id);
-        receiver.invitations.pull(invitation._id);
+        sender.friends?.addToSet(receiver._id);
+        receiver.friends?.addToSet(sender._id);
+        sender.invitations?.pull(invitation._id);
+        receiver.invitations?.pull(invitation._id);
         await Promise.all([
             invitation.save(),
             sender.save(),
@@ -138,8 +146,8 @@ export const changeInvitationStatusService = async (invitationId, receiverId, st
     else {
         invitation.status = "rejected";
         invitation.rejectedUntil = new Date(Date.now() + 24 * 60 * 60 * 1000);
-        sender.invitations.pull(invitation._id);
-        receiver.invitations.pull(invitation._id);
+        sender.invitations?.pull(invitation._id);
+        receiver.invitations?.pull(invitation._id);
         await Promise.all([
             invitation.save(),
             sender.save(),
@@ -148,7 +156,7 @@ export const changeInvitationStatusService = async (invitationId, receiverId, st
     }
     const io = getIO();
     if (io) {
-        io.to(`user_${sender._id}`).emit("invitation:statusChanged", {
+        io.to(`user_${sender._id.toString()}`).emit("invitation:statusChanged", {
             invitationId: invitation._id,
             status: invitation.status,
             receiver: {
@@ -157,8 +165,8 @@ export const changeInvitationStatusService = async (invitationId, receiverId, st
             },
         });
         if (createdConversation) {
-            io.to(`user_${sender._id}`).emit("conversation:new", createdConversation);
-            io.to(`user_${receiver._id}`).emit("conversation:new", createdConversation);
+            io.to(`user_${sender._id.toString()}`).emit("conversation:new", createdConversation);
+            io.to(`user_${receiver._id.toString()}`).emit("conversation:new", createdConversation);
         }
     }
     return invitation;

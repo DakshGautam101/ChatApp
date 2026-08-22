@@ -56,7 +56,7 @@ class MemoryCache {
         this.maxSize = maxSize;
     }
 
-    set(key: string, value: string, ttlSeconds?: number) {
+    set(key: string, value: any, ttlSeconds?: number) {
         const expiresAt = ttlSeconds ? Date.now() + Number(ttlSeconds) * 1000 : null;
 
         if (this.store.has(key)) {
@@ -71,21 +71,21 @@ class MemoryCache {
         this.store.set(key, { value, expiresAt });
     }
 
-    get(key:string) {
+    get<T = any>(key: string): T | null {
         const item = this.store.get(key);
         if (!item) return null;
         if (item.expiresAt && Date.now() > item.expiresAt) {
             this.store.delete(key);
             return null;
         }
-        return item.value;
+        return item.value as T;
     }
 
-    del(key:string) {
+    del(key: string) {
         this.store.delete(key);
     }
 
-    delPattern(pattern:string) {
+    delPattern(pattern: string) {
         const regexStr = "^" + pattern.replace(/\*/g, ".*") + "$";
         const regex = new RegExp(regexStr);
         for (const key of Array.from(this.store.keys())) {
@@ -108,21 +108,21 @@ class MemoryCache {
 const memoryFallback = new MemoryCache(5000);
 
 export const cacheService = {
-    async get(key:string) {
+    async get<T = any>(key: string): Promise<T | null> {
         if (isRedisConnected && redisClient) {
             try {
                 const data = await redisClient.get(key);
                 if (data !== null) {
-                    return JSON.parse(data);
+                    return JSON.parse(data) as T;
                 }
-            } catch (err:any) {
+            } catch (err: any) {
                 logger.warn(`[CacheService] Redis GET error for key ${key}: ${err.message}`);
             }
         }
-        return memoryFallback.get(key);
+        return memoryFallback.get<T>(key);
     },
 
-    async set(key : string, value : string, ttlSeconds = 300) {
+    async set(key: string, value: any, ttlSeconds = 300) {
         memoryFallback.set(key, value, ttlSeconds);
 
         if (isRedisConnected && redisClient) {
@@ -133,7 +133,7 @@ export const cacheService = {
                 } else {
                     await redisClient.set(key, serialized);
                 }
-            } catch (err : any) {
+            } catch (err: any) {
                 logger.warn(`[CacheService] Redis SET error for key ${key}: ${err.message}`);
             }
         }

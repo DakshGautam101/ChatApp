@@ -1,7 +1,10 @@
 import { getMessagesService, getConversationsService, sendMessageService } from "../services/message.service.js";
-import { sendSuccess } from "../utils/response.js";
+import { sendError, sendSuccess } from "../utils/response.js";
 export const sendMessage = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const userId = req.user.id;
         const { conversationId, content, attachments } = req.body;
         const message = await sendMessageService({
@@ -18,8 +21,11 @@ export const sendMessage = async (req, res, next) => {
 };
 export const getMessages = async (req, res, next) => {
     try {
-        const { conversationId } = req.params;
-        const { before } = req.query;
+        const conversationId = req.params.conversationId;
+        const before = req.query.before;
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const userId = req.user.id;
         const result = await getMessagesService(conversationId, before, userId);
         return sendSuccess(res, 200, result);
@@ -30,6 +36,9 @@ export const getMessages = async (req, res, next) => {
 };
 export const getConversation = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const userId = req.user.id;
         const conversations = await getConversationsService(userId);
         return sendSuccess(res, 200, { conversations });

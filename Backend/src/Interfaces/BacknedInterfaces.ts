@@ -35,11 +35,11 @@ export interface GroupInvitationInterface {
     receiver : Types.ObjectId,
     status : "pending" | "accepted" | "rejected"
 }
-export interface Invitation {
+export interface InvitationInterface {
     sender : Types.ObjectId;
     receiver : Types.ObjectId;
     status : "pending" | "accepted" | "rejected";
-    rejectedUntil : Date
+    rejectedUntil?: Date | null;
 }
 export interface AttachmentInterface{
     url : string,
@@ -112,7 +112,7 @@ export interface UserInterface {
     tokenVersion?: number;
 } 
 export interface CacheItem {
-    value: string;
+    value: any;
     expiresAt: number | null;
 }
 
@@ -182,4 +182,26 @@ export interface S3File {
     mimetype: string;
     size: number;
     originalname: string;
+}
+
+export interface SendMessageParams {
+    userId: string | Types.ObjectId;
+    conversationId: string | Types.ObjectId;
+    content?: string;
+    attachments?: AttachmentInterface[];
+}
+
+export interface SendInvitationResult {
+    invitation: any;
+    statusCode: number;
+}
+
+export interface UserInvitationsResult {
+    received: any[];
+    sent: any[];
+}
+
+export interface GetMessagesResult {
+    messages: any[];
+    hasMore: boolean;
 }

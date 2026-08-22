@@ -3,7 +3,7 @@ import sendEmail from "../utils/mailer.js";
 import logger from "../utils/logger.js";
 
 const verifyEmail = async function (email:string, otp:number) {
-    const html = getHTML(otp || "");
+    const html = getHTML(otp);
     const subject = "Verify your Email";
 
     logger.info(`Verification OTP generated for ${email}: ${otp}`);

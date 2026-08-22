@@ -3,8 +3,8 @@ import UploadSession from "../models/uploadSession.model.js";
 import User from "../models/user.model.js";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import s3Client from "../config/aws-s3.config.js";
+import logger from "../utils/logger.js";
 const PUBLIC_UPLOAD_PREFIX = "/uploads";
-
 export const toAttachment = (file) => ({
     url: file.location,
     key: file.key,

@@ -6,7 +6,11 @@ export const uploadAvatar = async (req, res, next) => {
             return sendError(res, 400, "No file uploaded");
         }
         const userId = req.user?.id;
-        const attachment = await processAvatarUpload(req.file, userId);
+        if (!req.file) {
+            sendError(res, 400, "No file uploaded");
+            return;
+        }
+        const attachment = await processAvatarUpload(req.file, userId ?? "");
         return sendSuccess(res, 200, { file: attachment }, "File uploaded successfully");
     }
     catch (error) {
@@ -20,7 +24,7 @@ export const uploadOneFile = async (req, res, next) => {
         }
         const uploadId = req.body?.uploadId;
         const userId = req.user?.id;
-        const attachment = await processSingleUpload(req.file, userId, uploadId);
+        const attachment = await processSingleUpload(req.file, userId ?? "", String(uploadId));
         return sendSuccess(res, 200, { file: attachment }, "File uploaded successfully");
     }
     catch (error) {
@@ -41,6 +45,9 @@ export const uploadMultipleFiles = async (req, res, next) => {
 };
 export const registerUploadSession = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "unauthorized");
+        }
         const session = await registerSessionService(req.user.id, req.body);
         return sendSuccess(res, 200, { session });
     }
@@ -64,6 +71,9 @@ export const markUploadInterrupted = async (req, res) => {
 export const getUploadSessionStatus = async (req, res, next) => {
     try {
         const { uploadId } = req.params;
+        if (!req.user) {
+            return sendError(res, 401, "unauthorized");
+        }
         const session = await getUploadSessionStatusService(uploadId, req.user.id);
         return sendSuccess(res, 200, { session });
     }

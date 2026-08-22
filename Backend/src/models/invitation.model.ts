@@ -1,8 +1,8 @@
 import mongoose, { Document, Types, type Date } from "mongoose";
-import type { Invitation } from "../Interfaces/BacknedInterfaces.js";
+import type { InvitationInterface } from "../Interfaces/BacknedInterfaces.js";
 
 
-const invitationSchema = new mongoose.Schema<Invitation>({
+const invitationSchema = new mongoose.Schema<InvitationInterface>({
     sender : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User' , 
@@ -24,5 +24,5 @@ const invitationSchema = new mongoose.Schema<Invitation>({
 } ,{timestamps : true});
 
 
-const Invitation = mongoose.model<Invitation>('Invitation' , invitationSchema);
+const Invitation = mongoose.model<InvitationInterface>('Invitation' , invitationSchema);
 export default Invitation; 

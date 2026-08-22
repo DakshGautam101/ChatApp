@@ -1,1 +1,1 @@
-{"version":3,"file":"aws-s3.config.d.ts","sourceRoot":"","sources":["../../src/config/aws-s3.config.js"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,oBAAoB,CAAC;AAE9C,QAAA,MAAO,QAAQ,UAMb,CAAA;eAEa,QAAQ"}
+{"version":3,"file":"aws-s3.config.d.ts","sourceRoot":"","sources":["../../src/config/aws-s3.config.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,oBAAoB,CAAC;AAE9C,QAAA,MAAO,QAAQ,UAMb,CAAA;eAEa,QAAQ"}

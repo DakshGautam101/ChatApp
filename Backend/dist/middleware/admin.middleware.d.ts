@@ -1,8 +1,3 @@
 import type { NextFunction, Request, Response } from "express";
-export interface isAdminRequest extends Request {
-    user: {
-        id: string;
-    };
-}
-export declare const isAdmin: (req: isAdminRequest, res: Response, next: NextFunction) => Promise<any>;
+export declare const isAdmin: (req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>> | undefined>;
 //# sourceMappingURL=admin.middleware.d.ts.map

@@ -1,4 +1,4 @@
-import type { AuthTokenPayload } from "../middleware/verifyAuth.middleware.js";
+import type { AuthTokenPayload } from "../Interfaces/BacknedInterfaces.ts";
 
 declare global {
     namespace Express {

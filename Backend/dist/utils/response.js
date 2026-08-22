@@ -1,5 +1,5 @@
 export const sendError = (res, status, message) => res.status(status).json({ success: false, message });
-export const sendSuccess = (res, status, data, message) => {
+export const sendSuccess = (res, status, data = {}, message) => {
     const payload = { success: true, ...(message ? { message } : {}) };
     if (Array.isArray(data)) {
         return res.status(status).json({ ...payload, data });

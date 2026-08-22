@@ -4,6 +4,9 @@ import { sendSuccess, sendError } from "../utils/response.js";
 import cacheService from "../services/cache.service.js";
 const getUserList = async function (req, res, next) {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const data = await fetchUserList(req.user.id);
         return sendSuccess(res, 200, { data });
     }
@@ -13,6 +16,9 @@ const getUserList = async function (req, res, next) {
 };
 const updateProfile = async function (req, res, next) {
     try {
+        if (!req.user) {
+            return sendError(res, 401, "Unauthorized");
+        }
         const userId = req.user.id;
         const { username, phone, avatar } = req.body;
         const updates = {};

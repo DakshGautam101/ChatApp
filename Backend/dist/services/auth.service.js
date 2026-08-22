@@ -1,12 +1,11 @@
 import bcrypt from "bcryptjs";
-import User, {} from "../models/user.model.js";
+import User from "../models/user.model.js";
 import generateOtp from "../helper/generateOtp.js";
 import generateToken from "../helper/generateToken.js";
 import { verifyEmail } from "./email.service.js";
 import { setAuthCookie } from "../utils/authCookie.js";
 import cacheService from "./cache.service.js";
 import logger from "../utils/logger.js";
-import { sendError } from "../utils/response.js";
 const findUserByEmail = async (email) => {
     return await User.findOne({ email: email.toLowerCase() });
 };

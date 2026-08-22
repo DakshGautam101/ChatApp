@@ -1,6 +1,5 @@
-import Redis from "ioredis";
+import { Redis } from "ioredis";
 import logger from "../utils/logger.js";
-import { stringify } from "node:querystring";
 const redisHost = process.env.REDIS_HOST || "127.0.0.1";
 const redisPort = process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379;
 const redisPassword = process.env.REDIS_PASSWORD || undefined;

@@ -1,10 +1,5 @@
-import mongoose, { Document, Types, type Date } from "mongoose";
-export interface Invitation {
-    sender: Types.ObjectId;
-    receiver: Types.ObjectId;
-    status: "pending" | "accepted" | "rejected";
-    rejectedUntil: Date;
-}
+import mongoose, { Document, Types } from "mongoose";
+import type { Invitation } from "../Interfaces/BacknedInterfaces.js";
 declare const Invitation: mongoose.Model<Invitation, {}, {}, {}, Document<unknown, {}, Invitation, {}, mongoose.DefaultSchemaOptions> & Invitation & {
     _id: Types.ObjectId;
 } & {

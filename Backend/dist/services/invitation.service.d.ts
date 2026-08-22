@@ -1,30 +1,12 @@
-export declare const sendInvitationService: (senderId: any, receiverId: any) => Promise<{
-    invitation: import("mongoose").Document<unknown, {}, import("../models/invitation.model.js").Invitation, {}, import("mongoose").DefaultSchemaOptions> & import("../models/invitation.model.js").Invitation & {
-        _id: import("mongoose").Types.ObjectId;
-    } & {
-        __v: number;
-    } & {
-        id: string;
-    };
-    statusCode: number;
-}>;
-export declare const changeInvitationStatusService: (invitationId: any, receiverId: any, statusInput: any) => Promise<import("mongoose").Document<unknown, {}, import("../models/invitation.model.js").Invitation, {}, import("mongoose").DefaultSchemaOptions> & import("../models/invitation.model.js").Invitation & {
-    _id: import("mongoose").Types.ObjectId;
+import { Types } from "mongoose";
+import type { SendInvitationResult, UserInvitationsResult } from "../Interfaces/BacknedInterfaces.js";
+export declare const sendInvitationService: (senderId: string | Types.ObjectId, receiverId?: string | Types.ObjectId) => Promise<SendInvitationResult>;
+export declare const changeInvitationStatusService: (invitationId?: string | Types.ObjectId, receiverId?: string | Types.ObjectId, statusInput?: any) => Promise<import("mongoose").Document<unknown, {}, import("../Interfaces/BacknedInterfaces.js").Invitation, {}, import("mongoose").DefaultSchemaOptions> & import("../Interfaces/BacknedInterfaces.js").Invitation & {
+    _id: Types.ObjectId;
 } & {
     __v: number;
 } & {
     id: string;
 }>;
-export declare const getUserInvitationsService: (userId: any) => Promise<{
-    received: (import("../models/invitation.model.js").Invitation & {
-        _id: import("mongoose").Types.ObjectId;
-    } & {
-        __v: number;
-    })[];
-    sent: (import("../models/invitation.model.js").Invitation & {
-        _id: import("mongoose").Types.ObjectId;
-    } & {
-        __v: number;
-    })[];
-}>;
+export declare const getUserInvitationsService: (userId: string | Types.ObjectId) => Promise<UserInvitationsResult>;
 //# sourceMappingURL=invitation.service.d.ts.map

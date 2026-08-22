@@ -1,5 +1,5 @@
-import { type UserInterface } from "../models/user.model.js";
 import type { Response } from "express";
+import type { UserInterface } from "../Interfaces/BacknedInterfaces.js";
 declare const findUserByEmail: (email: string) => Promise<(import("mongoose").Document<unknown, {}, UserInterface, {}, import("mongoose").DefaultSchemaOptions> & UserInterface & {
     _id: import("mongoose").Types.ObjectId;
 } & {

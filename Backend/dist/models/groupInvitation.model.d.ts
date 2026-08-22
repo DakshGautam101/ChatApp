@@ -1,10 +1,5 @@
 import mongoose, { Types } from "mongoose";
-export interface GroupInvitationInterface {
-    group: Types.ObjectId;
-    sender: Types.ObjectId;
-    receiver: Types.ObjectId;
-    status: "pending" | "accepted" | "rejected";
-}
+import type { GroupInvitationInterface } from "../Interfaces/BacknedInterfaces.js";
 declare const GroupInvitation: mongoose.Model<GroupInvitationInterface, {}, {}, {}, mongoose.Document<unknown, {}, GroupInvitationInterface, {}, mongoose.DefaultSchemaOptions> & GroupInvitationInterface & {
     _id: Types.ObjectId;
 } & {

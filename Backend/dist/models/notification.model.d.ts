@@ -1,14 +1,5 @@
 import mongoose, { Types } from "mongoose";
-export interface NotificationInterface {
-    recipient: Types.ObjectId;
-    sender: Types.ObjectId;
-    type: 'message' | 'invitation' | 'group_invitation' | 'system' | 'notification';
-    title: string | null;
-    message: string;
-    conversation?: Types.ObjectId;
-    invitation?: Types.ObjectId;
-    isRead: boolean;
-}
+import type { NotificationInterface } from "../Interfaces/BacknedInterfaces.js";
 declare const Notification: mongoose.Model<NotificationInterface, {}, {}, {}, mongoose.Document<unknown, {}, NotificationInterface, {}, mongoose.DefaultSchemaOptions> & NotificationInterface & {
     _id: Types.ObjectId;
 } & {

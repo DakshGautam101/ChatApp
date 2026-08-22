@@ -1,1 +1,1 @@
-{"version":3,"file":"authCookie.d.ts","sourceRoot":"","sources":["../../src/utils/authCookie.js"],"names":[],"mappings":"AAOA,eAAO,MAAM,aAAa,gCAEzB,CAAC;AAEF,eAAO,MAAM,eAAe,oBAQ3B,CAAC"}
+{"version":3,"file":"authCookie.d.ts","sourceRoot":"","sources":["../../src/utils/authCookie.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAiB,QAAQ,EAAE,MAAM,SAAS,CAAC;AAWvD,eAAO,MAAM,aAAa,QAAQ,QAAQ,SAAQ,MAAM,SAEvD,CAAC;AAEF,eAAO,MAAM,eAAe,QAAU,QAAQ,SAQ7C,CAAC"}

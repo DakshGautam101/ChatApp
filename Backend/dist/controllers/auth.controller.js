@@ -7,7 +7,6 @@ import { sendError, sendSuccess } from "../utils/response.js";
 import { clearAuthCookie } from "../utils/authCookie.js";
 import { getIO } from "../socket/socket.js";
 import cacheService from "../services/cache.service.js";
-import { StringDecoder } from "node:string_decoder";
 export const signup = async (req, res, next) => {
     try {
         const { username, email, phone, password, avatar } = req.body;
