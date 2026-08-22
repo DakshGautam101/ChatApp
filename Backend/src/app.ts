@@ -21,6 +21,7 @@ const __filename:string = fileURLToPath(import.meta.url);
 const __dirname:string = path.dirname(__filename);
 
 const app = express();
+app.set("trust proxy", 1);
 
 const server = createServer(app);
 const configuredOrigins = (process.env.CLIENT_URL || "")

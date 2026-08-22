@@ -1,7 +1,9 @@
 import axios from "axios";
 import { disconnectSocket } from "../socket/socket.js";
 
-const API_URL = import.meta.env.VITE_API_URL ||"https://chatapp-backend-s1n2.onrender.com"|| "http://localhost:5000";
+const API_URL =
+    import.meta.env.VITE_API_URL ||
+    (import.meta.env.DEV ? "http://localhost:5000" : "https://chatapp-backend-s1n2.onrender.com");
 const cleanBase = API_URL.replace(/\/api\/?$/, "");
 
 export const axiosInstance = axios.create({

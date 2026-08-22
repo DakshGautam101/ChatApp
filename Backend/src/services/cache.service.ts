@@ -2,6 +2,7 @@ import { Redis } from "ioredis";
 import logger from "../utils/logger.js";
 import type { CacheItem } from "../Interfaces/BacknedInterfaces.js";
 
+const redisUrl = process.env.REDIS_URL;
 const redisHost = process.env.REDIS_HOST || "127.0.0.1";
 const redisPort = process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379;
 const redisPassword = process.env.REDIS_PASSWORD || undefined;
@@ -10,17 +11,25 @@ let isRedisConnected = false;
 let redisClient: Redis | null = null;
 
 try {
-    redisClient = new Redis({
-        host: redisHost,
-        port: redisPort,
-        password: redisPassword,
+    const redisOptions = {
         lazyConnect: true,
         maxRetriesPerRequest: 1,
         retryStrategy(times: number) {
-            if (times > 3) return null; // Stop retrying Redis, use memory fallback
+            if (times > 3) return null; 
             return Math.min(times * 200, 1000);
         },
-    });
+    };
+
+    if (redisUrl) {
+        redisClient = new Redis(redisUrl, redisOptions);
+    } else {
+        redisClient = new Redis({
+            host: redisHost,
+            port: redisPort,
+            password: redisPassword,
+            ...redisOptions,
+        });
+    }
 
     redisClient.on("ready", () => {
         isRedisConnected = true;
