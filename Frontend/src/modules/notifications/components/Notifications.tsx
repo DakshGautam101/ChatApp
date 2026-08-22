@@ -1,25 +1,41 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { socket } from "@/core/socket/socket";
 import { Bell, MessageSquare, UserPlus, X } from "lucide-react";
 import useChatStore from "@/modules/chat/stores/useChatStore";
 
 const AUTO_DISMISS_MS = 6000;
 
-const ICONS = {
+const ICONS: Record<string, any> = {
     invitation: UserPlus,
     message: MessageSquare,
     notification: Bell,
     status: Bell,
 };
 
-export default function Notifications({ onNavigateTab }) {
-    const [items, setItems] = useState([]);
+export interface NotificationToastItem {
+    id: string;
+    type: string;
+    from?: string;
+    conversationId?: string;
+    message?: string;
+    senderName?: string;
+    status?: string;
+    by?: string;
+    [key: string]: any;
+}
 
-    const dismiss = (id) => {
+interface NotificationsProps {
+    onNavigateTab?: (tab: string) => void;
+}
+
+export default function Notifications({ onNavigateTab }: NotificationsProps) {
+    const [items, setItems] = useState<NotificationToastItem[]>([]);
+
+    const dismiss = (id: string) => {
         setItems((s) => s.filter((it) => it.id !== id));
     };
 
-    const handleItemClick = (it) => {
+    const handleItemClick = (it: NotificationToastItem) => {
         dismiss(it.id);
 
         if (it.conversationId) {
@@ -38,16 +54,16 @@ export default function Notifications({ onNavigateTab }) {
 
     useEffect(() => {
         if (!socket) return;
-        const push = (entry) => {
+        const push = (entry: Record<string, any>) => {
             const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-            setItems((s) => [{ ...entry, id }, ...s].slice(0, 5));
+            setItems((s) => [{ ...entry, id, type: entry.type || "notification" }, ...s].slice(0, 5));
             setTimeout(() => dismiss(id), AUTO_DISMISS_MS);
         };
 
-        const onInvitation = (data) => push({ type: "invitation", ...data });
-        const onNotification = (data) => push({ type: data.type || "notification", ...data });
-        const onStatusChanged = (data) => push({ type: "status", ...data });
-        const onGroupInvitation = (data) => push({ type: "invitation", ...data });
+        const onInvitation = (data: any) => push({ type: "invitation", ...data });
+        const onNotification = (data: any) => push({ type: data?.type || "notification", ...data });
+        const onStatusChanged = (data: any) => push({ type: "status", ...data });
+        const onGroupInvitation = (data: any) => push({ type: "invitation", ...data });
 
         socket.on("invitation:created", onInvitation);
         socket.on("notification:new", onNotification);

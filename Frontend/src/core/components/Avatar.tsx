@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { cn } from "@/core/utils/utils";
 
-export function getAvatarUrl(avatar) {
+export function getAvatarUrl(avatar?: string | null) {
     if (!avatar) return null;
     if (
         avatar.startsWith("http://") ||
@@ -18,7 +18,7 @@ export function getAvatarUrl(avatar) {
     return `${serverOrigin}${cleanPath}`;
 }
 
-const sizeClasses = {
+const sizeClasses: Record<string, string> = {
     xs: "h-7 w-7 text-xs",
     sm: "h-8 w-8 text-xs",
     md: "h-10 w-10 text-sm",
@@ -28,8 +28,8 @@ const sizeClasses = {
 };
 
 type AvatarProps = {
-    src ?: string;
-    name ?: string;
+    src ?: string | null;
+    name ?: string | null;
     className ?: string;
     size ?: string;
     showStatus ?: boolean;

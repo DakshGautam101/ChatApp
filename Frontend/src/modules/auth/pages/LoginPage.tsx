@@ -138,7 +138,7 @@ const LoginPage = () => {
                                             value={email}
                                             onChange={(e) => {
                                                 setEmail(e.target.value);
-                                                if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
+                                                if (errors.email) setErrors((p: Record<string, string | undefined>) => ({ ...p, email: undefined }));
                                             }}
                                             className="h-11 rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-blue-500/20"
                                         />
@@ -166,7 +166,7 @@ const LoginPage = () => {
                                             value={password}
                                             onChange={(e) => {
                                                 setPassword(e.target.value);
-                                                if (errors.password) setErrors((p) => ({ ...p, password: undefined }));
+                                                if (errors.password) setErrors((p: Record<string, string | undefined>) => ({ ...p, password: undefined }));
                                             }}
                                             className="h-11 rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-blue-500/20"
                                         />

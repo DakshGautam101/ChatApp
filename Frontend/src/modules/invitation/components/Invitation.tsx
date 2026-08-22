@@ -1,14 +1,53 @@
+import type React from "react";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "@/core/api/axiosInstance";
 import { socket } from "@/core/socket/socket";
 import { Button } from "@/core/components/ui/button";
 import toast from "react-hot-toast";
-import { AlertCircle, Check, Inbox, Loader2, Send, Users, X, UserPlus } from "lucide-react";
+import { AlertCircle, Check, Inbox, Send, Users, X } from "lucide-react";
 import { cn } from "@/core/utils/utils";
 import Avatar from "@/core/components/Avatar";
 import useChatStore from "@/modules/chat/stores/useChatStore";
 
-function StatusBadge({ status }) {
+export interface DirectInvitationItem {
+    _id: string;
+    sender?: {
+        _id?: string;
+        id?: string;
+        username?: string;
+        email?: string;
+        avatar?: string;
+        status?: string;
+    };
+    receiver?: {
+        _id?: string;
+        id?: string;
+        username?: string;
+        email?: string;
+        avatar?: string;
+        status?: string;
+    };
+    status: string;
+}
+
+export interface GroupInvitationItem {
+    _id: string;
+    group?: {
+        _id?: string;
+        name?: string;
+        avatarUrl?: string;
+    };
+    sender?: {
+        _id?: string;
+        id?: string;
+        username?: string;
+        email?: string;
+        avatar?: string;
+    };
+    status: string;
+}
+
+function StatusBadge({ status }: { status?: string }) {
     const isPending = status === "pending";
     const isAccepted = status === "accepted";
 
@@ -28,26 +67,26 @@ function StatusBadge({ status }) {
 
 function RowSkeleton() {
     return (
-        <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/50 p-4 mb-2">
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-secondary/20 bg-secondary/10 p-4 mb-2">
             <div className="flex items-center gap-3">
-                <div className="h-10 w-10 shrink-0 rounded-full bg-slate-200 animate-pulse" />
+                <div className="h-10 w-10 shrink-0 rounded-full bg-secondary/20 animate-pulse" />
                 <div className="space-y-2">
-                    <div className="h-3.5 w-32 rounded bg-slate-200 animate-pulse" />
-                    <div className="h-2.5 w-40 rounded bg-slate-200 animate-pulse" />
+                    <div className="h-3.5 w-32 rounded bg-secondary/20 animate-pulse" />
+                    <div className="h-2.5 w-40 rounded bg-secondary/20 animate-pulse" />
                 </div>
             </div>
-            <div className="h-8 w-20 rounded-lg bg-slate-200 animate-pulse" />
+            <div className="h-8 w-20 rounded-lg bg-secondary/20 animate-pulse" />
         </div>
     );
 }
 
 export default function Invitation() {
-    const [received, setReceived] = useState([]);
-    const [sent, setSent] = useState([]);
-    const [groupInvitations, setGroupInvitations] = useState([]);
+    const [received, setReceived] = useState<DirectInvitationItem[]>([]);
+    const [sent, setSent] = useState<DirectInvitationItem[]>([]);
+    const [groupInvitations, setGroupInvitations] = useState<GroupInvitationItem[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [updating, setUpdating] = useState({});
+    const [error, setError] = useState<string | null>(null);
+    const [updating, setUpdating] = useState<Record<string, string | undefined>>({});
     const [tab, setTab] = useState("received"); // 'received' | 'group' | 'sent'
     const { fetchConversations, respondToGroupInvitation } = useChatStore();
 
@@ -69,12 +108,12 @@ export default function Invitation() {
                 groupData.data ||
                 (Array.isArray(groupData) ? groupData : []);
 
-            setReceived(rawReceived.filter((i) => i.sender && (i.sender._id || i.sender.id)));
-            setSent(rawSent.filter((i) => i.receiver && (i.receiver._id || i.receiver.id)));
+            setReceived(rawReceived.filter((i: any) => i.sender && (i.sender._id || i.sender.id)));
+            setSent(rawSent.filter((i: any) => i.receiver && (i.receiver._id || i.receiver.id)));
             setGroupInvitations(
-                rawGroup.filter((i) => i.group && i.sender && (i.sender._id || i.sender.id))
+                rawGroup.filter((i: any) => i.group && i.sender && (i.sender._id || i.sender.id))
             );
-        } catch (err) {
+        } catch (err: any) {
             setError(err?.response?.data?.message || "Couldn't load invitations. Please try again.");
         } finally {
             setLoading(false);
@@ -92,11 +131,11 @@ export default function Invitation() {
             toast.success("You received a new friend invitation");
             fetchAllInvitations();
         };
-        const onStatusChanged = (data) => {
-            toast.success(`Invitation ${data.status}`);
+        const onStatusChanged = (data: any) => {
+            toast.success(`Invitation ${data?.status || "updated"}`);
             fetchAllInvitations();
         };
-        const onGroupInvitation = (invitation) => {
+        const onGroupInvitation = (invitation: any) => {
             toast.success(`You received a group invitation to join "${invitation?.group?.name || "a group"}"`);
             fetchAllInvitations();
         };
@@ -114,29 +153,29 @@ export default function Invitation() {
         };
     }, []);
 
-    const updateStatus = async (id, status) => {
+    const updateStatus = async (id: string, status: string) => {
         setUpdating((s) => ({ ...s, [id]: status }));
         try {
             await axiosInstance.patch(`/invitation/${id}?invitationStatus=${status}`);
             toast.success(status === "accepted" ? "Friend invitation accepted" : "Friend invitation rejected");
             fetchAllInvitations();
             if (status === "accepted") fetchConversations();
-        } catch (err) {
-            toast.error(err.response?.data?.message || "Something went wrong");
+        } catch (err: any) {
+            toast.error(err?.response?.data?.message || "Something went wrong");
         } finally {
             setUpdating((s) => ({ ...s, [id]: undefined }));
         }
     };
 
-    const updateGroupStatus = async (invitationId, action) => {
+    const updateGroupStatus = async (invitationId: string, action: "accepted" | "rejected") => {
         setUpdating((s) => ({ ...s, [`group_${invitationId}`]: action }));
         try {
             await respondToGroupInvitation(invitationId, action);
             toast.success(action === "accepted" ? "Group invitation accepted!" : "Group invitation declined");
             fetchAllInvitations();
             if (action === "accepted") fetchConversations();
-        } catch (err) {
-            toast.error(err.response?.data?.message || "Something went wrong responding to group invitation");
+        } catch (err: any) {
+            toast.error(err?.response?.data?.message || "Something went wrong responding to group invitation");
         } finally {
             setUpdating((s) => ({ ...s, [`group_${invitationId}`]: undefined }));
         }

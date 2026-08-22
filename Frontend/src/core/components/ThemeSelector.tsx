@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { ScrollArea } from "@/core/components/ui/scroll-area";
 import { themes } from "@/constants/Themes";
 import { Palette, Check, Search, Sparkles, X } from "lucide-react";

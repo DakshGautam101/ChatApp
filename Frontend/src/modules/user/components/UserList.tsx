@@ -6,7 +6,7 @@ import { axiosInstance } from "@/core/api/axiosInstance";
 import { socket } from "@/core/socket/socket.js";
 import { Button } from "@/core/components/ui/button";
 import { Input } from "@/core/components/ui/input";
-import { AlertCircle, Loader2, MessageCircle, Search, Send, Users } from "lucide-react";
+import { AlertCircle, MessageCircle, Search, Send, Users } from "lucide-react";
 import toast from "react-hot-toast";
 import { cn } from "@/core/utils/utils";
 import Avatar from "@/core/components/Avatar";
@@ -30,12 +30,12 @@ function UserRowSkeleton() {
 
 interface UserRowProps{
     u : UserInterface & {isFriend : boolean};
-    conv : ConversationInterface;
+    conv ?: ConversationInterface;
     unreadCount : number;
     isSending : boolean;
     isSent:boolean;
-    onOpenMessage : (conversation: ConversationInterface) => void;
-    onSendInvite : (userId: string) => void;
+    onOpenMessage : (conversation?: ConversationInterface) => void;
+    onSendInvite : (userId?: string) => void;
     index ?: number;
 }
 
@@ -89,7 +89,7 @@ const UserRow = React.memo<UserRowProps>(function UserRow({
                 <Button
                     size="sm"
                     disabled={isSending || isSent}
-                    onClick={() => onSendInvite(u._id)}
+                    onClick={() => onSendInvite(u._id || u.id)}
                     className={cn(
                         "shrink-0 gap-1.5 rounded-lg h-9 font-semibold text-xs transition-all border-none shadow-xs",
                         !isSent && !isSending
@@ -115,11 +115,11 @@ function UserList() {
     const openConversation = useChatStore((state) => state.openConversation);
     const navigate = useNavigate();
 
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<(UserInterface & { isFriend: boolean })[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [sending, setSending] = useState({});
-    const [sentTo, setSentTo] = useState({});
+    const [error, setError] = useState<string | null>(null);
+    const [sending, setSending] = useState<Record<string, boolean>>({});
+    const [sentTo, setSentTo] = useState<Record<string, boolean>>({});
     const [searchTerm, setSearchTerm] = useState("");
 
     const fetchUsers = useCallback(async () => {
@@ -128,7 +128,7 @@ function UserList() {
         try {
             const res = await axiosInstance.get("/user/userlist");
             setUsers(res.data.data || []);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
             setError(err?.response?.data?.message || "Couldn't load people. Check your connection and try again.");
         } finally {
@@ -147,7 +147,7 @@ function UserList() {
 
     useEffect(() => {
         if (!socket) return;
-        const handleStatusChange = ({ userId, status }) => {
+        const handleStatusChange = ({ userId, status }: { userId: string; status: string }) => {
             if (!userId) return;
             const targetId = userId.toString();
             setUsers((prevUsers) =>
@@ -162,15 +162,15 @@ function UserList() {
         };
     }, []);
 
-    const sendInvitation = useCallback(async (targetId) => {
+    const sendInvitation = useCallback(async (targetId?: string) => {
         if (!targetId) return;
         setSending((s) => ({ ...s, [targetId]: true }));
         try {
             await axiosInstance.post(`/invitation/send/${targetId}`);
             setSentTo((s) => ({ ...s, [targetId]: true }));
             toast.success("Invitation sent");
-        } catch (err) {
-            console.error("send invitation error", err.response || err.message || err);
+        } catch (err: any) {
+            console.error("send invitation error", err?.response || err?.message || err);
             toast.error(err?.response?.data?.message || "Couldn't send the invitation");
         } finally {
             setSending((s) => ({ ...s, [targetId]: false }));
@@ -195,7 +195,7 @@ function UserList() {
     }, [conversations, currentUserId]);
 
     const visibleUsers = useMemo(() => {
-        const filtered = users.filter((u) => String(u._id) !== currentUserId);
+        const filtered = users.filter((u) => String(u._id || u.id) !== currentUserId);
         const normalizedSearch = searchTerm.trim().toLowerCase();
 
         if (!normalizedSearch) {
@@ -208,7 +208,7 @@ function UserList() {
         });
     }, [searchTerm, currentUserId, users]);
 
-    const handleOpenMessage = useCallback((conv) => {
+    const handleOpenMessage = useCallback((conv?: ConversationInterface) => {
         if (conv?._id) {
             openConversation(conv);
             navigate(`/chats/${conv._id}`);
@@ -283,18 +283,18 @@ function UserList() {
             {!loading && !error && visibleUsers.length > 0 && (
                 <ul className="space-y-2 overflow-y-auto pr-1 pb-4 flex-1">
                     {visibleUsers.map((u, i) => {
-                        const targetId = String(u._id || u.id);
+                        const targetId = String(u._id || u.id || "");
                         const conv = conversationMap.get(targetId);
                         const unreadCount = conv?.unreadCount || 0;
 
                         return (
                             <UserRow
-                                key={u._id}
+                                key={targetId}
                                 u={u}
                                 conv={conv}
                                 unreadCount={unreadCount}
-                                isSending={!!sending[u._id]}
-                                isSent={!!sentTo[u._id]}
+                                isSending={!!sending[targetId]}
+                                isSent={!!sentTo[targetId]}
                                 onOpenMessage={handleOpenMessage}
                                 onSendInvite={sendInvitation}
                                 index={i}

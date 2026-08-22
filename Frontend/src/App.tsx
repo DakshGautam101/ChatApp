@@ -13,7 +13,7 @@ const SignUpPage = lazy(() => import('./modules/auth/pages/SignUpPage'));
 const EmailVerification = lazy(() => import('./modules/auth/pages/EmailVerification').then(m => ({ default: m.EmailVerification })));
 const DashboardPage = lazy(() => import('./modules/chat/pages/DashboardPage'));
 
-function AnimatedPage({ children }) {
+function AnimatedPage({ children }: { children: React.ReactNode }) {
     return (
         <div className="min-h-screen animate-fade-in">
             {children}

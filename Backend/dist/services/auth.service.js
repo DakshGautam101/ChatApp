@@ -55,7 +55,7 @@ const createSafeUserResponse = async (userId) => {
 };
 const sendVerificationEmail = async (email) => {
     try {
-        const otp = cacheService.get(`otp:${email}`);
+        const otp = await cacheService.get(`otp:${email}`);
         if (!otp) {
             logger.error("otp not found");
         }

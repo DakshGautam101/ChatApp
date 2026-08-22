@@ -71,7 +71,7 @@ export const MessageBubble = memo(
                 {isFirstUnread && (
                     <div className="flex items-center gap-3 w-full my-4 animate-scale-in">
                         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
-                        <span className="text-[11px] font-extrabold text-blue-600 bg-primary border border-blue-200/80 px-3 py-1 rounded-full shadow-2xs tracking-wide">
+                        <span className="text-[11px] font-extrabold text-primary border border-primary/80 px-3 py-1 rounded-full shadow-2xs tracking-wide">
                             NEW MESSAGES BELOW
                         </span>
                         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />

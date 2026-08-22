@@ -1,8 +1,9 @@
+import type React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import useAuthStore from '@/modules/auth/stores/useAuthStore';
 import LoadingComponent from './LoadingComponent';
 
-export default function ProtectedRoute({ children }) {
+export default function ProtectedRoute({ children }: { children?: React.ReactNode }) {
     const { isAuthenticated, isLoading } = useAuthStore();
 
     if (isLoading) {

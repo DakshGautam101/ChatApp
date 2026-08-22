@@ -41,7 +41,9 @@ export function EmailVerification() {
     useEffect(() => {
         if (cooldown <= 0) return;
         timerRef.current = setTimeout(() => setCooldown((c) => c - 1), 1000);
-        return () => clearTimeout(timerRef.current);
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
     }, [cooldown]);
 
     const handleVerify = async () => {

@@ -18,14 +18,14 @@ const MAX_FILES = 10;
 
 export interface item{
     _id ?: string;
-    id ?: string;
+    id : string;
     file ?: File;
     caption ?: string;
     status ?: string;
     progress ?: number;
-    attachment ?: AttachmentInterface;
-    cancel ?: () => void;
-    uploadId ?: string;
+    attachment ?: AttachmentInterface | null;
+    cancel ?: (() => void) | null;
+    uploadId ?: string | null;
     messageId ?: string;
 }
 
@@ -106,6 +106,7 @@ const useFileStore = create<FileStoreInterface>((set, get) => ({
     },
 
     startUpload: (item, { existingUploadId } = {}) => {
+        if (!item.file || !item.id) return { uploadId: null, cancel: null };
         const activeConversation = useChatStore.getState().activeConversation;
         const { updateItem } = get();
 
@@ -220,7 +221,10 @@ const useFileStore = create<FileStoreInterface>((set, get) => ({
 
         const allCompleted = allTargetItems.every((i) => i.status === "completed" && i.attachment);
         if (allCompleted) {
-            const completedAttachments = allTargetItems.map((i) => i.attachment);
+            const completedAttachments = allTargetItems
+                .map((i) => i.attachment)
+                .filter((att): att is AttachmentInterface => Boolean(att));
+
             useChatStore.getState().sendMessage({
                 content,
                 attachments: completedAttachments,
@@ -250,23 +254,30 @@ const useFileStore = create<FileStoreInterface>((set, get) => ({
         const target = storeItem || item;
         const messageId = target.messageId || item.messageId;
         const itemId = target.id || item.id || item._id;
+        if (!itemId) return;
 
-        useChatStore.getState().updateOptimisticAttachment(messageId, itemId, {
-            status: "uploading",
-            progress: 0,
-        });
+        if (messageId) {
+            useChatStore.getState().updateOptimisticAttachment(messageId, itemId, {
+                status: "uploading",
+                progress: 0,
+            });
+        }
 
         if (target.file) {
             const { uploadId, promise, cancel } = uploadFileRecoverable(target.file, {
                 conversationId: useChatStore.getState().activeConversation?._id,
-                existingUploadId: target.uploadId,
+                existingUploadId: target.uploadId || undefined,
                 onStatusChange: (status) => {
                     get().updateItem(itemId, { status });
-                    useChatStore.getState().updateOptimisticAttachment(messageId, itemId, { status });
+                    if (messageId) {
+                        useChatStore.getState().updateOptimisticAttachment(messageId, itemId, { status });
+                    }
                 },
                 onProgress: (progress) => {
                     get().updateItem(itemId, { progress });
-                    useChatStore.getState().updateOptimisticAttachment(messageId, itemId, { progress });
+                    if (messageId) {
+                        useChatStore.getState().updateOptimisticAttachment(messageId, itemId, { progress });
+                    }
                 },
             });
 
@@ -276,22 +287,24 @@ const useFileStore = create<FileStoreInterface>((set, get) => ({
                 .then((result) => {
                     const finalAttachment = { ...result, caption: target.caption || "" };
                     get().updateItem(itemId, { status: "completed", attachment: finalAttachment });
-                    useChatStore.getState().updateOptimisticAttachment(messageId, itemId, {
-                        status: "completed",
-                        url: result.url,
-                    });
                     if (messageId) {
+                        useChatStore.getState().updateOptimisticAttachment(messageId, itemId, {
+                            status: "completed",
+                            url: result.url,
+                        });
                         get().checkAndEmitMessage(messageId);
                     }
                 })
                 .catch((err) => {
                     if (err?.message !== "aborted" && err?.message !== "cancelled") {
                         get().updateItem(itemId, { status: "failed" });
-                        useChatStore.getState().updateOptimisticAttachment(messageId, itemId, { status: "failed" });
+                        if (messageId) {
+                            useChatStore.getState().updateOptimisticAttachment(messageId, itemId, { status: "failed" });
+                        }
                     }
                 });
         } else {
-            get().startUpload(item, { existingUploadId: item.uploadId });
+            get().startUpload(item, { existingUploadId: item.uploadId || undefined });
         }
     },
 

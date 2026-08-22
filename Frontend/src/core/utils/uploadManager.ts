@@ -56,11 +56,11 @@ async function uploadWithProgress(file: File, uploadId: string, onProgress: (per
         });
 
         return response.data;
-    } catch (err) {
-        if (axios.isCancel(err) || err.name === "CanceledError" || err.code === "ERR_CANCELED") {
+    } catch (err: any) {
+        if (axios.isCancel(err) || err?.name === "CanceledError" || err?.code === "ERR_CANCELED") {
             throw new Error("aborted");
         }
-        if (!err.response) {
+        if (!err?.response) {
             throw new Error("network");
         }
         throw new Error(`Upload failed with status ${err.response.status}`);
@@ -110,10 +110,10 @@ export function uploadFileRecoverable(
                 activeUploads.delete(uploadId);
                 onStatusChange?.("completed", attempt );
                 return { ...result.file, uploadId };
-            } catch (err) {
-                if (cancelled || err.message === "aborted") throw err;
+            } catch (err: any) {
+                if (cancelled || err?.message === "aborted") throw err;
 
-                const isNetworkIssue = err.message === "network" || !navigator.onLine;
+                const isNetworkIssue = err?.message === "network" || !navigator.onLine;
 
                 if (isNetworkIssue && attempt < MAX_ATTEMPTS) {
                     onStatusChange?.("reconnecting", attempt );
@@ -128,7 +128,7 @@ export function uploadFileRecoverable(
                 }
 
                 activeUploads.delete(uploadId);
-                onStatusChange?.("failed", attempt, err.message);
+                onStatusChange?.("failed", attempt, err?.message);
                 throw err;
             }
         }

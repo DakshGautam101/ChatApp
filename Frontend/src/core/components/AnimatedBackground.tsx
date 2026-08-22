@@ -2,8 +2,8 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-function Particles({ count = 120 }) {
-    const mesh = useRef(null);
+function Particles({ count = 120 }: { count?: number }) {
+    const mesh = useRef<THREE.Points | any>(null);
     const positions = useMemo(() => {
         const pos = new Float32Array(count * 3);
         for (let i = 0; i < count; i++) {
@@ -23,8 +23,8 @@ function Particles({ count = 120 }) {
     }, [count]);
 
     useFrame((state) => {
-        if (!mesh.current) return;
-        const positions = mesh.current.geometry.attributes.position.array;
+        if (!mesh.current || !mesh.current.geometry) return;
+        const positions = mesh.current.geometry.attributes.position.array as Float32Array;
         const time = state.clock.getElapsedTime();
 
         for (let i = 0; i < count; i++) {
@@ -47,9 +47,7 @@ function Particles({ count = 120 }) {
             <bufferGeometry>
                 <bufferAttribute
                     attach="attributes-position"
-                    count={count}
-                    array={positions}
-                    itemSize={3}
+                    args={[positions, 3]}
                 />
             </bufferGeometry>
             <pointsMaterial
@@ -66,7 +64,7 @@ function Particles({ count = 120 }) {
 }
 
 function GradientMesh() {
-    const mesh = useRef(null);
+    const mesh = useRef<THREE.Mesh | any>(null);
 
     useFrame((state) => {
         if (!mesh.current) return;
@@ -89,8 +87,8 @@ function GradientMesh() {
     );
 }
 
-function FloatingOrb({ position, color, size = 0.3 }) {
-    const mesh = useRef(null);
+function FloatingOrb({ position, color, size = 0.3 }: { position: [number, number, number]; color: string; size?: number }) {
+    const mesh = useRef<THREE.Mesh | any>(null);
     const offset = useMemo(() => Math.random() * Math.PI * 2, []);
 
     useFrame((state) => {
@@ -112,7 +110,7 @@ function FloatingOrb({ position, color, size = 0.3 }) {
     );
 }
 
-export default function AnimatedBackground({ className = "" }) {
+export default function AnimatedBackground({ className = "" }: { className?: string }) {
     return (
         <div className={`absolute inset-0 -z-10 ${className}`}>
             <Canvas

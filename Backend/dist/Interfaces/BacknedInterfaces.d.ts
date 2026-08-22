@@ -34,7 +34,7 @@ export interface GroupInvitationInterface {
     receiver: Types.ObjectId;
     status: "pending" | "accepted" | "rejected";
 }
-export interface Invitation {
+export interface InvitationInterface {
     sender: Types.ObjectId;
     receiver: Types.ObjectId;
     status: "pending" | "accepted" | "rejected";

@@ -1,22 +1,36 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Bell, CheckCheck, MessageSquare, UserPlus, Trash2, X } from "lucide-react";
+import { Bell, Trash2 } from "lucide-react";
 import { axiosInstance } from "@/core/api/axiosInstance";
 import { socket } from "@/core/socket/socket";
 import Avatar from "@/core/components/Avatar";
 import useChatStore from "@/modules/chat/stores/useChatStore";
 import toast from "react-hot-toast";
 
-const ICONS = {
-    invitation: UserPlus,
-    message: MessageSquare,
-    notification: Bell,
-};
+export interface NotificationItem {
+    _id: string;
+    sender?: {
+        avatar?: string;
+        username?: string;
+        email?: string;
+    };
+    title?: string;
+    message?: string;
+    createdAt?: string;
+    isRead?: boolean;
+    conversation?: string | { _id: string };
+    type?: string;
+}
 
-export default function NotificationDropdown({ onNavigateTab, pendingInvitationsCount = 0 }) {
+interface NotificationDropdownProps {
+    onNavigateTab?: (tab: string) => void;
+    pendingInvitationsCount?: number;
+}
+
+export default function NotificationDropdown({ onNavigateTab, pendingInvitationsCount = 0 }: NotificationDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const [notifications, setNotifications] = useState([]);
+    const [notifications, setNotifications] = useState<NotificationItem[]>([]);
     const [unreadCount, setUnreadCount] = useState(0);
-    const dropdownRef = useRef(null);
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
 
     const fetchNotifications = async () => {
         try {
@@ -34,7 +48,7 @@ export default function NotificationDropdown({ onNavigateTab, pendingInvitations
 
         if (!socket) return;
 
-        const onNewNotification = (newNotif) => {
+        const onNewNotification = (newNotif: NotificationItem) => {
             if (!newNotif) return;
             setNotifications((prev) => [newNotif, ...prev.filter((n) => n._id !== newNotif._id)]);
             setUnreadCount((count) => count + 1);
@@ -51,8 +65,8 @@ export default function NotificationDropdown({ onNavigateTab, pendingInvitations
 
     // Close dropdown when clicking outside
     useEffect(() => {
-        const handleClickOutside = (e: any) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
                 setIsOpen(false);
             }
         };
@@ -63,7 +77,7 @@ export default function NotificationDropdown({ onNavigateTab, pendingInvitations
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [isOpen]);
 
-    const handleItemClick = async (notif) => {
+    const handleItemClick = async (notif: NotificationItem) => {
         setIsOpen(false);
 
         // Mark as read locally and on server
@@ -107,7 +121,7 @@ export default function NotificationDropdown({ onNavigateTab, pendingInvitations
         }
     };
 
-    const handleDelete = async (e, notifId) => {
+    const handleDelete = async (e: React.MouseEvent, notifId: string) => {
         e.stopPropagation();
         try {
             setNotifications((prev) => prev.filter((n) => n._id !== notifId));

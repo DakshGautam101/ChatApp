@@ -200,9 +200,9 @@ export const me = async (req: Request, res: Response, next: NextFunction) => {
         const exists = await checkExistingUserByID(userId);
         if (!exists) return sendError(res, 404, "User not found");
 
-        const user = await User.findById(userId).select("-password");
+        const user = await User.findById(userId).select("-password").lean();
         if (user) {
-            await cacheService.set(cacheKey, String(user), 3600);
+            await cacheService.set(cacheKey, user, 3600);
         }
         return sendSuccess(res, 200, { user });
     } catch (err) {

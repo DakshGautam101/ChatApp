@@ -1,2 +1,2 @@
-export default function getHTML(otp: any): string;
+export default function getHTML(otp: number): string;
 //# sourceMappingURL=EmailTemplate.d.ts.map
